@@ -198,11 +198,22 @@ namespace AccountTester
             }
         }
 
+        /// <summary>
+        /// Event handler for the Start button click event. 
+        /// For output formatting, see the ExecutionSequentielle method instead.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             Task.Run(() => ExecutionSequentielle()).Wait();
         }
 
+        /// <summary>
+        /// Method for executing all tests sequentially, displaying the results in the richTextBoxLogs.
+        /// It's here that you can add or remove tests and format the output.
+        /// </summary>
+        /// <returns></returns>
         async Task ExecutionSequentielle()
         {
             richTextBoxLogs.Clear();
