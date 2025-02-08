@@ -1,10 +1,8 @@
 using Microsoft.Win32;
-using System.Configuration;
-using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using Word = Microsoft.Office.Interop.Word;
-                                     
+
 namespace AccountTester
 {
     public partial class MainForm : Form
@@ -81,7 +79,7 @@ namespace AccountTester
         /// Method for testing Office version on the system
         /// </summary>
         private void OfficeVersionTesting()
-        { 
+        {
             string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
 
             using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
@@ -89,7 +87,7 @@ namespace AccountTester
 
             if (!string.IsNullOrEmpty(officeVersion))
             {
-                if (officeVersion.Contains(","))
+                if (officeVersion.Contains(','))
                 {
                     foreach (string version in officeVersion.Split(','))
                     {
