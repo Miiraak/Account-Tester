@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             buttonStart = new Button();
             label2 = new Label();
             richTextBoxLogs = new RichTextBox();
@@ -74,9 +75,10 @@
             Controls.Add(buttonStart);
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "MainForm";
-            Text = "Account Tester v0.6";
+            Text = "Account Tester v0.6.2";
             ResumeLayout(false);
             PerformLayout();
         }
