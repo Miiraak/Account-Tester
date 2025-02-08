@@ -41,7 +41,7 @@ Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez s
 6. Ouvrez une Pull Request.
 
 ## Issues and Suggestions
-Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/AccountTester/issues).
+Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
 
 ## License
 Ce projet n'est pas licencé. Voir le fichier [LICENSE](./LICENSE) pour plus de détails.
