@@ -37,7 +37,7 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                richTextBoxLogs.AppendText("Internet connection is not OK : " + Environment.NewLine + ex + Environment.NewLine);
+                MessageBox.Show("Error InternetConnexion : " + Environment.NewLine + ex.Message);
             }
         }
 
@@ -46,32 +46,38 @@ namespace AccountTester
         /// </summary>
         private void NetworkStorageRightsTesting()
         {
-            // Code for testing network storage rights
-            foreach (var drive in DriveInfo.GetDrives())
+            try
             {
-                if (drive.DriveType == DriveType.Network)
+                foreach (var drive in DriveInfo.GetDrives())
                 {
-                    // Test d'ecriture
-                    try
+                    if (drive.DriveType == DriveType.Network)
                     {
-                        string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
-                        File.WriteAllText(testFile, "test");
-                        File.Delete(testFile);
-                        richTextBoxLogs.AppendText($"{drive.Name} : OK" + Environment.NewLine);
+                        // Test d'ecriture
+                        try
+                        {
+                            string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
+                            File.WriteAllText(testFile, "test");
+                            File.Delete(testFile);
+                            richTextBoxLogs.AppendText($"{drive.Name} : OK" + Environment.NewLine);
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            richTextBoxLogs.AppendText($"{drive.Name} : Ecriture refusée" + Environment.NewLine);
+                        }
+                        catch (IOException)
+                        {
+                            richTextBoxLogs.AppendText($"{drive.Name} : Erreur" + Environment.NewLine);
+                        }
                     }
-                    catch (UnauthorizedAccessException)
+                    else
                     {
-                        richTextBoxLogs.AppendText($"{drive.Name} : Ecriture refusée" + Environment.NewLine);
-                    }
-                    catch (IOException)
-                    {
-                        richTextBoxLogs.AppendText($"{drive.Name} : Erreur" + Environment.NewLine);
+                        richTextBoxLogs.AppendText($"{drive.Name} : Omis" + Environment.NewLine);
                     }
                 }
-                else
-                {
-                    richTextBoxLogs.AppendText($"{drive.Name} : Omis" + Environment.NewLine);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur NetworkStorageRights : " + Environment.NewLine + ex.Message);
             }
         }
 
@@ -80,25 +86,36 @@ namespace AccountTester
         /// </summary>
         private void OfficeVersionTesting()
         {
-            string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
-
-            using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
-            string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
-
-            if (!string.IsNullOrEmpty(officeVersion))
+            try
             {
-                if (officeVersion.Contains(','))
-                {
-                    foreach (string version in officeVersion.Split(','))
-                    {
-                        richTextBoxLogs.AppendText($"{version}" + Environment.NewLine);
-                    }
-                }
-                _WordIsInstalled = true;
-                return;
-            }
+                string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
 
-            richTextBoxLogs.AppendText("Aucune" + Environment.NewLine);
+                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
+                string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
+
+                if (!string.IsNullOrEmpty(officeVersion))
+                {
+                    if (officeVersion.Contains(','))
+                    {
+                        foreach (string version in officeVersion.Split(','))
+                        {
+                            richTextBoxLogs.AppendText($"{version}" + Environment.NewLine);
+                        }
+                    }
+                    else
+                    {
+                        richTextBoxLogs.AppendText($"{officeVersion}" + Environment.NewLine);
+                    }
+                    _WordIsInstalled = true;
+                    return;
+                }
+
+                richTextBoxLogs.AppendText("Aucune" + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur OfficeVersion : " + Environment.NewLine + ex.Message);
+            }
         }
 
         /// <summary>
@@ -108,7 +125,8 @@ namespace AccountTester
         {
             try
             {
-                string filePath = Path.Combine(Path.GetTempPath(), "test_document.docx");
+                string fileName = Guid.NewGuid().ToString() + ".doc";   // Guid named file to avoid collision.
+                string filePath = Path.Combine(Path.GetTempPath(), fileName);
 
                 Word.Application wordApp = new()
                 {
@@ -164,7 +182,7 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                richTextBoxLogs.AppendText($"Erreur : {ex.Message}" + Environment.NewLine);
+                MessageBox.Show("Erreur OfficeRigts: " + Environment.NewLine + ex.Message);
             }
         }
 
@@ -177,24 +195,6 @@ namespace AccountTester
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
                 richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                /*
-                // Test d'impression
-                try
-                {
-                    PrintDocument pd = new();
-                    pd.PrinterSettings.PrinterName = PrinterSettings.InstalledPrinters[0];
-                    pd.PrintPage += (sender, e) =>
-                    {
-                        e.Graphics.DrawString("Test d'impression", new Font("Arial", 12), new SolidBrush(Color.Black), new PointF(100, 100));
-                    };
-                    pd.Print();
-                    richTextBoxLogs.AppendText("Impression OK" + Environment.NewLine);
-                }
-                catch (Exception ex)
-                {
-                    richTextBoxLogs.AppendText("Impression ECHEC : " + ex.Message + Environment.NewLine);
-                }     
-                */
             }
         }
 
@@ -247,7 +247,7 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                richTextBoxLogs.AppendText("Erreur : " + ex.Message + Environment.NewLine);
+                MessageBox.Show("Erreur Execution Sequentielle : " + Environment.NewLine + ex.Message);
             }
         }
     }
