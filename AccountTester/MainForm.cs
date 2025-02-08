@@ -1,10 +1,8 @@
 using Microsoft.Win32;
-using System.Configuration;
-using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using Word = Microsoft.Office.Interop.Word;
-                                     
+
 namespace AccountTester
 {
     public partial class MainForm : Form
@@ -14,6 +12,7 @@ namespace AccountTester
         public MainForm()
         {
             InitializeComponent();
+            richTextBoxLogs.Font = new Font("Consolas", 10);
         }
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace AccountTester
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"Lecteur local omis : {drive.Name}" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"{drive.Name} : Omis" + Environment.NewLine);
                 }
             }
         }
@@ -80,7 +79,7 @@ namespace AccountTester
         /// Method for testing Office version on the system
         /// </summary>
         private void OfficeVersionTesting()
-        { 
+        {
             string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
 
             using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
@@ -88,7 +87,13 @@ namespace AccountTester
 
             if (!string.IsNullOrEmpty(officeVersion))
             {
-                richTextBoxLogs.AppendText($"{officeVersion}" + Environment.NewLine);
+                if (officeVersion.Contains(','))
+                {
+                    foreach (string version in officeVersion.Split(','))
+                    {
+                        richTextBoxLogs.AppendText($"{version}" + Environment.NewLine);
+                    }
+                }
                 _WordIsInstalled = true;
                 return;
             }
@@ -193,38 +198,48 @@ namespace AccountTester
             }
         }
 
+        /// <summary>
+        /// Event handler for the Start button click event. 
+        /// For output formatting, see the ExecutionSequentielle method instead.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             Task.Run(() => ExecutionSequentielle()).Wait();
         }
 
+        /// <summary>
+        /// Method for executing all tests sequentially, displaying the results in the richTextBoxLogs.
+        /// It's here that you can add or remove tests and format the output.
+        /// </summary>
+        /// <returns></returns>
         async Task ExecutionSequentielle()
         {
             richTextBoxLogs.Clear();
 
             try
             {
-                richTextBoxLogs.Font = new Font("Consolas", 10);
-                richTextBoxLogs.AppendText("Internet :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Internet :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 await InternetConnexionTest();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                richTextBoxLogs.AppendText("Lecteur réseaux :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Lecteur réseaux :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 NetworkStorageRightsTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                richTextBoxLogs.AppendText("Version Office :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Version Office :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 OfficeVersionTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 if (_WordIsInstalled)
                 {
-                    richTextBoxLogs.AppendText("Droit :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("Droit :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                     OfficeWRTesting();
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                richTextBoxLogs.AppendText("Imprimantes :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Imprimantes :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 PrinterTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
