@@ -35,7 +35,7 @@
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(129, 378);
+            buttonStart.Location = new Point(127, 352);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(75, 21);
             buttonStart.TabIndex = 0;
@@ -54,11 +54,13 @@
             // 
             // richTextBoxLogs
             // 
+            richTextBoxLogs.HideSelection = false;
             richTextBoxLogs.Location = new Point(12, 25);
             richTextBoxLogs.Name = "richTextBoxLogs";
             richTextBoxLogs.ReadOnly = true;
-            richTextBoxLogs.Size = new Size(308, 347);
+            richTextBoxLogs.Size = new Size(304, 321);
             richTextBoxLogs.TabIndex = 4;
+            richTextBoxLogs.TabStop = false;
             richTextBoxLogs.Text = "";
             // 
             // MainForm
@@ -66,7 +68,7 @@
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(332, 411);
+            ClientSize = new Size(328, 381);
             Controls.Add(richTextBoxLogs);
             Controls.Add(label2);
             Controls.Add(buttonStart);

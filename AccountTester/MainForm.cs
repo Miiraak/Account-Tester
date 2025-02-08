@@ -14,6 +14,7 @@ namespace AccountTester
         public MainForm()
         {
             InitializeComponent();
+            richTextBoxLogs.Font = new Font("Consolas", 10);
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace AccountTester
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"Lecteur local omis : {drive.Name}" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"{drive.Name} : Omis" + Environment.NewLine);
                 }
             }
         }
@@ -88,7 +89,13 @@ namespace AccountTester
 
             if (!string.IsNullOrEmpty(officeVersion))
             {
-                richTextBoxLogs.AppendText($"{officeVersion}" + Environment.NewLine);
+                if (officeVersion.Contains(","))
+                {
+                    foreach (string version in officeVersion.Split(','))
+                    {
+                        richTextBoxLogs.AppendText($"{version}" + Environment.NewLine);
+                    }
+                }
                 _WordIsInstalled = true;
                 return;
             }
@@ -204,27 +211,26 @@ namespace AccountTester
 
             try
             {
-                richTextBoxLogs.Font = new Font("Consolas", 10);
-                richTextBoxLogs.AppendText("Internet :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Internet :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 await InternetConnexionTest();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                richTextBoxLogs.AppendText("Lecteur réseaux :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Lecteur réseaux :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 NetworkStorageRightsTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                richTextBoxLogs.AppendText("Version Office :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Version Office :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 OfficeVersionTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 if (_WordIsInstalled)
                 {
-                    richTextBoxLogs.AppendText("Droit :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("Droit :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                     OfficeWRTesting();
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                richTextBoxLogs.AppendText("Imprimantes :" + Environment.NewLine + "------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("Imprimantes :" + Environment.NewLine + "------------------------------" + Environment.NewLine);
                 PrinterTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
