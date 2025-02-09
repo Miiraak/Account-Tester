@@ -48,9 +48,6 @@
             // Exportation du rapport selon l'extension choisie
             switch (extension)
             {
-                case ".pdf":
-                    ExportToPdf(fileName, filePath);
-                    break;
                 case ".csv":
                     ExportToCsv(fileName, filePath);
                     break;
@@ -60,18 +57,10 @@
                 case ".json":
                     ExportToJson(fileName, filePath);
                     break;
-                case ".xlsx":
-                    ExportToExcel(fileName, filePath);
-                    break;
                 case ".txt":
                     ExportToTxt(fileName, filePath);
                     break;
             }
-        }
-
-        private void ExportToPdf(string fileName, string filePath)
-        {
-            // Code pour exporter le rapport en PDF
         }
 
         private void ExportToCsv(string fileName, string filePath)
@@ -87,11 +76,6 @@
         private void ExportToJson(string fileName, string filePath)
         {
             // Code pour exporter le rapport en JSON
-        }
-
-        private void ExportToExcel(string fileName, string filePath)
-        {
-            // Code pour exporter le rapport en Excel
         }
 
         private void ExportToTxt(string fileName, string filePath)
