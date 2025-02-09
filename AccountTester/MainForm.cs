@@ -13,6 +13,7 @@ namespace AccountTester
         {
             InitializeComponent();
             richTextBoxLogs.Font = new Font("Consolas", 10);
+            buttonExportForm.Enabled = false;
         }
 
         /// <summary>
@@ -20,12 +21,15 @@ namespace AccountTester
         /// </summary>
         private async Task InternetConnexionTest()
         {
-            string URL = "https://google.ch/";
             try
             {
                 using HttpClient client = new();
-                client.Timeout = TimeSpan.FromSeconds(3);
-                HttpResponseMessage response = await client.GetAsync(URL);
+                client.Timeout = TimeSpan.FromSeconds(5);
+                HttpResponseMessage response = await client.GetAsync(ExportVariables.InternetConnexion_export_TestedURL);
+
+                ExportVariables.InternetConnexion_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                ExportVariables.InternetConnexion_export_HTMLStatut = response.StatusCode.ToString();
+
                 if (response.IsSuccessStatusCode)
                 {
                     richTextBoxLogs.AppendText("Connecté" + Environment.NewLine);
@@ -46,6 +50,8 @@ namespace AccountTester
         /// </summary>
         private void NetworkStorageRightsTesting()
         {
+            ExportVariables.NetworkStorageRights_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
             try
             {
                 foreach (var drive in DriveInfo.GetDrives())
@@ -206,6 +212,7 @@ namespace AccountTester
         /// <param name="e"></param>
         private void ButtonStart_Click(object sender, EventArgs e)
         {
+            buttonStart.Enabled = false;
             Task.Run(() => ExecutionSequentielle()).Wait();
         }
 
@@ -244,11 +251,28 @@ namespace AccountTester
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("Tests terminés." + Environment.NewLine);
+                buttonExportForm.Enabled = true;
+                buttonStart.Enabled = true;
+                buttonStart.Text = "Restart";
+
+                ExportVariables.General_export_Resume = richTextBoxLogs.Text;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erreur Execution Sequentielle : " + Environment.NewLine + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Event handler for the Export button click event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonExport_Click(object sender, EventArgs e)
+        {
+            buttonExportForm.Enabled = false;
+            ExportForm exportForm = new();
+            exportForm.Show();
         }
     }
 }

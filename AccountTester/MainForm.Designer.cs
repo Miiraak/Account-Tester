@@ -32,11 +32,12 @@
             buttonStart = new Button();
             label2 = new Label();
             richTextBoxLogs = new RichTextBox();
+            buttonExportForm = new Button();
             SuspendLayout();
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(127, 352);
+            buttonStart.Location = new Point(127, 353);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(75, 21);
             buttonStart.TabIndex = 0;
@@ -64,12 +65,23 @@
             richTextBoxLogs.TabStop = false;
             richTextBoxLogs.Text = "";
             // 
+            // buttonExportForm
+            // 
+            buttonExportForm.Location = new Point(241, 352);
+            buttonExportForm.Name = "buttonExportForm";
+            buttonExportForm.Size = new Size(75, 23);
+            buttonExportForm.TabIndex = 5;
+            buttonExportForm.Text = "Export";
+            buttonExportForm.UseVisualStyleBackColor = true;
+            buttonExportForm.Click += ButtonExport_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(328, 381);
+            Controls.Add(buttonExportForm);
             Controls.Add(richTextBoxLogs);
             Controls.Add(label2);
             Controls.Add(buttonStart);
@@ -88,5 +100,6 @@
         private Button buttonStart;
         private Label label2;
         private RichTextBox richTextBoxLogs;
+        private Button buttonExportForm;
     }
 }
