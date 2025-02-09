@@ -14,7 +14,7 @@ AccountTester est une application Windows Forms (C#) permettant de tester divers
 ### Features in development
 | Nom | Desc. |
 |---|---|
-| **Format d'export de rapport** | Ajout d'un export des résultats sous format `.pdf`, `.csv`, `.xmlx`, `.json` et `.xml` | 
+| **Format d'export de rapport** | Ajout d'un export des résultats sous format `.csv`, `.json` et `.xml` | 
 | **Interface améliorée** | Amélioration de l'UI pour une meilleure lisibilité des résultats. |
 | **...** | ... |
 
@@ -46,7 +46,7 @@ Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez s
 6. Ouvrez une Pull Request.
 
 ## Issues and Suggestions
-Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/AccountTester/issues).
+Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
 
 ## License
 Ce projet n'est pas licencé. Voir le fichier [LICENSE](./LICENSE) pour plus de détails.
