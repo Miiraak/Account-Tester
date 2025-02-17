@@ -58,7 +58,6 @@ namespace AccountTester
         /// </summary>
         private void NetworkStorageRightsTesting()
         {
-            ExportVariables.General_export_TotalTests++;
             ExportVariables.NetworkStorageRights_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             Stopwatch stopwatch = new();
 
@@ -68,6 +67,8 @@ namespace AccountTester
 
                 foreach (var drive in DriveInfo.GetDrives())
                 {
+                    ExportVariables.General_export_TotalTests++;
+
                     if (drive.DriveType == DriveType.Network)
                     {
                         // Test d'ecriture
@@ -181,7 +182,7 @@ namespace AccountTester
                 {
                     richTextBoxLogs.AppendText("- Création : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanCreate = "True";
-                    ExportVariables.General_export_TotalSuccess++; 
+                    ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
@@ -280,7 +281,7 @@ namespace AccountTester
             }
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
-            {                                     
+            {
                 richTextBoxLogs.AppendText("- " + printer + Environment.NewLine);
             }
 
@@ -319,7 +320,7 @@ namespace AccountTester
                 stopwatch.Start();
 
                 richTextBoxLogs.AppendText($"#### Utilisateur :" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {ExportVariables.General_export_UserName}" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"- {ExportVariables.General_export_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
@@ -329,7 +330,7 @@ namespace AccountTester
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText("#### Lecteurs réseaux :" + Environment.NewLine);
-                NetworkStorageRightsTesting();                     
+                NetworkStorageRightsTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
