@@ -1,7 +1,7 @@
 # AccountTester
 
 ## Description
-AccountTester est une application Windows Forms (C#) permettant de tester divers aspects des comptes utilisateurs sur un système. Elle permet d'effectuer des vérifications sur la connectivité Internet, les droits d'accès aux lecteurs réseaux, la présence et les permissions d'Office, ainsi que la disponibilité des imprimantes.
+AccountTester est une application Windows Forms (C#) permettant de tester divers aspects des comptes utilisateurs sur un système. Elle permet d'effectuer des vérifications sur la connectivité Internet, les droits d'accès aux lecteurs réseaux, la présence et les permissions d'Office, ainsi que la disponibilité des imprimantes. Une exportation de rapport détaillé est désormais possible.
 
 ## Features
 - **Test de connexion Internet** : Vérifie si l'ordinateur a accès à Internet en envoyant une requête à Google.
@@ -9,13 +9,14 @@ AccountTester est une application Windows Forms (C#) permettant de tester divers
 - **Détection de la version d'Office** : Recherche la présence d'Office sur le système via la base de registre.
 - **Test des droits de lecture et écriture Office** : Crée, modifie et lit un document Word pour vérifier les permissions de l'utilisateur.
 - **Liste des imprimantes installées** : Affiche toutes les imprimantes disponibles sur le système.
+- **Rapport détaillé des tests** : Exportation du rapport complet des test sous formats `.txt`. 
 
 ### Features in development
 | Nom | Desc. |
 |---|---|
-| **Rapport détaillé des tests** | Ajout d'un export des résultats sous format CSV ou JSON. | 
+| **Format d'export de rapport** | Ajout d'un export des résultats sous format `.csv`, `.json` et `.xml` | 
 | **Interface améliorée** | Amélioration de l'UI pour une meilleure lisibilité des résultats. |
-| **Support multi-utilisateur** | Permet de tester plusieurs comptes en une seule session. |
+| **...** | ... |
 
 ## Prerequisites
 Avant d'exécuter le projet, assurez-vous d'avoir les éléments suivants installés :
@@ -29,6 +30,10 @@ Avant d'exécuter le projet, assurez-vous d'avoir les éléments suivants instal
 2. Cliquer sur le bouton **Start**.
 3. Attendre la fin des tests.
 4. Consulter les résultats dans la zone de logs.
+5. Exportez les résultats si souhaité.
+6. Choisissez le nom, si rien n'est entré, un nom par défaut lui sera attribué.
+7. Choisissez l'emplacement de sauvegarde.
+8. Selectionnez un format d'export.
 
 ## Contributing
 Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez suivre ces étapes :
