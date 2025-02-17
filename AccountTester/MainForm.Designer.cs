@@ -33,11 +33,12 @@
             label2 = new Label();
             richTextBoxLogs = new RichTextBox();
             buttonExportForm = new Button();
+            buttonCopier = new Button();
             SuspendLayout();
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(127, 353);
+            buttonStart.Location = new Point(13, 352);
             buttonStart.Name = "buttonStart";
             buttonStart.Size = new Size(75, 21);
             buttonStart.TabIndex = 0;
@@ -71,9 +72,20 @@
             buttonExportForm.Name = "buttonExportForm";
             buttonExportForm.Size = new Size(75, 23);
             buttonExportForm.TabIndex = 5;
-            buttonExportForm.Text = "Export";
+            buttonExportForm.Text = "Rapport";
             buttonExportForm.UseVisualStyleBackColor = true;
             buttonExportForm.Click += ButtonExport_Click;
+            // 
+            // buttonCopier
+            // 
+            buttonCopier.Enabled = false;
+            buttonCopier.Location = new Point(127, 352);
+            buttonCopier.Name = "buttonCopier";
+            buttonCopier.Size = new Size(75, 21);
+            buttonCopier.TabIndex = 6;
+            buttonCopier.Text = "Copier";
+            buttonCopier.UseVisualStyleBackColor = true;
+            buttonCopier.Click += ButtonCopier_Click;
             // 
             // MainForm
             // 
@@ -81,6 +93,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(328, 381);
+            Controls.Add(buttonCopier);
             Controls.Add(buttonExportForm);
             Controls.Add(richTextBoxLogs);
             Controls.Add(label2);
@@ -101,5 +114,6 @@
         private Label label2;
         private RichTextBox richTextBoxLogs;
         private Button buttonExportForm;
+        private Button buttonCopier;
     }
 }
