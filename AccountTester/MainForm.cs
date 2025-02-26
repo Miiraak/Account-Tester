@@ -318,7 +318,11 @@ namespace AccountTester
             {
                 Stopwatch stopwatch = new();
                 stopwatch.Start();
+                richTextBoxLogs.AppendText("AccountTester - Rapport de test" + Environment.NewLine);
+                richTextBoxLogs.AppendText(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine);
+                richTextBoxLogs.AppendText(Environment.NewLine);
 
+                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### Utilisateur :" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- {ExportVariables.General_export_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
