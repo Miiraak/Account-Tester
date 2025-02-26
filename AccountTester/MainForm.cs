@@ -312,6 +312,8 @@ namespace AccountTester
         /// <returns></returns>
         async Task ExecutionSequentielle()
         {
+            buttonCopier.Enabled = false;
+            buttonExportForm.Enabled = false;
             richTextBoxLogs.Clear();
 
             try
@@ -360,6 +362,8 @@ namespace AccountTester
                 stopwatch.Stop();
                 richTextBoxLogs.AppendText("- Total temps écoulé : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- Tests réussi : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
+                ExportVariables.General_export_TotalSuccess = 0;
+                ExportVariables.General_export_TotalTests = 0;
 
                 // Play a sound when the tests are done
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
