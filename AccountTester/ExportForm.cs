@@ -67,6 +67,9 @@
                 case ".txt":
                     ExportToTxt(fileName, filePath);
                     break;
+                case ".log":
+                    ExportToLog(fileName, filePath);
+                    break;
             }
         }
 
@@ -211,6 +214,18 @@
             */
 
             // Fermeture du StreamWriter
+            sw.Close();
+
+            MessageBox.Show("The report has been exported successfully.");
+            this.Close();
+        }
+
+        private void ExportToLog(string fileName, string filePath)
+        {
+            string path = Path.Combine(filePath, $"{fileName}.log");
+            using StreamWriter sw = new(path);
+
+            sw.Write(ExportVariables.General_export_Resume);
             sw.Close();
 
             MessageBox.Show("The report has been exported successfully.");
