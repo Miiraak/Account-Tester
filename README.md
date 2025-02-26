@@ -9,7 +9,7 @@ AccountTester est une application Windows Forms (C#) permettant de tester divers
 - **Détection de la version d'Office** : Recherche la présence d'Office sur le système via la base de registre.
 - **Test des droits de lecture et écriture Office** : Crée, modifie et lit un document Word pour vérifier les permissions de l'utilisateur.
 - **Liste des imprimantes installées** : Affiche toutes les imprimantes disponibles sur le système.
-- **Rapport détaillé des tests** : Exportation du rapport complet des test sous formats `.txt`. 
+- **Rapport détaillé des tests** : Exportation du rapport complet des test sous formats `.txt` ou résumé sous format `.log`. 
 
 ### Features in development
 | Nom | Desc. |
@@ -49,7 +49,7 @@ Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez s
 Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
 
 ## License
-Ce projet n'est pas licencé. Voir le fichier [LICENSE](./LICENSE) pour plus de détails.
+Ce projet n'est pas licencé.
 
 ## Authors
 - [**Miiraak**](https://github.com/miiraak) - *Lead Developer*
