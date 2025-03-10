@@ -71,7 +71,6 @@ namespace AccountTester
 
                     if (drive.DriveType == DriveType.Network)
                     {
-                        // Test d'ecriture
                         try
                         {
                             string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
@@ -86,7 +85,7 @@ namespace AccountTester
                         }
                         catch (IOException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Erreur" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Erreur connexion" + Environment.NewLine);
                         }
                     }
                     else
@@ -386,9 +385,8 @@ namespace AccountTester
         /// <param name="e"></param>
         private void ButtonExport_Click(object sender, EventArgs e)
         {
-            buttonExportForm.Enabled = false;
             ExportForm exportForm = new();
-            exportForm.Show();
+            exportForm.ShowDialog();
         }
 
         private void ButtonCopier_Click(object sender, EventArgs e)

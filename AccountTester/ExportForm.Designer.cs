@@ -42,7 +42,7 @@
             // 
             textBoxFileName.Location = new Point(12, 25);
             textBoxFileName.Name = "textBoxFileName";
-            textBoxFileName.Size = new Size(188, 22);
+            textBoxFileName.Size = new Size(221, 22);
             textBoxFileName.TabIndex = 1;
             // 
             // textBoxFilePath
@@ -50,7 +50,7 @@
             textBoxFilePath.Location = new Point(10, 76);
             textBoxFilePath.Name = "textBoxFilePath";
             textBoxFilePath.ReadOnly = true;
-            textBoxFilePath.Size = new Size(136, 22);
+            textBoxFilePath.Size = new Size(169, 22);
             textBoxFilePath.TabIndex = 2;
             // 
             // comboBoxExtension
@@ -59,7 +59,7 @@
             comboBoxExtension.Items.AddRange(new object[] { ".log", ".txt", ".csv", ".xml", ".json" });
             comboBoxExtension.Location = new Point(10, 127);
             comboBoxExtension.Name = "comboBoxExtension";
-            comboBoxExtension.Size = new Size(188, 22);
+            comboBoxExtension.Size = new Size(223, 22);
             comboBoxExtension.TabIndex = 4;
             // 
             // label1
@@ -91,7 +91,7 @@
             // 
             // buttonExport
             // 
-            buttonExport.Location = new Point(71, 155);
+            buttonExport.Location = new Point(85, 157);
             buttonExport.Name = "buttonExport";
             buttonExport.Size = new Size(75, 23);
             buttonExport.TabIndex = 8;
@@ -101,7 +101,7 @@
             // 
             // buttonSelectPath
             // 
-            buttonSelectPath.Location = new Point(152, 76);
+            buttonSelectPath.Location = new Point(185, 76);
             buttonSelectPath.Name = "buttonSelectPath";
             buttonSelectPath.Size = new Size(48, 23);
             buttonSelectPath.TabIndex = 9;
@@ -113,7 +113,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(216, 189);
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ClientSize = new Size(245, 189);
             Controls.Add(buttonSelectPath);
             Controls.Add(buttonExport);
             Controls.Add(label3);
