@@ -220,7 +220,6 @@ namespace AccountTester
                     ExportVariables.OfficeRights_export_CanRead = "True";
                     ExportVariables.OfficeRights_export_CanWrite = "True";
                     ExportVariables.General_export_TotalSuccess += 2;
-
                 }
                 else
                 {
@@ -228,7 +227,6 @@ namespace AccountTester
                     richTextBoxLogs.AppendText("- Ecriture : Echec" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanRead = "False";
                     ExportVariables.OfficeRights_export_CanWrite = "False";
-
                 }
                 doc.Close();
 
@@ -310,11 +308,11 @@ namespace AccountTester
                             richTextBoxLogs.AppendText("- IP : Non trouvé" + Environment.NewLine);
                         }
                     }
-
-                    stopwatch.Stop();
-                    ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
                 }
             }
+
+            stopwatch.Stop();
+            ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>
