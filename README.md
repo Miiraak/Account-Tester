@@ -1,4 +1,4 @@
-# AccountTester
+# AccountTester [![Security Checks](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml/badge.svg)](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml)
 <p align="center">
     <img src=".github/App.gif">
 p>
