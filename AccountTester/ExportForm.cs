@@ -97,7 +97,6 @@
             sw.WriteLine("Général");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Système d'exploitation: {ExportVariables.General_export_DeviceOS}");
-            sw.WriteLine($"Type de processus: {ExportVariables.General_export_ProcessType}");
             sw.WriteLine($"Architecture de l'OS: {ExportVariables.General_export_OSArchitecture}");
             sw.WriteLine();
             sw.WriteLine();
@@ -164,6 +163,7 @@
             sw.WriteLine($"Peut déplacer: {ExportVariables.OfficeRights_export_CanMove}");
             sw.WriteLine($"Peut renommer: {ExportVariables.OfficeRights_export_CanRename}");
             sw.WriteLine($"Peut créer: {ExportVariables.OfficeRights_export_CanCreate}");
+            sw.WriteLine($"Peut sauvegarder: {ExportVariables.OfficeRights_export_CanSave}");
             sw.WriteLine("Dossier testé: ");
             if (ExportVariables.OfficeRights_export_FolderTested != null)
             {

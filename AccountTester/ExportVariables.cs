@@ -6,7 +6,6 @@
 
         // General variables - OK
         public static string General_export_DeviceOS = Convert.ToUInt32(Environment.OSVersion.Version.ToString().Split('.')[2]) >= 22631 ? "Windows 11" : "Windows 10";   // OK
-        public static string? General_export_ProcessType = Environment.Is64BitProcess ? "64 bits" : "32 bits";     // OK
         public static string? General_export_OSArchitecture = Environment.Is64BitOperatingSystem ? "64 bits" : "32 bits";     // OK
         public static string General_export_UserName = Environment.UserName;     // OK
 
@@ -42,15 +41,15 @@
         public static string? OfficeVersion_export_ElapsedTime { get; set; }    // Incorrect n'affiche pas le temps
 
         // OfficeRights variables
-        public static string? OfficeRights_export_DateAndHour { get; set; }      // set
-        public static string? OfficeRights_export_CanWrite { get; set; }    // Set
-        public static string? OfficeRights_export_CanRead { get; set; }      // Set
-        public static string? OfficeRights_export_CanDelete { get; set; }      // set
+        public static string? OfficeRights_export_DateAndHour { get; set; }      // OK
+        public static string? OfficeRights_export_CanWrite { get; set; }    // OK
+        public static string? OfficeRights_export_CanRead { get; set; }      // OK
+        public static string? OfficeRights_export_CanDelete { get; set; }      // OK
         public static string? OfficeRights_export_CanCopy { get; set; }
         public static string? OfficeRights_export_CanMove { get; set; }
         public static string? OfficeRights_export_CanRename { get; set; }
-        public static string? OfficeRights_export_CanSave { get; set; }            // set
-        public static string? OfficeRights_export_CanCreate { get; set; }     // Set
+        public static string? OfficeRights_export_CanSave { get; set; }            // OK
+        public static string? OfficeRights_export_CanCreate { get; set; }     // OK
         public static string[]? OfficeRights_export_FolderTested { get; set; }  // Fonctionne si aucun disque, a tester avec un disque réseau
         public static string? OfficeRights_export_ElapsedTime { get; set; }     // OK
 

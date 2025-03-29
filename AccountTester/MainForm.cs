@@ -1,7 +1,8 @@
-using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace AccountTester
@@ -60,11 +61,10 @@ namespace AccountTester
         {
             ExportVariables.NetworkStorageRights_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             Stopwatch stopwatch = new();
+            stopwatch.Start();
 
             try
             {
-                stopwatch.Start();
-
                 foreach (var drive in DriveInfo.GetDrives())
                 {
                     ExportVariables.General_export_TotalTests++;
@@ -117,7 +117,6 @@ namespace AccountTester
             try
             {
                 string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
-
                 using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
                 string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
 
@@ -266,27 +265,56 @@ namespace AccountTester
         /// </summary>
         private void PrinterTesting()
         {
-            ExportVariables.General_export_TotalTests++;
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
             // Gather all printers on the system
             if (PrinterSettings.InstalledPrinters.Count == 0)
             {
+                ExportVariables.General_export_TotalTests++;
                 richTextBoxLogs.AppendText("Aucune imprimante trouvée." + Environment.NewLine);
+                ExportVariables.General_export_TotalSuccess++;
                 stopwatch.Stop();
                 ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-                return;
             }
-
-            foreach (string printer in PrinterSettings.InstalledPrinters)
+            else
             {
-                richTextBoxLogs.AppendText("- " + printer + Environment.NewLine);
-            }
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) && !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
+                    {
+                        ExportVariables.General_export_TotalTests++;
+                        string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
+                        string PrinterIP = Registry.LocalMachine.OpenSubKey(registryPath).GetValue("Location").ToString().Split("//").Last().Split(":").First();
 
-            stopwatch.Stop();
-            ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-            ExportVariables.General_export_TotalSuccess++;
+                        if (!string.IsNullOrEmpty(PrinterIP))
+                        {
+                            Ping ping = new();
+                            PingReply reply = ping.Send(PrinterIP, 1000);
+
+                            if (reply.Status == IPStatus.Success)
+                            {
+                                richTextBoxLogs.AppendText(printer + Environment.NewLine);
+                                richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
+                                ExportVariables.General_export_TotalSuccess++;
+                            }
+                            else
+                            {
+                                richTextBoxLogs.AppendText(printer + Environment.NewLine);
+                                richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : Echec" + Environment.NewLine);
+                            }
+                        }
+                        else
+                        {
+                            richTextBoxLogs.AppendText(printer + Environment.NewLine);
+                            richTextBoxLogs.AppendText("- IP : Non trouvé" + Environment.NewLine);
+                        }
+                    }
+
+                    stopwatch.Stop();
+                    ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+                }
+            }
         }
 
         /// <summary>
@@ -346,7 +374,7 @@ namespace AccountTester
                 if (_WordIsInstalled)
                 {
                     richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                    richTextBoxLogs.AppendText("#### Droit :" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("#### Droits Office :" + Environment.NewLine);
                     OfficeWRTesting();
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
