@@ -1,4 +1,7 @@
 # AccountTester
+<p align="center">
+    <img src=".github/App.gif">
+p>
 
 ## Description
 AccountTester est une application Windows Forms (C#) permettant de tester divers aspects des comptes utilisateurs sur un système. Elle permet d'effectuer des vérifications sur la connectivité Internet, les droits d'accès aux lecteurs réseaux, la présence et les permissions d'Office, ainsi que la disponibilité des imprimantes. Une exportation de rapport détaillé est désormais possible.
