@@ -1,7 +1,6 @@
 # AccountTester [![Security Checks](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml/badge.svg)](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml)
 <p align="center">
     <img src=".github/App.gif">
-p>
   
 ## Description
 AccountTester est une application Windows Forms (C#) permettant de tester divers aspects des comptes utilisateurs sur un système. Elle permet d'effectuer des vérifications sur la connectivité Internet, les droits d'accès aux lecteurs réseaux, la présence et les permissions d'Office, ainsi que la disponibilité des imprimantes. Une exportation de rapport détaillé est désormais possible.
@@ -33,10 +32,10 @@ Avant d'exécuter le projet, assurez-vous d'avoir les éléments suivants instal
 2. Cliquer sur le bouton **Start**.
 3. Attendre la fin des tests.
 4. Consulter les résultats dans la zone de logs.
-5. Exportez les résultats si souhaité.
+5. Exportez les résultats si souhaités.
 6. Choisissez le nom, si rien n'est entré, un nom par défaut lui sera attribué.
 7. Choisissez l'emplacement de sauvegarde.
-8. Selectionnez un format d'export.
+8. Sélectionnez un format d'export.
 
 ## Contributing
 Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez suivre ces étapes :
@@ -52,7 +51,7 @@ Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez s
 Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
 
 ## License
-Ce projet n'est pas licencé.
+Ce projet n’a pas de licence. Tous droits réservés.
 
 ## Authors
 - [**Miiraak**](https://github.com/miiraak) - *Lead Developer*

@@ -88,7 +88,7 @@
             using StreamWriter sw = new(path);
             // Création de l'entête
             sw.WriteLine("Test Report");
-            sw.WriteLine($"Date: {DateTime.Today:yyyy-MM-dd}");
+            sw.WriteLine($"Date: {ExportVariables.General_DateAndHour}");
             sw.WriteLine($"Nom d'utilisateur: {ExportVariables.General_export_UserName}");
             sw.WriteLine();
             sw.WriteLine();
@@ -104,7 +104,7 @@
             // Connexion Internet
             sw.WriteLine("Connexion Internet");
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Date et heure: {ExportVariables.InternetConnexion_export_DateAndHour}");
+            sw.WriteLine($"Heure: {ExportVariables.InternetConnexion_export_Hour}");
             sw.WriteLine($"URL testée: {ExportVariables.InternetConnexion_export_TestedURL}");
             sw.WriteLine($"Statut HTML: {ExportVariables.InternetConnexion_export_HTMLStatut}");
             sw.WriteLine($"Temps de réponse: {ExportVariables.InternetConnexion_export_ElapsedTime} ms");
@@ -114,7 +114,7 @@
             // Droits de stockage réseau
             sw.WriteLine("Droits de stockage réseau");
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Date et heure: {ExportVariables.NetworkStorageRights_export_DateAndHour}");
+            sw.WriteLine($"Heure: {ExportVariables.NetworkStorageRights_export_Hour}");
             sw.WriteLine($"Type de connexion: {ExportVariables.NetworkStorageRights_export_ConnexionType}");
             sw.WriteLine("Lettre de disque");
             if (ExportVariables.NetworkStorageRights_export_DiskLetter != null)
@@ -140,7 +140,7 @@
             // Version d'Office
             sw.WriteLine("Version d'Office");
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Date et heure: {ExportVariables.OfficeVersion_export_DateAndHour}");
+            sw.WriteLine($"Heure: {ExportVariables.OfficeVersion_export_Hour}");
             sw.WriteLine($"Version d'Office: {ExportVariables.OfficeVersion_export_OfficeVersion}");
             sw.WriteLine($"Édition d'Office: {ExportVariables.OfficeVersion_export_OfficeEdition}");
             sw.WriteLine($"Architecture d'Office: {ExportVariables.OfficeVersion_export_OfficeArchitecture}");
@@ -155,7 +155,7 @@
             // Droits d'Office
             sw.WriteLine("Droits d'Office");
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Date et heure: {ExportVariables.OfficeRights_export_DateAndHour}");
+            sw.WriteLine($"Heure: {ExportVariables.OfficeRights_export_Hour}");
             sw.WriteLine($"Peut écrire: {ExportVariables.OfficeRights_export_CanWrite}");
             sw.WriteLine($"Peut lire: {ExportVariables.OfficeRights_export_CanRead}");
             sw.WriteLine($"Peut supprimer: {ExportVariables.OfficeRights_export_CanDelete}");
@@ -185,7 +185,7 @@
             // Imprimante 
             sw.WriteLine("Imprimante");
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Date et heure: {ExportVariables.Printer_export_DateAndHour}");
+            sw.WriteLine($"Heure: {ExportVariables.Printer_export_Hour}");
             sw.WriteLine("Nom de l'imprimante");
             if (ExportVariables.Printer_export_PrinterName != null)
             {
