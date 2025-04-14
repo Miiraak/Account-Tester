@@ -24,8 +24,8 @@ namespace AccountTester
         private async Task InternetConnexionTest()
         {
             ExportVariables.General_export_TotalTests++;
-
             Stopwatch stopwatch = new();
+
             try
             {
                 stopwatch.Start();
@@ -33,7 +33,7 @@ namespace AccountTester
                 client.Timeout = TimeSpan.FromSeconds(5);
                 HttpResponseMessage response = await client.GetAsync(ExportVariables.InternetConnexion_export_TestedURL);
 
-                ExportVariables.InternetConnexion_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                ExportVariables.InternetConnexion_export_Hour = DateTime.Now.ToString("HH:mm:ss");
                 ExportVariables.InternetConnexion_export_HTMLStatut = response.StatusCode.ToString();
 
                 if (response.IsSuccessStatusCode)
@@ -50,8 +50,11 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error InternetConnexion : " + Environment.NewLine + ex.Message);
+                richTextBoxLogs.AppendText("- État : " + ex.InnerException?.Message + Environment.NewLine);
             }
+
+            stopwatch.Stop();
+            ExportVariables.InternetConnexion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace AccountTester
         /// </summary>
         private void NetworkStorageRightsTesting()
         {
-            ExportVariables.NetworkStorageRights_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            ExportVariables.NetworkStorageRights_export_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
@@ -75,9 +78,14 @@ namespace AccountTester
                         {
                             string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
                             File.WriteAllText(testFile, "test");
+
+                            if (File.Exists(testFile))
+                            {
+                                richTextBoxLogs.AppendText($@"- {drive.Name}\ : OK" + Environment.NewLine);
+                                ExportVariables.General_export_TotalSuccess++;
+                            }
+
                             File.Delete(testFile);
-                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : OK" + Environment.NewLine);
-                            ExportVariables.General_export_TotalSuccess++;
                         }
                         catch (UnauthorizedAccessException)
                         {
@@ -101,7 +109,7 @@ namespace AccountTester
             }
 
             stopwatch.Stop();
-            ExportVariables.InternetConnexion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+            ExportVariables.NetworkStorageRights_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>
@@ -110,7 +118,7 @@ namespace AccountTester
         private void OfficeVersionTesting()
         {
             ExportVariables.General_export_TotalTests++;
-            ExportVariables.OfficeVersion_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            ExportVariables.OfficeVersion_export_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
@@ -137,17 +145,19 @@ namespace AccountTester
                     }
                     ExportVariables.General_export_TotalSuccess++;
                     _WordIsInstalled = true;
-                    return;
                 }
-
-                stopwatch.Stop();
-                ExportVariables.OfficeVersion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-                richTextBoxLogs.AppendText("- Aucune version trouvée" + Environment.NewLine);
+                else
+                {
+                    richTextBoxLogs.AppendText("- Aucune version trouvée" + Environment.NewLine);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erreur OfficeVersion : " + Environment.NewLine + ex.Message);
             }
+
+            stopwatch.Stop();
+            ExportVariables.OfficeVersion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>                                      
@@ -156,7 +166,7 @@ namespace AccountTester
         private void OfficeWRTesting()
         {
             ExportVariables.General_export_TotalTests += 5;
-            ExportVariables.OfficeRights_export_DateAndHour = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            ExportVariables.OfficeRights_export_Hour = DateTime.Now.ToString("HH:mm:ss");
             ExportVariables.OfficeRights_export_FolderTested = [Path.GetTempPath()];
             Stopwatch stopwatch = new();
 
@@ -164,7 +174,7 @@ namespace AccountTester
             {
                 stopwatch.Start();
 
-                string fileName = Guid.NewGuid().ToString() + ".doc";   // Guid named file to avoid collision.
+                string fileName = $"temp_{Guid.NewGuid().ToString()}.doc";   // Guid named file to avoid collision.
                 string filePath = Path.Combine(Path.GetTempPath(), fileName);
                 Word.Application wordApp = new()
                 {
@@ -263,6 +273,7 @@ namespace AccountTester
         /// </summary>
         private void PrinterTesting()
         {
+            ExportVariables.Printer_export_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
