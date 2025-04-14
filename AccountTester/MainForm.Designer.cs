@@ -103,7 +103,8 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "MainForm";
-            Text = "Account Tester v0.7.6.3";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Account Tester v0.7.6.5";
             ResumeLayout(false);
             PerformLayout();
         }
