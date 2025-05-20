@@ -3,55 +3,56 @@
     <img src=".github/App.gif">
   
 ## Description
-AccountTester est une application Windows Forms (C#) permettant de tester divers aspects des comptes utilisateurs sur un système. Elle permet d'effectuer des vérifications sur la connectivité Internet, les droits d'accès aux lecteurs réseaux, la présence et les permissions d'Office, ainsi que la disponibilité des imprimantes. Une exportation de rapport détaillé est désormais possible.
+AccountTester is a Windows Forms application (C#) designed to test various aspects of user accounts on a system. It performs checks such as Internet connectivity, access rights to network drives, Office presence and permissions, as well as printer availability. A detailed test report export is now available.
 
 ## Features
-- **Test de connexion Internet** : Vérifie si l'ordinateur a accès à Internet en envoyant une requête à Google.
-- **Test des droits sur les lecteurs réseau** : Tente de créer et de supprimer un fichier test sur chaque lecteur réseau pour vérifier les permissions d'écriture.
-- **Détection de la version d'Office** : Recherche la présence d'Office sur le système via la base de registre.
-- **Test des droits de lecture et écriture Office** : Crée, modifie et lit un document Word pour vérifier les permissions de l'utilisateur.
-- **Liste des imprimantes installées** : Affiche toutes les imprimantes disponibles sur le système.
-- **Rapport détaillé des tests** : Exportation du rapport complet des test sous formats `.txt` ou résumé sous format `.log`. 
+- **Internet Connectivity Test:** Verifies if the computer can access the Internet by sending a request to Google.
+- **Network Drive Access Test:** Attempts to create and delete a test file on each mapped network drive to check write permissions.
+- **Office Version Detection:** Searches for the presence of Microsoft Office via the system registry.
+- **Office Read/Write Permissions Test:** Creates, edits, and reads a Word document to verify user permissions with interop.word.
+- **Installed Printers List:** Displays all printers available on the system.
+- **Detailed Test Report:** Export the full test report in `.txt` format or a summarized version in `.log` format.
 
 ### Features in development
 | Nom | Desc. |
 |---|---|
-| **Format d'export de rapport** | Ajout d'un export des résultats sous format `.csv`, `.json` et `.xml` | 
-| **Interface améliorée** | Amélioration de l'UI pour une meilleure lisibilité des résultats. |
+| **Report export formats** | Add support for `.csv`, `.json` and `.xml` export formats. | 
+| **Improved Interface** | 	Enhancing the UI for better readability and user experience. |
 | **...** | ... |
 
 ## Prerequisites
-Avant d'exécuter le projet, assurez-vous d'avoir les éléments suivants installés :
+Before running the project, make sure you have the following:
 
-- Windows avec .NET Framework installé.
-- Microsoft Office installé (pour les tests relatifs à Word).
-- Droits d'accès suffisants pour tester les lecteurs réseaux et la base de registre. 
+- Windows with .NET Framework installed.
+- Microsoft Office installed (for Word-related tests).
+- Sufficient access rights to test network drives and the Windows registry.
+> The software is designed to work with at least the rights of a local non-admin user account.
 
 ## Usage
-1. Ouvrir l'application.
-2. Cliquer sur le bouton **Start**.
-3. Attendre la fin des tests.
-4. Consulter les résultats dans la zone de logs.
-5. Exportez les résultats si souhaités.
-6. Choisissez le nom, si rien n'est entré, un nom par défaut lui sera attribué.
-7. Choisissez l'emplacement de sauvegarde.
-8. Sélectionnez un format d'export.
+1. Launch the application.
+2. Click the Start button.
+3. Wait for the tests to complete.
+4. View the results in the log area.
+5. Export results if desired.
+6. Choose a name (a default name will be used if left empty).
+7. Choose the save location.
+8. Select the export format.
 
 ## Contributing
-Les contributions sont les bienvenues ! Pour contribuer à ce projet, veuillez suivre ces étapes :
+Contributions are welcome! To contribute to this project, please follow these steps:
 
-1. Forkez le dépôt.
-2. Créez une nouvelle branche pour votre fonctionnalité (`git checkout -b my-new-feature`).
-3. Apportez vos modifications.
-4. Commitez vos changements (`git commit -m 'Add my new feature'`).
-5. Poussez votre branche (`git push origin my-new-feature`).
-6. Ouvrez une Pull Request.
+1. Fork the repository.
+2. Create a new branch for your feature (git checkout -b my-new-feature).
+3. Make your changes.
+4. Commit your changes (git commit -m 'Add my new feature').
+5. Push your branch (git push origin my-new-feature).
+6. Open a Pull Request.
 
 ## Issues and Suggestions
-Si vous rencontrez des problèmes ou avez des suggestions pour améliorer le projet, veuillez utiliser le [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
+If you encounter issues or have suggestions to improve the project, please use the [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
 
 ## License
-Ce projet n’a pas de licence. Tous droits réservés.
+This project is not licensed. All rights reserved.
 
 ## Authors
 - [**Miiraak**](https://github.com/miiraak) - *Lead Developer*
