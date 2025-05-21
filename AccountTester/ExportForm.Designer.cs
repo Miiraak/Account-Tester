@@ -56,7 +56,7 @@
             // comboBoxExtension
             // 
             comboBoxExtension.FormattingEnabled = true;
-            comboBoxExtension.Items.AddRange(new object[] { ".log", ".txt", ".csv", ".xml", ".json" });
+            comboBoxExtension.Items.AddRange(new object[] { ".log", ".txt", ".csv", ".xml", ".json", ".zip" });
             comboBoxExtension.Location = new Point(10, 127);
             comboBoxExtension.Name = "comboBoxExtension";
             comboBoxExtension.Size = new Size(223, 22);
@@ -76,18 +76,18 @@
             label2.AutoSize = true;
             label2.Location = new Point(12, 8);
             label2.Name = "label2";
-            label2.Size = new Size(42, 14);
+            label2.Size = new Size(84, 14);
             label2.TabIndex = 6;
-            label2.Text = "Nom :";
+            label2.Text = "File name :";
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(10, 59);
             label3.Name = "label3";
-            label3.Size = new Size(63, 14);
+            label3.Size = new Size(49, 14);
             label3.TabIndex = 7;
-            label3.Text = "Chemin :";
+            label3.Text = "Path :";
             // 
             // buttonExport
             // 
@@ -125,7 +125,8 @@
             Controls.Add(textBoxFileName);
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Name = "ExportForm";
-            Text = "Exportation";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Export";
             ResumeLayout(false);
             PerformLayout();
         }
