@@ -104,7 +104,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Account Tester v0.7.6.5";
+            Text = "Account Tester v0.7.8";
             ResumeLayout(false);
             PerformLayout();
         }
