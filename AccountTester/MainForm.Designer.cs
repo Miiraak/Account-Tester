@@ -72,7 +72,7 @@
             buttonExportForm.Name = "buttonExportForm";
             buttonExportForm.Size = new Size(75, 23);
             buttonExportForm.TabIndex = 5;
-            buttonExportForm.Text = "Rapport";
+            buttonExportForm.Text = "Export";
             buttonExportForm.UseVisualStyleBackColor = true;
             buttonExportForm.Click += ButtonExport_Click;
             // 
@@ -83,7 +83,7 @@
             buttonCopier.Name = "buttonCopier";
             buttonCopier.Size = new Size(75, 21);
             buttonCopier.TabIndex = 6;
-            buttonCopier.Text = "Copier";
+            buttonCopier.Text = "Copy";
             buttonCopier.UseVisualStyleBackColor = true;
             buttonCopier.Click += ButtonCopier_Click;
             // 
@@ -104,7 +104,7 @@
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Account Tester v0.7.6.5";
+            Text = "Account Tester v0.7.8";
             ResumeLayout(false);
             PerformLayout();
         }

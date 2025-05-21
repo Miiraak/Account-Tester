@@ -38,19 +38,17 @@ namespace AccountTester
 
                 if (response.IsSuccessStatusCode)
                 {
-                    richTextBoxLogs.AppendText("- État : Connecté" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Status : Connected" + Environment.NewLine);
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText("- État : " + response.StatusCode + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Status : " + response.StatusCode + Environment.NewLine);
                 }
-                stopwatch.Stop();
-                ExportVariables.InternetConnexion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
             }
             catch (Exception ex)
             {
-                richTextBoxLogs.AppendText("- État : " + ex.InnerException?.Message + Environment.NewLine);
+                richTextBoxLogs.AppendText("- Status : " + ex.InnerException?.Message + Environment.NewLine);
             }
 
             stopwatch.Stop();
@@ -89,23 +87,23 @@ namespace AccountTester
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Ecriture refusée" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Write refused" + Environment.NewLine);
                         }
                         catch (IOException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Erreur connexion" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Connexion error" + Environment.NewLine);
                         }
                     }
                     else
                     {
-                        richTextBoxLogs.AppendText($@"- {drive.Name}\ : Omis" + Environment.NewLine);
+                        richTextBoxLogs.AppendText($@"- {drive.Name}\ : Omitted" + Environment.NewLine);
                         ExportVariables.General_export_TotalSuccess++;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur NetworkStorageRights : " + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error NetworkStorageRights : " + Environment.NewLine + ex.Message);
             }
 
             stopwatch.Stop();
@@ -148,12 +146,12 @@ namespace AccountTester
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText("- Aucune version trouvée" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Version not found" + Environment.NewLine);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur OfficeVersion : " + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error OfficeVersion : " + Environment.NewLine + ex.Message);
             }
 
             stopwatch.Stop();
@@ -167,14 +165,13 @@ namespace AccountTester
         {
             ExportVariables.General_export_TotalTests += 5;
             ExportVariables.OfficeRights_export_Hour = DateTime.Now.ToString("HH:mm:ss");
-            ExportVariables.OfficeRights_export_FolderTested = [Path.GetTempPath()];
             Stopwatch stopwatch = new();
 
             try
             {
                 stopwatch.Start();
 
-                string fileName = $"temp_{Guid.NewGuid().ToString()}.doc";   // Guid named file to avoid collision.
+                string fileName = $"temp_{Guid.NewGuid()}.doc";   // Guid named file to avoid collision.
                 string filePath = Path.Combine(Path.GetTempPath(), fileName);
                 Word.Application wordApp = new()
                 {
@@ -183,58 +180,56 @@ namespace AccountTester
 
                 // Création du document
                 Word.Document doc = wordApp.Documents.Add();
-                doc.Content.Text = "Ceci est un test d'écriture dans un fichier .docx via Word.";
+                doc.Content.Text = "The quick brown fox jumps over the lazy dog";
                 doc.SaveAs2(filePath);
                 doc.Close();
                 if (File.Exists(filePath))
                 {
-                    richTextBoxLogs.AppendText("- Création : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can create : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanCreate = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText("- Création : ECHEC." + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can create : FAIL." + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanCreate = "False";
                     return;
                 }
 
                 // Sauvegarde
                 doc = wordApp.Documents.Open(filePath);
-                doc.Content.Text += "\nAjout de texte pour le test de sauvegarde.";
+                doc.Content.Text += "\nAdding more fox over the lazy dog.";
                 doc.Save();
                 doc.Close();
 
-
-                // Check if the content was added
                 doc = wordApp.Documents.Open(filePath);
-                if (doc.Content.Text.Contains("Ajout de texte pour le test de sauvegarde"))
+                if (doc.Content.Text.Contains("Adding more fox over the lazy dog"))
                 {
-                    richTextBoxLogs.AppendText("- Sauvegarde : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can save : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanSave = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText("- Sauvegarde : ECHEC" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can save : FAIL" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanSave = "False";
                 }
                 doc.Close();
 
                 // Réouverture du document
                 doc = wordApp.Documents.Open(filePath);
-                if (doc.Content.Text.Contains("Ceci est un test d'écriture dans un fichier .docx via Word."))
+                if (doc.Content.Text.Contains("The quick brown fox jumps over the lazy dog"))
                 {
-                    richTextBoxLogs.AppendText("- Lecture : OK" + Environment.NewLine);
-                    richTextBoxLogs.AppendText("- Ecriture : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can read : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can write : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanRead = "True";
                     ExportVariables.OfficeRights_export_CanWrite = "True";
                     ExportVariables.General_export_TotalSuccess += 2;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText("- Lecture : Echec" + Environment.NewLine);
-                    richTextBoxLogs.AppendText("- Ecriture : Echec" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can read : FAIL" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can write : FAIL" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanRead = "False";
                     ExportVariables.OfficeRights_export_CanWrite = "False";
                 }
@@ -249,22 +244,21 @@ namespace AccountTester
                 File.Delete(filePath);
                 if (!File.Exists(filePath))
                 {
-                    richTextBoxLogs.AppendText("- Suppression : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can delete : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanDelete = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText("- Suppression : Echec" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("- Can delete : FAIL" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanDelete = "False";
                 }
-
                 stopwatch.Stop();
                 ExportVariables.OfficeRights_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur OfficeRigts: " + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error OfficeRights: " + Environment.NewLine + ex.Message);
             }
         }
 
@@ -281,7 +275,7 @@ namespace AccountTester
             if (PrinterSettings.InstalledPrinters.Count == 0)
             {
                 ExportVariables.General_export_TotalTests++;
-                richTextBoxLogs.AppendText("Aucune imprimante trouvée." + Environment.NewLine);
+                richTextBoxLogs.AppendText("No printer found." + Environment.NewLine);
                 ExportVariables.General_export_TotalSuccess++;
                 stopwatch.Stop();
                 ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
@@ -290,33 +284,54 @@ namespace AccountTester
             {
                 foreach (string printer in PrinterSettings.InstalledPrinters)
                 {
-                    if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) && !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
+                    if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) &&
+                        !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
+                        !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
                     {
                         ExportVariables.General_export_TotalTests++;
                         string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
-                        string PrinterIP = Registry.LocalMachine.OpenSubKey(registryPath).GetValue("Location").ToString().Split("//").Last().Split(":").First();
 
-                        if (!string.IsNullOrEmpty(PrinterIP))
+                        using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
+                        if (printerKey != null)
                         {
-                            Ping ping = new();
-                            PingReply reply = ping.Send(PrinterIP, 1000);
-
-                            if (reply.Status == IPStatus.Success)
+                            string? locationValue = printerKey.GetValue("Location")?.ToString();
+                            if (!string.IsNullOrEmpty(locationValue))
                             {
-                                richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
-                                ExportVariables.General_export_TotalSuccess++;
+                                string PrinterIP = locationValue.Split("//").Last().Split(":").First();
+
+                                if (!string.IsNullOrEmpty(PrinterIP))
+                                {
+                                    Ping ping = new();
+                                    PingReply reply = ping.Send(PrinterIP, 1000);
+
+                                    if (reply.Status == IPStatus.Success)
+                                    {
+                                        richTextBoxLogs.AppendText(printer + Environment.NewLine);
+                                        richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
+                                        ExportVariables.General_export_TotalSuccess++;
+                                    }
+                                    else
+                                    {
+                                        richTextBoxLogs.AppendText(printer + Environment.NewLine);
+                                        richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
+                                    }
+                                }
+                                else
+                                {
+                                    richTextBoxLogs.AppendText(printer + Environment.NewLine);
+                                    richTextBoxLogs.AppendText("- IP : Not found" + Environment.NewLine);
+                                }
                             }
                             else
                             {
                                 richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : Echec" + Environment.NewLine);
+                                richTextBoxLogs.AppendText("- Location value not found in registry." + Environment.NewLine);
                             }
                         }
                         else
                         {
                             richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                            richTextBoxLogs.AppendText("- IP : Non trouvé" + Environment.NewLine);
+                            richTextBoxLogs.AppendText("- Registry key not found for printer." + Environment.NewLine);
                         }
                     }
                 }
@@ -348,6 +363,8 @@ namespace AccountTester
         /// <returns></returns>
         async Task ExecutionSequentielle()
         {
+            ExportVariables.General_export_TotalSuccess = 0;
+            ExportVariables.General_export_TotalTests = 0;
             buttonCopier.Enabled = false;
             buttonExportForm.Enabled = false;
             richTextBoxLogs.Clear();
@@ -356,12 +373,12 @@ namespace AccountTester
             {
                 Stopwatch stopwatch = new();
                 stopwatch.Start();
-                richTextBoxLogs.AppendText("AccountTester - Rapport de test" + Environment.NewLine);
+                richTextBoxLogs.AppendText("AccountTester - Test report" + Environment.NewLine);
                 richTextBoxLogs.AppendText(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### Utilisateur :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### Users :" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- {ExportVariables.General_export_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
@@ -371,33 +388,33 @@ namespace AccountTester
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText("#### Lecteurs réseaux :" + Environment.NewLine);
+                richTextBoxLogs.AppendText("#### Network drives :" + Environment.NewLine);
                 NetworkStorageRightsTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText("#### Version Office :" + Environment.NewLine);
+                richTextBoxLogs.AppendText("#### Office version :" + Environment.NewLine);
                 OfficeVersionTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 if (_WordIsInstalled)
                 {
                     richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                    richTextBoxLogs.AppendText("#### Droits Office :" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("#### Office rights :" + Environment.NewLine);
                     OfficeWRTesting();
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText("#### Imprimantes :" + Environment.NewLine);
+                richTextBoxLogs.AppendText("#### Printer :" + Environment.NewLine);
                 PrinterTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText("#### Tests terminés." + Environment.NewLine);
+                richTextBoxLogs.AppendText("#### Tests finished." + Environment.NewLine);
                 stopwatch.Stop();
-                richTextBoxLogs.AppendText("- Total temps écoulé : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"- Tests réussi : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
+                richTextBoxLogs.AppendText("- Total time elapsed : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"- Passed tests : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
                 ExportVariables.General_export_TotalSuccess = 0;
                 ExportVariables.General_export_TotalTests = 0;
 
@@ -411,7 +428,7 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erreur Execution Sequentielle : " + Environment.NewLine + ex.Message);
+                MessageBox.Show("Sequential Execution Error : " + Environment.NewLine + ex.Message);
             }
         }
 
