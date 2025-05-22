@@ -30,10 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             buttonStart = new Button();
-            label2 = new Label();
             richTextBoxLogs = new RichTextBox();
             buttonExportForm = new Button();
             buttonCopier = new Button();
+            label2 = new Label();
             SuspendLayout();
             // 
             // buttonStart
@@ -46,22 +46,13 @@
             buttonStart.UseVisualStyleBackColor = true;
             buttonStart.Click += ButtonStart_Click;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(13, 8);
-            label2.Name = "label2";
-            label2.Size = new Size(49, 14);
-            label2.TabIndex = 3;
-            label2.Text = "Logs :";
-            // 
             // richTextBoxLogs
             // 
             richTextBoxLogs.HideSelection = false;
-            richTextBoxLogs.Location = new Point(12, 25);
+            richTextBoxLogs.Location = new Point(12, 30);
             richTextBoxLogs.Name = "richTextBoxLogs";
             richTextBoxLogs.ReadOnly = true;
-            richTextBoxLogs.Size = new Size(304, 321);
+            richTextBoxLogs.Size = new Size(304, 316);
             richTextBoxLogs.TabIndex = 4;
             richTextBoxLogs.TabStop = false;
             richTextBoxLogs.Text = "";
@@ -86,6 +77,16 @@
             buttonCopier.Text = "Copy";
             buttonCopier.UseVisualStyleBackColor = true;
             buttonCopier.Click += ButtonCopier_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(12, 9);
+            label2.Name = "label2";
+            label2.Size = new Size(56, 18);
+            label2.TabIndex = 3;
+            label2.Text = "Logs :";
             // 
             // MainForm
             // 
@@ -112,9 +113,9 @@
         #endregion
 
         private Button buttonStart;
-        private Label label2;
         private RichTextBox richTextBoxLogs;
         private Button buttonExportForm;
         private Button buttonCopier;
+        private Label label2;
     }
 }
