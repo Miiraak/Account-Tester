@@ -14,8 +14,6 @@ namespace AccountTester
         /// <summary>
         /// This method allows the user to select a path to save the report.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ButtonSelectPath_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog = new()
@@ -32,8 +30,6 @@ namespace AccountTester
         /// <summary>
         /// Main call to export the report according to the selected extension, name and path.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ButtonExport_Click(object sender, EventArgs e)
         {
             string fileName;
@@ -58,7 +54,6 @@ namespace AccountTester
             else
                 extension = comboBoxExtension.Text;
 
-            // Exportation du rapport selon l'extension choisie
             switch (extension)
             {
                 case ".csv":
@@ -85,26 +80,26 @@ namespace AccountTester
             this.Close();
         }
 
-        private void ExportToTxt(string fileName, string filePath)
+        /// <summary>
+        /// Export the report to a TXT file.
+        /// </summary>
+        /// <param name="fileName">txt file name</param>
+        /// <param name="filePath">txt saving path</param>
+        private static void ExportToTxt(string fileName, string filePath)
         {
-            // Code pour exporter le rapport en TXT
-            // Création du fichier
             string path = Path.Combine(filePath, $"{fileName}.txt");
             int i = 0;
 
             using StreamWriter sw = new(path);
-            // Création de l'entête
             sw.WriteLine(fileName);
             sw.WriteLine($"Date: {ExportVariables.General_DateAndHour}");
             sw.WriteLine($"Username: {ExportVariables.General_export_UserName}\n\n");
 
-            // Général
             sw.WriteLine("General");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Operating system: {ExportVariables.General_export_DeviceOS}");
             sw.WriteLine($"OS architectury: {ExportVariables.General_export_OSArchitecture}\n\n");
 
-            // Connexion Internet
             sw.WriteLine("Internet connection");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Hour: {ExportVariables.InternetConnexion_export_Hour}");
@@ -112,7 +107,6 @@ namespace AccountTester
             sw.WriteLine($"HTML status: {ExportVariables.InternetConnexion_export_HTMLStatut}");
             sw.WriteLine($"Response time: {ExportVariables.InternetConnexion_export_ElapsedTime} ms\n\n");
 
-            // Droits de stockage réseau
             sw.WriteLine("Network storage rights");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Hour: {ExportVariables.NetworkStorageRights_export_Hour}");
@@ -136,7 +130,6 @@ namespace AccountTester
             sw.WriteLine($"Time elapsed: {ExportVariables.NetworkStorageRights_export_ElapsedTime} ms\n\n");
             i = 0;
 
-            // Version d'Office
             sw.WriteLine("Office version");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Hour: {ExportVariables.OfficeVersion_export_Hour}");
@@ -144,7 +137,6 @@ namespace AccountTester
             sw.WriteLine($"Office path: {ExportVariables.OfficeVersion_export_OfficePath}");
             sw.WriteLine($"Time elapsed: {ExportVariables.OfficeVersion_export_ElapsedTime} ms\n\n");
 
-            // Droits d'Office
             sw.WriteLine("Office rights");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Hour: {ExportVariables.OfficeRights_export_Hour}");
@@ -158,7 +150,6 @@ namespace AccountTester
             sw.WriteLine();
             sw.WriteLine($"Time elapsed: {ExportVariables.OfficeRights_export_ElapsedTime} ms\n\n");
 
-            // Imprimante 
             sw.WriteLine("Printer");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"Hour: {ExportVariables.Printer_export_Hour}");
@@ -181,11 +172,15 @@ namespace AccountTester
             sw.WriteLine($"Time elapsed: {ExportVariables.Printer_export_ElapsedTime} ms\n\n");
             i = 0;
 
-            // Fermeture du StreamWriter
             sw.Close();
         }
 
-        private void ExportToLog(string fileName, string filePath)
+        /// <summary>
+        /// Export the log to a file.
+        /// </summary>
+        /// <param name="fileName">log file name</param>
+        /// <param name="filePath">log saving path</param>
+        private static void ExportToLog(string fileName, string filePath)
         {
             string path = Path.Combine(filePath, $"{fileName}.log");
             using StreamWriter sw = new(path);
@@ -194,201 +189,123 @@ namespace AccountTester
             sw.Close();
         }
 
-        private void ExportToXML(string fileName, string filePath)
+        /// <summary>
+        /// Export the report to a XML file.
+        /// </summary>
+        /// <param name="fileName">xml file name</param>
+        /// <param name="filePath">xml saving path</param>
+        private static void ExportToXML(string fileName, string filePath)
         {
             XmlDocument doc = new();
+
             XmlElement root = doc.CreateElement(fileName);
             doc.AppendChild(root);
+
             XmlElement general = doc.CreateElement("General");
             root.AppendChild(general);
-            XmlElement os = doc.CreateElement("OperatingSystem");
-            os.InnerText = ExportVariables.General_export_DeviceOS;
-            general.AppendChild(os);
-            XmlElement osArch = doc.CreateElement("OSArchitecture");
-            osArch.InnerText = ExportVariables.General_export_OSArchitecture;
-            general.AppendChild(osArch);
-            XmlElement userName = doc.CreateElement("UserName");
-            userName.InnerText = ExportVariables.General_export_UserName;
-            general.AppendChild(userName);
-            XmlElement date = doc.CreateElement("Date");
-            date.InnerText = ExportVariables.General_DateAndHour;
-            general.AppendChild(date);
-            XmlElement totalTests = doc.CreateElement("TotalTests");
-            totalTests.InnerText = ExportVariables.General_export_TotalTests.ToString();
-            general.AppendChild(totalTests);
-            XmlElement totalSuccess = doc.CreateElement("TotalSuccess");
-            totalSuccess.InnerText = ExportVariables.General_export_TotalSuccess.ToString();
-            general.AppendChild(totalSuccess);
+            JSONW(doc, general, "OperatingSystem", ExportVariables.General_export_DeviceOS);
+            JSONW(doc, general, "OSArchitecture", ExportVariables.General_export_OSArchitecture);
+            JSONW(doc, general, "Username", ExportVariables.General_export_UserName);
+            JSONW(doc, general, "Date", ExportVariables.General_DateAndHour);
+            JSONW(doc, general, "TotalTests", ExportVariables.General_export_TotalTests.ToString());
+            JSONW(doc, general, "TotalSuccess", ExportVariables.General_export_TotalSuccess.ToString());
+
             XmlElement internetConnection = doc.CreateElement("InternetConnection");
             root.AppendChild(internetConnection);
-            XmlElement hour = doc.CreateElement("Hour");
-            hour.InnerText = ExportVariables.InternetConnexion_export_Hour;
-            internetConnection.AppendChild(hour);
-            XmlElement testedURL = doc.CreateElement("TestedURL");
-            testedURL.InnerText = ExportVariables.InternetConnexion_export_TestedURL;
-            internetConnection.AppendChild(testedURL);
-            XmlElement htmlStatus = doc.CreateElement("HTMLStatus");
-            htmlStatus.InnerText = ExportVariables.InternetConnexion_export_HTMLStatut;
-            internetConnection.AppendChild(htmlStatus);
-            XmlElement responseTime = doc.CreateElement("ResponseTime");
-            responseTime.InnerText = ExportVariables.InternetConnexion_export_ElapsedTime;
-            internetConnection.AppendChild(responseTime);
+            JSONW(doc, internetConnection, "Hour", ExportVariables.InternetConnexion_export_Hour);
+            JSONW(doc, internetConnection, "TestedURL", ExportVariables.InternetConnexion_export_TestedURL);
+            JSONW(doc, internetConnection, "HTMLStatus", ExportVariables.InternetConnexion_export_HTMLStatut);
+            JSONW(doc, internetConnection, "ResponseTime", ExportVariables.InternetConnexion_export_ElapsedTime);
+
             XmlElement networkStorageRights = doc.CreateElement("NetworkStorageRights");
             root.AppendChild(networkStorageRights);
-            XmlElement connexionType = doc.CreateElement("ConnexionType");
-            connexionType.InnerText = ExportVariables.NetworkStorageRights_export_ConnexionType;
-            networkStorageRights.AppendChild(connexionType);
-            XmlElement diskLetter = doc.CreateElement("DiskLetter");
-            if (ExportVariables.NetworkStorageRights_export_DiskLetter != null)
-            {
-                foreach (string disk in ExportVariables.NetworkStorageRights_export_DiskLetter)
-                {
-                    XmlElement diskElement = doc.CreateElement("Disk");
-                    diskElement.InnerText = disk;
-                    diskLetter.AppendChild(diskElement);
-                }
-            }
-            networkStorageRights.AppendChild(diskLetter);
-            XmlElement uncPath = doc.CreateElement("UNCPath");
-            if (ExportVariables.NetworkStorageRights_export_CheminUNC != null)
-            {
-                foreach (string unc in ExportVariables.NetworkStorageRights_export_CheminUNC)
-                {
-                    XmlElement uncElement = doc.CreateElement("Path");
-                    uncElement.InnerText = unc;
-                    uncPath.AppendChild(uncElement);
-                }
-            }
-            networkStorageRights.AppendChild(uncPath);
-            XmlElement server = doc.CreateElement("Server");
-            if (ExportVariables.NetworkStorageRights_export_Serveur != null)
-            {
-                foreach (string srv in ExportVariables.NetworkStorageRights_export_Serveur)
-                {
-                    XmlElement serverElement = doc.CreateElement("ServerName");
-                    serverElement.InnerText = srv;
-                    server.AppendChild(serverElement);
-                }
-            }
-            networkStorageRights.AppendChild(server);
-            XmlElement shareName = doc.CreateElement("ShareName");
-            if (ExportVariables.NetworkStorageRights_export_ShareName != null)
-            {
-                foreach (string share in ExportVariables.NetworkStorageRights_export_ShareName)
-                {
-                    XmlElement shareElement = doc.CreateElement("Share");
-                    shareElement.InnerText = share;
-                    shareName.AppendChild(shareElement);
-                }
-            }
-            networkStorageRights.AppendChild(shareName);
-            XmlElement elapsedTime = doc.CreateElement("ElapsedTime");
-            elapsedTime.InnerText = ExportVariables.NetworkStorageRights_export_ElapsedTime;
-            networkStorageRights.AppendChild(elapsedTime);
+            JSONW(doc, networkStorageRights, "Hour", ExportVariables.NetworkStorageRights_export_Hour);
+            JSONW(doc, networkStorageRights, "ConnexionType", ExportVariables.NetworkStorageRights_export_ConnexionType);
+            JSONWL(doc, networkStorageRights, "DiskLetter", ExportVariables.NetworkStorageRights_export_DiskLetter, "Disk");
+            JSONWL(doc, networkStorageRights, "UNCPath", ExportVariables.NetworkStorageRights_export_CheminUNC, "Path");
+            JSONWL(doc, networkStorageRights, "Server", ExportVariables.NetworkStorageRights_export_Serveur, "ServerName");
+            JSONWL(doc, networkStorageRights, "Share", ExportVariables.NetworkStorageRights_export_ShareName, "ShareName");
+            JSONW(doc, networkStorageRights, "ElapsedTime", ExportVariables.NetworkStorageRights_export_ElapsedTime);
+
             XmlElement officeVersion = doc.CreateElement("OfficeVersion");
             root.AppendChild(officeVersion);
-            XmlElement officeHour = doc.CreateElement("Hour");
-            officeHour.InnerText = ExportVariables.OfficeVersion_export_Hour;
-            officeVersion.AppendChild(officeHour);
-            XmlElement officeVersionElement = doc.CreateElement("Version");
-            officeVersionElement.InnerText = ExportVariables.OfficeVersion_export_OfficeVersion;
-            officeVersion.AppendChild(officeVersionElement);
-            XmlElement officePath = doc.CreateElement("Path");
-            officePath.InnerText = ExportVariables.OfficeVersion_export_OfficePath;
-            officeVersion.AppendChild(officePath);
-            XmlElement officeElapsedTime = doc.CreateElement("ElapsedTime");
-            officeElapsedTime.InnerText = ExportVariables.OfficeVersion_export_ElapsedTime;
-            officeVersion.AppendChild(officeElapsedTime);
+            JSONW(doc, officeVersion, "Hour", ExportVariables.OfficeVersion_export_Hour);
+            JSONW(doc, officeVersion, "Version", ExportVariables.OfficeVersion_export_OfficeVersion);
+            JSONW(doc, officeVersion, "Path", ExportVariables.OfficeVersion_export_OfficePath);
+            JSONW(doc, officeVersion, "ElapsedTime", ExportVariables.OfficeVersion_export_ElapsedTime);
+
             XmlElement officeRights = doc.CreateElement("OfficeRights");
             root.AppendChild(officeRights);
-            XmlElement officeRightsHour = doc.CreateElement("Hour");
-            officeRightsHour.InnerText = ExportVariables.OfficeRights_export_Hour;
-            officeRights.AppendChild(officeRightsHour);
-            XmlElement canWrite = doc.CreateElement("CanWrite");
-            canWrite.InnerText = ExportVariables.OfficeRights_export_CanWrite;
-            officeRights.AppendChild(canWrite);
-            XmlElement canRead = doc.CreateElement("CanRead");
-            canRead.InnerText = ExportVariables.OfficeRights_export_CanRead;
-            officeRights.AppendChild(canRead);
-            XmlElement canDelete = doc.CreateElement("CanDelete");
-            canDelete.InnerText = ExportVariables.OfficeRights_export_CanDelete;
-            officeRights.AppendChild(canDelete);
-            XmlElement canCreate = doc.CreateElement("CanCreate");
-            canCreate.InnerText = ExportVariables.OfficeRights_export_CanCreate;
-            officeRights.AppendChild(canCreate);
-            XmlElement canSave = doc.CreateElement("CanSave");
-            canSave.InnerText = ExportVariables.OfficeRights_export_CanSave;
-            officeRights.AppendChild(canSave);
-            XmlElement testedFolder = doc.CreateElement("TestedFolder");
-            testedFolder.InnerText = ExportVariables.OfficeRights_export_FolderTested;
-            officeRights.AppendChild(testedFolder);
-            XmlElement officeRightsElapsedTime = doc.CreateElement("ElapsedTime");
-            officeRightsElapsedTime.InnerText = ExportVariables.OfficeRights_export_ElapsedTime;
-            officeRights.AppendChild(officeRightsElapsedTime);
+            JSONW(doc, officeRights, "Hour", ExportVariables.OfficeRights_export_Hour);
+            JSONW(doc, officeRights, "CanWrite", ExportVariables.OfficeRights_export_CanWrite);
+            JSONW(doc, officeRights, "CanRead", ExportVariables.OfficeRights_export_CanRead);
+            JSONW(doc, officeRights, "CanDelete", ExportVariables.OfficeRights_export_CanDelete);
+            JSONW(doc, officeRights, "CanCreate", ExportVariables.OfficeRights_export_CanCreate);
+            JSONW(doc, officeRights, "CanSave", ExportVariables.OfficeRights_export_CanSave);
+            JSONW(doc, officeRights, "TestedFolder", ExportVariables.OfficeRights_export_FolderTested);
+            JSONW(doc, officeRights, "ElapsedTime", ExportVariables.OfficeRights_export_ElapsedTime);
+
             XmlElement printer = doc.CreateElement("Printer");
             root.AppendChild(printer);
-            XmlElement printerHour = doc.CreateElement("Hour");
-            printerHour.InnerText = ExportVariables.Printer_export_Hour;
-            printer.AppendChild(printerHour);
-            XmlElement printerName = doc.CreateElement("PrinterName");
-            if (ExportVariables.Printer_export_PrinterName != null)
-            {
-                foreach (string printerNameElement in ExportVariables.Printer_export_PrinterName)
-                {
-                    XmlElement printerElement = doc.CreateElement("Printer");
-                    printerElement.InnerText = printerNameElement;
-                    printerName.AppendChild(printerElement);
-                }
-            }
-            printer.AppendChild(printerName);
-            XmlElement printerStatus = doc.CreateElement("PrinterStatus");
-            if (ExportVariables.Printer_export_PrinterStatus != null)
-            {
-                foreach (string printerStatusElement in ExportVariables.Printer_export_PrinterStatus)
-                {
-                    XmlElement statusElement = doc.CreateElement("Status");
-                    statusElement.InnerText = printerStatusElement;
-                    printerStatus.AppendChild(statusElement);
-                }
-            }
-            printer.AppendChild(printerStatus);
-            XmlElement printerDriver = doc.CreateElement("PrinterDriver");
-            if (ExportVariables.Printer_export_PrinterDriver != null)
-            {
-                foreach (string printerDriverElement in ExportVariables.Printer_export_PrinterDriver)
-                {
-                    XmlElement driverElement = doc.CreateElement("Driver");
-                    driverElement.InnerText = printerDriverElement;
-                    printerDriver.AppendChild(driverElement);
-                }
-            }
-            printer.AppendChild(printerDriver);
-            XmlElement printerPort = doc.CreateElement("PrinterPort");
-            if (ExportVariables.Printer_export_PrinterPort != null)
-            {
-                foreach (string printerPortElement in ExportVariables.Printer_export_PrinterPort)
-                {
-                    XmlElement portElement = doc.CreateElement("Port");
-                    portElement.InnerText = printerPortElement;
-                    printerPort.AppendChild(portElement);
-                }
-            }
-            printer.AppendChild(printerPort);
-            XmlElement printerElapsedTime = doc.CreateElement("ElapsedTime");
-            printerElapsedTime.InnerText = ExportVariables.Printer_export_ElapsedTime;
-            printer.AppendChild(printerElapsedTime);
-            // Enregistrement du fichier XML
+            JSONW(doc, printer, "Hour", ExportVariables.Printer_export_Hour);
+            JSONWL(doc, printer, "PrinterName", ExportVariables.Printer_export_PrinterName, "Printer");
+            JSONWL(doc, printer, "PrinterStatus", ExportVariables.Printer_export_PrinterStatus, "Status");
+            JSONWL(doc, printer, "PrinterDriver", ExportVariables.Printer_export_PrinterDriver, "Driver");
+            JSONWL(doc, printer, "PrinterPort", ExportVariables.Printer_export_PrinterPort, "Port");
+            JSONW(doc, printer, "ElapsedTime", ExportVariables.Printer_export_ElapsedTime);
+
             string path = Path.Combine(filePath, $"{fileName}.xml");
             doc.Save(path);
         }
 
-        private void ExportToCSV(string fileName, string filePath)
+        /// <summary>
+        /// Write a value in the XML file.
+        /// </summary>
+        /// <param name="doc">The XML document</param>
+        /// <param name="root">The parent node</param>
+        /// <param name="title">Name of the child node</param>
+        /// <param name="value">A value</param>
+        public static void JSONW(XmlDocument doc, XmlElement root, string title, string value)
+        {
+            XmlElement child = doc.CreateElement(title);
+            child.InnerText = value;
+            root.AppendChild(child);
+        }
+
+        /// <summary>
+        /// Write a list of values in the XML file.
+        /// </summary>
+        /// <param name="doc">The XML document</param>
+        /// <param name="root">The parent node</param>
+        /// <param name="title">Name of the child node</param>
+        /// <param name="value">A list of values</param>
+        /// <param name="child_value">Name of the child node for each value</param>
+        private static void JSONWL(XmlDocument doc, XmlElement root, string title, string[]? value, string child_value)
+        {
+            XmlElement child = doc.CreateElement(title);
+            if (value != null)
+            {
+                foreach (string item in value)
+                {
+                    XmlElement itemChild = doc.CreateElement(child_value);
+                    itemChild.InnerText = item;
+                    child.AppendChild(itemChild);
+                }
+            }
+            root.AppendChild(child);
+        }
+
+        /// <summary>
+        /// Export the report to a CSV file.
+        /// </summary>
+        /// <param name="fileName">csv file name</param>
+        /// <param name="filePath">csv saving path</param>
+        private static void ExportToCSV(string fileName, string filePath)
         {
             string path = Path.Combine(filePath, $"{fileName}.csv");
             using StreamWriter sw = new(path);
-            // Entête - OK
             CSVWL("Section", "Key", "Value", sw);
-            // Général - OK
+
             CSVWL("General", "Report name", fileName, sw);
             CSVWL("General", "Date/Hour", ExportVariables.General_DateAndHour, sw);
             CSVWL("General", "Operating system", ExportVariables.General_export_DeviceOS, sw);
@@ -396,12 +313,12 @@ namespace AccountTester
             CSVWL("General", "Username", ExportVariables.General_export_UserName, sw);
             CSVWL("General", "Total tests", ExportVariables.General_export_TotalTests.ToString(), sw);
             CSVWL("General", "Total succes", ExportVariables.General_export_TotalSuccess.ToString(), sw);
-            // Connexion Internet - OK
+
             CSVWL("Internet Connexion", "Hour", ExportVariables.InternetConnexion_export_Hour, sw);
             CSVWL("Internet Connexion", "Tested URL", ExportVariables.InternetConnexion_export_TestedURL, sw);
             CSVWL("Internet Connexion", "HTML status", ExportVariables.InternetConnexion_export_HTMLStatut, sw);
             CSVWL("Internet Connexion", "Response time (ms)", ExportVariables.InternetConnexion_export_ElapsedTime, sw);
-            // Droits de stockage réseau - OK
+
             CSVWL("Network storage rights", "Hour", ExportVariables.NetworkStorageRights_export_Hour, sw);
             CSVWL("Network storage rights", "Connexion type", ExportVariables.NetworkStorageRights_export_ConnexionType, sw);
             if (ExportVariables.NetworkStorageRights_export_DiskLetter != null)
@@ -419,7 +336,7 @@ namespace AccountTester
                 CSVWL("Network storage rights", "No network disk found", "", sw);
             }
             CSVWL("Network storage rights", "Time elapsed (ms)", ExportVariables.NetworkStorageRights_export_ElapsedTime, sw);
-            // Version d'Office - OK
+
             CSVWL("Office version", "Hour", ExportVariables.OfficeVersion_export_Hour, sw);
             if (ExportVariables.OfficeVersion_export_OfficeVersion.Split(',').Length > 0)
             {
@@ -430,7 +347,7 @@ namespace AccountTester
             }
             CSVWL("Office version", "Chemin d'Office", ExportVariables.OfficeVersion_export_OfficePath, sw);
             CSVWL("Office version", "Time elapsed (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
-            // Droits d'Office - 
+
             CSVWL("Office rights", "Hour", ExportVariables.OfficeRights_export_Hour, sw);
             CSVWL("Office rights", "Can write", ExportVariables.OfficeRights_export_CanWrite, sw);
             CSVWL("Office rights", "Can read", ExportVariables.OfficeRights_export_CanRead, sw);
@@ -439,7 +356,7 @@ namespace AccountTester
             CSVWL("Office rights", "Can save", ExportVariables.OfficeRights_export_CanSave, sw);
             CSVWL("Office rights", "Tested folder", ExportVariables.OfficeRights_export_FolderTested, sw);
             CSVWL("Office rights", "Time elapsed (ms)", ExportVariables.OfficeRights_export_ElapsedTime, sw);
-            // Imprimante
+
             CSVWL("Printer", "Hour", ExportVariables.Printer_export_Hour, sw);
             if (ExportVariables.Printer_export_PrinterName != null)
             {
@@ -460,7 +377,9 @@ namespace AccountTester
             sw.Close();
         }
 
-        // ExportToCSV() writeline function
+        /// <summary>
+        /// Write a line in the CSV file with 3 values.
+        /// </summary>
         private static void CSVWL(string value1, string value2, string? value3, StreamWriter sw)
         {
             sw.WriteLine($"{value1},{value2},{value3 ?? string.Empty}");
@@ -468,7 +387,12 @@ namespace AccountTester
 
         private static readonly JsonSerializerOptions CachedJsonSerializerOptions = new() { WriteIndented = true };
 
-        private void ExportToJSON(string fileName, string filePath)
+        /// <summary>
+        /// Export the report to a JSON file.
+        /// </summary>
+        /// <param name="fileName">json file name</param>
+        /// <param name="filePath">json saving path</param>
+        private static void ExportToJSON(string fileName, string filePath)
         {
             var Block = new
             {
@@ -535,9 +459,9 @@ namespace AccountTester
         /// <summary>
         /// Create a zip file that contains all the disponible reports.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="filePath"></param>
-        private void ExportToZip(string fileName, string filePath)
+        /// <param name="fileName">zip file name</param>
+        /// <param name="filePath">zip saving path</param>
+        private static void ExportToZip(string fileName, string filePath)
         {
             string tempFolder = Path.GetTempPath();
 

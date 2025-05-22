@@ -72,6 +72,16 @@ namespace AccountTester
 
                     if (drive.DriveType == DriveType.Network)
                     {
+                        string UNCpath = "null";
+                        using (RegistryKey? key = Registry.CurrentUser.OpenSubKey("Network\\" + drive.Name[0].ToString()))
+                            if (key != null)
+                            {
+                                UNCpath = key.GetValue("RemotePath")?.ToString() + drive.Name[2..].ToString();
+                            }
+
+                        ExportVariables.NetworkStorageRights_export_CheminUNC ??= [];
+                        ExportVariables.NetworkStorageRights_export_CheminUNC = ExportVariables.NetworkStorageRights_export_CheminUNC.Append(UNCpath).ToArray();
+
                         try
                         {
                             string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
@@ -79,7 +89,7 @@ namespace AccountTester
 
                             if (File.Exists(testFile))
                             {
-                                richTextBoxLogs.AppendText($@"- {drive.Name}\ : OK" + Environment.NewLine);
+                                richTextBoxLogs.AppendText($@"- {drive.Name} : OK" + Environment.NewLine);
                                 ExportVariables.General_export_TotalSuccess++;
                             }
 
@@ -87,23 +97,26 @@ namespace AccountTester
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Write refused" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name} : Write refused" + Environment.NewLine);
                         }
                         catch (IOException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name}\ : Connexion error" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name} : Connexion error" + Environment.NewLine);
                         }
                     }
                     else
                     {
-                        richTextBoxLogs.AppendText($@"- {drive.Name}\ : Omitted" + Environment.NewLine);
+                        ExportVariables.NetworkStorageRights_export_DiskLetter ??= [];
+                        ExportVariables.NetworkStorageRights_export_DiskLetter = ExportVariables.NetworkStorageRights_export_DiskLetter.Append(drive.Name).ToArray();
+
+                        richTextBoxLogs.AppendText($@"- {drive.Name} : Omitted" + Environment.NewLine);
                         ExportVariables.General_export_TotalSuccess++;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error NetworkStorageRights : " + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error NetworkStorageRights : " + Environment.NewLine + ex);
             }
 
             stopwatch.Stop();
@@ -178,7 +191,6 @@ namespace AccountTester
                     Visible = false
                 };
 
-                // Création du document
                 Word.Document doc = wordApp.Documents.Add();
                 doc.Content.Text = "The quick brown fox jumps over the lazy dog";
                 doc.SaveAs2(filePath);
@@ -196,7 +208,6 @@ namespace AccountTester
                     return;
                 }
 
-                // Sauvegarde
                 doc = wordApp.Documents.Open(filePath);
                 doc.Content.Text += "\nAdding more fox over the lazy dog.";
                 doc.Save();
@@ -216,7 +227,6 @@ namespace AccountTester
                 }
                 doc.Close();
 
-                // Réouverture du document
                 doc = wordApp.Documents.Open(filePath);
                 if (doc.Content.Text.Contains("The quick brown fox jumps over the lazy dog"))
                 {
@@ -235,12 +245,10 @@ namespace AccountTester
                 }
                 doc.Close();
 
-                // Fermeture et nettoyage
                 wordApp.Quit();
                 Marshal.ReleaseComObject(doc);
                 Marshal.ReleaseComObject(wordApp);
 
-                // Suppression du fichier
                 File.Delete(filePath);
                 if (!File.Exists(filePath))
                 {
@@ -271,7 +279,6 @@ namespace AccountTester
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
-            // Gather all printers on the system
             if (PrinterSettings.InstalledPrinters.Count == 0)
             {
                 ExportVariables.General_export_TotalTests++;
@@ -342,11 +349,8 @@ namespace AccountTester
         }
 
         /// <summary>
-        /// Event handler for the Start button click event. 
         /// For output formatting, see the ExecutionSequentielle method instead.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             buttonStart.Enabled = false;
@@ -358,7 +362,6 @@ namespace AccountTester
 
         /// <summary>
         /// Method for executing all tests sequentially, displaying the results in the richTextBoxLogs.
-        /// It's here that you can add or remove tests and format the output.
         /// </summary>
         /// <returns></returns>
         async Task ExecutionSequentielle()
@@ -418,7 +421,6 @@ namespace AccountTester
                 ExportVariables.General_export_TotalSuccess = 0;
                 ExportVariables.General_export_TotalTests = 0;
 
-                // Play a sound when the tests are done
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
                 player.Play();
 
@@ -435,8 +437,6 @@ namespace AccountTester
         /// <summary>
         /// Event handler for the Export button click event.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ButtonExport_Click(object sender, EventArgs e)
         {
             ExportForm exportForm = new();
