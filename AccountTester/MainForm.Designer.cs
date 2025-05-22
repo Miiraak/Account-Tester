@@ -33,14 +33,21 @@
             richTextBoxLogs = new RichTextBox();
             buttonExportForm = new Button();
             buttonCopier = new Button();
-            label2 = new Label();
+            labelLogs = new Label();
+            menuStrip1 = new MenuStrip();
+            optionsToolStripMenuItem = new ToolStripMenuItem();
+            langageToolStripMenuItem = new ToolStripMenuItem();
+            enUSToolStripMenuItem = new ToolStripMenuItem();
+            frFRToolStripMenuItem = new ToolStripMenuItem();
+            label1 = new Label();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(13, 352);
+            buttonStart.Location = new Point(12, 352);
             buttonStart.Name = "buttonStart";
-            buttonStart.Size = new Size(75, 21);
+            buttonStart.Size = new Size(88, 21);
             buttonStart.TabIndex = 0;
             buttonStart.Text = "Start";
             buttonStart.UseVisualStyleBackColor = true;
@@ -49,17 +56,17 @@
             // richTextBoxLogs
             // 
             richTextBoxLogs.HideSelection = false;
-            richTextBoxLogs.Location = new Point(12, 30);
+            richTextBoxLogs.Location = new Point(12, 56);
             richTextBoxLogs.Name = "richTextBoxLogs";
             richTextBoxLogs.ReadOnly = true;
-            richTextBoxLogs.Size = new Size(304, 316);
+            richTextBoxLogs.Size = new Size(304, 290);
             richTextBoxLogs.TabIndex = 4;
             richTextBoxLogs.TabStop = false;
             richTextBoxLogs.Text = "";
             // 
             // buttonExportForm
             // 
-            buttonExportForm.Location = new Point(241, 352);
+            buttonExportForm.Location = new Point(239, 352);
             buttonExportForm.Name = "buttonExportForm";
             buttonExportForm.Size = new Size(75, 23);
             buttonExportForm.TabIndex = 5;
@@ -70,7 +77,7 @@
             // buttonCopier
             // 
             buttonCopier.Enabled = false;
-            buttonCopier.Location = new Point(127, 352);
+            buttonCopier.Location = new Point(132, 352);
             buttonCopier.Name = "buttonCopier";
             buttonCopier.Size = new Size(75, 21);
             buttonCopier.TabIndex = 6;
@@ -78,15 +85,62 @@
             buttonCopier.UseVisualStyleBackColor = true;
             buttonCopier.Click += ButtonCopier_Click;
             // 
-            // label2
+            // labelLogs
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 9);
-            label2.Name = "label2";
-            label2.Size = new Size(56, 18);
-            label2.TabIndex = 3;
-            label2.Text = "Logs :";
+            labelLogs.AutoSize = true;
+            labelLogs.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelLogs.Location = new Point(12, 35);
+            labelLogs.Name = "labelLogs";
+            labelLogs.Size = new Size(56, 18);
+            labelLogs.TabIndex = 3;
+            labelLogs.Text = "Logs :";
+            // 
+            // menuStrip1
+            // 
+            menuStrip1.BackColor = SystemColors.ButtonFace;
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(328, 24);
+            menuStrip1.TabIndex = 7;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { langageToolStripMenuItem });
+            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            optionsToolStripMenuItem.Size = new Size(61, 20);
+            optionsToolStripMenuItem.Text = "Options";
+            // 
+            // langageToolStripMenuItem
+            // 
+            langageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { enUSToolStripMenuItem, frFRToolStripMenuItem });
+            langageToolStripMenuItem.Name = "langageToolStripMenuItem";
+            langageToolStripMenuItem.Size = new Size(119, 22);
+            langageToolStripMenuItem.Text = "Langage";
+            // 
+            // enUSToolStripMenuItem
+            // 
+            enUSToolStripMenuItem.Name = "enUSToolStripMenuItem";
+            enUSToolStripMenuItem.Size = new Size(106, 22);
+            enUSToolStripMenuItem.Text = "en-US";
+            enUSToolStripMenuItem.Click += enUSToolStripMenuItem_Click;
+            // 
+            // frFRToolStripMenuItem
+            // 
+            frFRToolStripMenuItem.Name = "frFRToolStripMenuItem";
+            frFRToolStripMenuItem.Size = new Size(106, 22);
+            frFRToolStripMenuItem.Text = "fr-FR";
+            frFRToolStripMenuItem.Click += frFRToolStripMenuItem_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(0, 12);
+            label1.Name = "label1";
+            label1.Size = new Size(329, 14);
+            label1.TabIndex = 8;
+            label1.Text = "______________________________________________";
             // 
             // MainForm
             // 
@@ -97,15 +151,20 @@
             Controls.Add(buttonCopier);
             Controls.Add(buttonExportForm);
             Controls.Add(richTextBoxLogs);
-            Controls.Add(label2);
+            Controls.Add(labelLogs);
             Controls.Add(buttonStart);
+            Controls.Add(menuStrip1);
+            Controls.Add(label1);
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Account Tester v0.7.8";
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -116,6 +175,12 @@
         private RichTextBox richTextBoxLogs;
         private Button buttonExportForm;
         private Button buttonCopier;
-        private Label label2;
+        private Label labelLogs;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem optionsToolStripMenuItem;
+        private ToolStripMenuItem langageToolStripMenuItem;
+        private ToolStripMenuItem enUSToolStripMenuItem;
+        private ToolStripMenuItem frFRToolStripMenuItem;
+        private Label label1;
     }
 }
