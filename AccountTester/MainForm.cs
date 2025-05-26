@@ -24,12 +24,12 @@ namespace AccountTester
 
         private void UpdateTexts()
         {
-            labelLogs.Text = T("LabelLogs");
-            buttonCopier.Text = T("CopyButton");
-            buttonExportForm.Text = T("ExportButton");
-            buttonStart.Text = T("StartButton");
-            optionsToolStripMenuItem.Text = T("optionsToolStripMenuItem");
-            langageToolStripMenuItem.Text = T("langageToolStripMenuItem");
+            labelLogs.Text = T("Logs");
+            buttonCopier.Text = T("Copy");
+            buttonExportForm.Text = T("Export");
+            buttonStart.Text = T("Start");
+            optionsToolStripMenuItem.Text = T("Options");
+            langageToolStripMenuItem.Text = T("Langage");
         }
 
         /// <summary>
@@ -52,17 +52,17 @@ namespace AccountTester
 
                 if (response.IsSuccessStatusCode)
                 {
-                    richTextBoxLogs.AppendText($"{T("RTBL_Internet_1")}" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Connected")}" + Environment.NewLine);
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"{"RTBL_Internet_2"}" + response.StatusCode + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"{"MainForm_RTBL_Internet_Others"}" + response.StatusCode + Environment.NewLine);
                 }
             }
             catch (Exception ex)
             {
-                richTextBoxLogs.AppendText($"{"RTBL_Internet_2"}" + ex.InnerException?.Message + Environment.NewLine);
+                richTextBoxLogs.AppendText($"{"MainForm_RTBL_Internet_Others"}" + ex.InnerException?.Message + Environment.NewLine);
             }
 
             stopwatch.Stop();
@@ -111,11 +111,11 @@ namespace AccountTester
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name} : {T("RTBL_NetworkStorageRightsTesting_1")}" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Refused")}" + Environment.NewLine);
                         }
                         catch (IOException)
                         {
-                            richTextBoxLogs.AppendText($@"- {drive.Name} : {T("RTBL_NetworkStorageRightsTesting_2")}" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Error")}" + Environment.NewLine);
                         }
                     }
                     else
@@ -123,7 +123,7 @@ namespace AccountTester
                         ExportVariables.NetworkStorageRights_export_DiskLetter ??= [];
                         ExportVariables.NetworkStorageRights_export_DiskLetter = ExportVariables.NetworkStorageRights_export_DiskLetter.Append(drive.Name).ToArray();
 
-                        richTextBoxLogs.AppendText($@"- {drive.Name} : {T("RTBL_NetworkStorageRightsTesting_3")}" + Environment.NewLine);
+                        richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Omitted")}" + Environment.NewLine);
                         ExportVariables.General_export_TotalSuccess++;
                     }
                 }
@@ -173,7 +173,7 @@ namespace AccountTester
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeVersionTesting_1")}" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_OfficeVersionTesting_NotFound")}" + Environment.NewLine);
                 }
             }
             catch (Exception ex)
@@ -211,13 +211,13 @@ namespace AccountTester
                 doc.Close();
                 if (File.Exists(filePath))
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_1")} : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanCreate")} : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanCreate = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_1")} : FAIL." + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanCreate")} : FAIL." + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanCreate = "False";
                     return;
                 }
@@ -230,13 +230,13 @@ namespace AccountTester
                 doc = wordApp.Documents.Open(filePath);
                 if (doc.Content.Text.Contains("Adding more fox over the lazy dog"))
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_2")} : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanSave")} : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanSave = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_2")} : FAIL" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanSave")} : FAIL" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanSave = "False";
                 }
                 doc.Close();
@@ -244,16 +244,16 @@ namespace AccountTester
                 doc = wordApp.Documents.Open(filePath);
                 if (doc.Content.Text.Contains("The quick brown fox jumps over the lazy dog"))
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_3")} : OK" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_4")} : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanRead")} : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanWrite")} : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanRead = "True";
                     ExportVariables.OfficeRights_export_CanWrite = "True";
                     ExportVariables.General_export_TotalSuccess += 2;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_3")} : FAIL" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_4")} : FAIL" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanRead")} : FAIL" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanWrite")} : FAIL" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanRead = "False";
                     ExportVariables.OfficeRights_export_CanWrite = "False";
                 }
@@ -266,13 +266,13 @@ namespace AccountTester
                 File.Delete(filePath);
                 if (!File.Exists(filePath))
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_5")} : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanDelete")} : OK" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanDelete = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("RTBL_OfficeWRTesting_5")} : FAIL" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("CanDelete")} : FAIL" + Environment.NewLine);
                     ExportVariables.OfficeRights_export_CanDelete = "False";
                 }
                 stopwatch.Stop();
@@ -296,7 +296,7 @@ namespace AccountTester
             if (PrinterSettings.InstalledPrinters.Count == 0)
             {
                 ExportVariables.General_export_TotalTests++;
-                richTextBoxLogs.AppendText($"{T("RTBL_PrinterTesting_1")}" + Environment.NewLine);
+                richTextBoxLogs.AppendText(T("NoPrinterFound") + Environment.NewLine);
                 ExportVariables.General_export_TotalSuccess++;
                 stopwatch.Stop();
                 ExportVariables.Printer_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
@@ -340,19 +340,19 @@ namespace AccountTester
                                 else
                                 {
                                     richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                    richTextBoxLogs.AppendText($"- IP : {T("RTBL_PrinterTesting_2")}" + Environment.NewLine);
+                                    richTextBoxLogs.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
                                 }
                             }
                             else
                             {
                                 richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                richTextBoxLogs.AppendText($"- {T("RTBL_PrinterTesting_3")}" + Environment.NewLine);
+                                richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
                             }
                         }
                         else
                         {
                             richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                            richTextBoxLogs.AppendText($"- {T("RTBL_PrinterTesting_4")}" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoRegKey")}" + Environment.NewLine);
                         }
                     }
                 }
@@ -390,55 +390,55 @@ namespace AccountTester
             {
                 Stopwatch stopwatch = new();
                 stopwatch.Start();
-                richTextBoxLogs.AppendText($"AccountTester - {T("RTBL_ExecutionSequentielle_1")}" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"AccountTester - {T("TestReport")}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_2")} :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### {T("Username")} :" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- {ExportVariables.General_export_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_3")} :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### {T("Internet")} :" + Environment.NewLine);
                 await InternetConnexionTest();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_4")} :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### {T("NetworkStorageRights")} :" + Environment.NewLine);
                 NetworkStorageRightsTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_5")} :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### {T("OfficeVersion")} :" + Environment.NewLine);
                 OfficeVersionTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 if (_WordIsInstalled)
                 {
                     richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_6")} :" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"#### {T("OfficeRights")} :" + Environment.NewLine);
                     OfficeWRTesting();
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_7")} :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### {T("Printer")} :" + Environment.NewLine);
                 PrinterTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("RTBL_ExecutionSequentielle_8")} :" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"#### {T("TestsFinished")} :" + Environment.NewLine);
                 stopwatch.Stop();
-                richTextBoxLogs.AppendText($"- {T("RTBL_ExecutionSequentielle_9")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"- {T("RTBL_ExecutionSequentielle_10")} : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
+                richTextBoxLogs.AppendText($"- {T("TotalTimeElapsed")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"- {T("TotalSuccess")} : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
                 ExportVariables.General_export_TotalSuccess = 0;
                 ExportVariables.General_export_TotalTests = 0;
 
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
                 player.Play();
 
-                buttonStart.Text = T("RTBL_ExecutionSequentielle_11");
+                buttonStart.Text = T("Restart");
 
                 ExportVariables.General_export_Resume = richTextBoxLogs.Text;
             }

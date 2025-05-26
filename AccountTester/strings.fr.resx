@@ -117,103 +117,220 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CopyButton" xml:space="preserve">
+  <data name="Copy" xml:space="preserve">
     <value>Copier</value>
   </data>
-  <data name="ExportButton" xml:space="preserve">
+  <data name="Export" xml:space="preserve">
     <value>Exporter</value>
   </data>
-  <data name="LabelLogs" xml:space="preserve">
+  <data name="Logs" xml:space="preserve">
     <value>Journaux :</value>
   </data>
   <data name="nullValue" xml:space="preserve">
     <value>nul</value>
   </data>
-  <data name="RTBL_ExecutionSequentielle_1" xml:space="preserve">
+  <data name="TestReport" xml:space="preserve">
     <value>Rapport de test</value>
   </data>
-  <data name="RTBL_ExecutionSequentielle_10" xml:space="preserve">
-    <value>Tests effectués</value>
-  </data>
-  <data name="RTBL_ExecutionSequentielle_11" xml:space="preserve">
+  <data name="Restart" xml:space="preserve">
     <value>Recommencer</value>
   </data>
-  <data name="RTBL_ExecutionSequentielle_2" xml:space="preserve">
-    <value>Utilisateurs</value>
-  </data>
-  <data name="RTBL_ExecutionSequentielle_3" xml:space="preserve">
+  <data name="Internet" xml:space="preserve">
     <value>Internet</value>
   </data>
-  <data name="RTBL_ExecutionSequentielle_4" xml:space="preserve">
-    <value>Disques réseaux</value>
-  </data>
-  <data name="RTBL_ExecutionSequentielle_5" xml:space="preserve">
-    <value>Version d'Office</value>
-  </data>
-  <data name="RTBL_ExecutionSequentielle_6" xml:space="preserve">
-    <value>Droits Office</value>
-  </data>
-  <data name="RTBL_ExecutionSequentielle_7" xml:space="preserve">
-    <value>Imprimantes</value>
-  </data>
-  <data name="RTBL_ExecutionSequentielle_8" xml:space="preserve">
+  <data name="TestsFinished" xml:space="preserve">
     <value>Tests terminés</value>
   </data>
-  <data name="RTBL_ExecutionSequentielle_9" xml:space="preserve">
-    <value>Temps écoulé</value>
-  </data>
-  <data name="RTBL_Internet_1" xml:space="preserve">
+  <data name="MainForm_RTBL_Internet_Connected" xml:space="preserve">
     <value>- État : Connecté</value>
   </data>
-  <data name="RTBL_Internet_2" xml:space="preserve">
+  <data name="MainForm_RTBL_Internet_Others" xml:space="preserve">
     <value>- État : </value>
   </data>
-  <data name="RTBL_NetworkStorageRightsTesting_1" xml:space="preserve">
+  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Refused" xml:space="preserve">
     <value>Écriture refusée</value>
   </data>
-  <data name="RTBL_NetworkStorageRightsTesting_2" xml:space="preserve">
+  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Error" xml:space="preserve">
     <value>Erreur de connexion</value>
   </data>
-  <data name="RTBL_NetworkStorageRightsTesting_3" xml:space="preserve">
+  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Omitted" xml:space="preserve">
     <value>Omis</value>
   </data>
-  <data name="RTBL_OfficeVersionTesting_1" xml:space="preserve">
+  <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
     <value>Version non trouvée</value>
   </data>
-  <data name="RTBL_OfficeWRTesting_1" xml:space="preserve">
-    <value>Peut créer</value>
-  </data>
-  <data name="RTBL_OfficeWRTesting_2" xml:space="preserve">
-    <value>Peut sauvegarder</value>
-  </data>
-  <data name="RTBL_OfficeWRTesting_3" xml:space="preserve">
-    <value>Peut lire</value>
-  </data>
-  <data name="RTBL_OfficeWRTesting_4" xml:space="preserve">
-    <value>Peut écrire</value>
-  </data>
-  <data name="RTBL_OfficeWRTesting_5" xml:space="preserve">
-    <value>Peut supprimer</value>
-  </data>
-  <data name="RTBL_PrinterTesting_1" xml:space="preserve">
+  <data name="NoPrinterFound" xml:space="preserve">
     <value>Aucune imprimante trouvée.</value>
   </data>
-  <data name="RTBL_PrinterTesting_2" xml:space="preserve">
+  <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
     <value>Non trouvé</value>
   </data>
-  <data name="RTBL_PrinterTesting_3" xml:space="preserve">
+  <data name="MainForm_RTBL_PrinterTesting_NoLocationValueReg" xml:space="preserve">
     <value>Emplacemet non trouvé dans le registre.</value>
   </data>
-  <data name="RTBL_PrinterTesting_4" xml:space="preserve">
+  <data name="MainForm_RTBL_PrinterTesting_NoRegKey" xml:space="preserve">
     <value>Clé de registre non trouvé pour l'imprimante.</value>
   </data>
-  <data name="StartButton" xml:space="preserve">
+  <data name="Start" xml:space="preserve">
     <value>Démarrer</value>
   </data>
-  <data name="langageToolStripMenuItem" xml:space="preserve">
+  <data name="Langage" xml:space="preserve">
     <value>Langue</value>
   </data>
-  <data name="optionsToolStripMenuItem" xml:space="preserve">
+  <data name="Options" xml:space="preserve">
     <value>Paramètres</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Rapport</value>
+  </data>
+  <data name="ExportForm_ButtonExport_MessageBox_Error" xml:space="preserve">
+    <value>Veuillez sélectionner une extension de fichier.</value>
+  </data>
+  <data name="ExportForm_ButtonExport_MessageBox_Success" xml:space="preserve">
+    <value>Le rapport a été exporté avec succès</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Nom utilisateur</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Général</value>
+  </data>
+  <data name="OperatingSystem" xml:space="preserve">
+    <value>Systeme Exploitation</value>
+  </data>
+  <data name="OSArchitecture" xml:space="preserve">
+    <value>SE Architecture</value>
+  </data>
+  <data name="TotalTests" xml:space="preserve">
+    <value>Tests totaux</value>
+  </data>
+  <data name="TotalSuccess" xml:space="preserve">
+    <value>Succès totaux</value>
+  </data>
+  <data name="InternetConnexion" xml:space="preserve">
+    <value>Connection Internet</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Heure</value>
+  </data>
+  <data name="TestedURL" xml:space="preserve">
+    <value>URL testé</value>
+  </data>
+  <data name="HTMLStatus" xml:space="preserve">
+    <value>Status HTML</value>
+  </data>
+  <data name="ResponseTime" xml:space="preserve">
+    <value>Temps réponse</value>
+  </data>
+  <data name="ConnexionType" xml:space="preserve">
+    <value>Type de connexion</value>
+  </data>
+  <data name="NetworkStorageRights" xml:space="preserve">
+    <value>Droits stockage réseau</value>
+  </data>
+  <data name="DiskLetter" xml:space="preserve">
+    <value>Lettre Disque</value>
+  </data>
+  <data name="UNCPath" xml:space="preserve">
+    <value>Chemin UNC</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Serveur</value>
+  </data>
+  <data name="ShareName" xml:space="preserve">
+    <value>Nom de partage</value>
+  </data>
+  <data name="ElapsedTime" xml:space="preserve">
+    <value>Temps écoulé</value>
+  </data>
+  <data name="OfficeVersion" xml:space="preserve">
+    <value>Version Office</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Chemin</value>
+  </data>
+  <data name="OfficeRights" xml:space="preserve">
+    <value>Droits Office</value>
+  </data>
+  <data name="CanWrite" xml:space="preserve">
+    <value>Peut écrire</value>
+  </data>
+  <data name="CanRead" xml:space="preserve">
+    <value>Peut lire</value>
+  </data>
+  <data name="CanDelete" xml:space="preserve">
+    <value>Peut supprimer</value>
+  </data>
+  <data name="CanCreate" xml:space="preserve">
+    <value>Peut créer</value>
+  </data>
+  <data name="CanSave" xml:space="preserve">
+    <value>Peut sauvegarder</value>
+  </data>
+  <data name="TestedFolder" xml:space="preserve">
+    <value>Dossier testé</value>
+  </data>
+  <data name="Printer" xml:space="preserve">
+    <value>Imprimante</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Droits</value>
+  </data>
+  <data name="NoNetworkShare" xml:space="preserve">
+    <value>Aucun partage réseau trouvé</value>
+  </data>
+  <data name="Letter" xml:space="preserve">
+    <value>Lettre</value>
+  </data>
+  <data name="Disk" xml:space="preserve">
+    <value>Disque</value>
+  </data>
+  <data name="TotalTimeElapsed" xml:space="preserve">
+    <value>Temps total écoulé</value>
+  </data>
+  <data name="OfficePath" xml:space="preserve">
+    <value>Chemin Office</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Nom de serveur</value>
+  </data>
+  <data name="ReportName" xml:space="preserve">
+    <value>Nom de rapport</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Section" xml:space="preserve">
+    <value>Section</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Clé</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Partage</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Nom fichier</value>
+  </data>
+  <data name="Extension" xml:space="preserve">
+    <value>Extension</value>
   </data>
 </root>

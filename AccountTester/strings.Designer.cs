@@ -61,38 +61,353 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can Create.
+        /// </summary>
+        internal static string CanCreate {
+            get {
+                return ResourceManager.GetString("CanCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can Delete.
+        /// </summary>
+        internal static string CanDelete {
+            get {
+                return ResourceManager.GetString("CanDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can Read.
+        /// </summary>
+        internal static string CanRead {
+            get {
+                return ResourceManager.GetString("CanRead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can Save.
+        /// </summary>
+        internal static string CanSave {
+            get {
+                return ResourceManager.GetString("CanSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Can Write.
+        /// </summary>
+        internal static string CanWrite {
+            get {
+                return ResourceManager.GetString("CanWrite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Connexion Type.
+        /// </summary>
+        internal static string ConnexionType {
+            get {
+                return ResourceManager.GetString("ConnexionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Copy.
         /// </summary>
-        internal static string CopyButton {
+        internal static string Copy {
             get {
-                return ResourceManager.GetString("CopyButton", resourceCulture);
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Date.
+        /// </summary>
+        internal static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Disk.
+        /// </summary>
+        internal static string Disk {
+            get {
+                return ResourceManager.GetString("Disk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Disk Letter.
+        /// </summary>
+        internal static string DiskLetter {
+            get {
+                return ResourceManager.GetString("DiskLetter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Driver.
+        /// </summary>
+        internal static string Driver {
+            get {
+                return ResourceManager.GetString("Driver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Elapsed Time.
+        /// </summary>
+        internal static string ElapsedTime {
+            get {
+                return ResourceManager.GetString("ElapsedTime", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Export.
         /// </summary>
-        internal static string ExportButton {
+        internal static string Export {
             get {
-                return ResourceManager.GetString("ExportButton", resourceCulture);
+                return ResourceManager.GetString("Export", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Logs :.
+        ///   Recherche une chaîne localisée semblable à Please select a file extension.
         /// </summary>
-        internal static string LabelLogs {
+        internal static string ExportForm_ButtonExport_MessageBox_Error {
             get {
-                return ResourceManager.GetString("LabelLogs", resourceCulture);
+                return ResourceManager.GetString("ExportForm_ButtonExport_MessageBox_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à The report has been exported successfully.
+        /// </summary>
+        internal static string ExportForm_ButtonExport_MessageBox_Success {
+            get {
+                return ResourceManager.GetString("ExportForm_ButtonExport_MessageBox_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Extension.
+        /// </summary>
+        internal static string Extension {
+            get {
+                return ResourceManager.GetString("Extension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à File Name.
+        /// </summary>
+        internal static string FileName {
+            get {
+                return ResourceManager.GetString("FileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à General.
+        /// </summary>
+        internal static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Hour.
+        /// </summary>
+        internal static string Hour {
+            get {
+                return ResourceManager.GetString("Hour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à HTML Status.
+        /// </summary>
+        internal static string HTMLStatus {
+            get {
+                return ResourceManager.GetString("HTMLStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Internet.
+        /// </summary>
+        internal static string Internet {
+            get {
+                return ResourceManager.GetString("Internet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Internet Connexion.
+        /// </summary>
+        internal static string InternetConnexion {
+            get {
+                return ResourceManager.GetString("InternetConnexion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Key.
+        /// </summary>
+        internal static string Key {
+            get {
+                return ResourceManager.GetString("Key", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Langage.
         /// </summary>
-        internal static string langageToolStripMenuItem {
+        internal static string Langage {
             get {
-                return ResourceManager.GetString("langageToolStripMenuItem", resourceCulture);
+                return ResourceManager.GetString("Langage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Letter.
+        /// </summary>
+        internal static string Letter {
+            get {
+                return ResourceManager.GetString("Letter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Logs :.
+        /// </summary>
+        internal static string Logs {
+            get {
+                return ResourceManager.GetString("Logs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à - Status : Connected.
+        /// </summary>
+        internal static string MainForm_RTBL_Internet_Connected {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_Internet_Connected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à - Status : .
+        /// </summary>
+        internal static string MainForm_RTBL_Internet_Others {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_Internet_Others", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Connexion error.
+        /// </summary>
+        internal static string MainForm_RTBL_NetworkStorageRightsTesting_Error {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_NetworkStorageRightsTesting_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Omitted.
+        /// </summary>
+        internal static string MainForm_RTBL_NetworkStorageRightsTesting_Omitted {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_NetworkStorageRightsTesting_Omitted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Write refused.
+        /// </summary>
+        internal static string MainForm_RTBL_NetworkStorageRightsTesting_Refused {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_NetworkStorageRightsTesting_Refused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Version not found.
+        /// </summary>
+        internal static string MainForm_RTBL_OfficeVersionTesting_NotFound {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_OfficeVersionTesting_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Location value not found in registry..
+        /// </summary>
+        internal static string MainForm_RTBL_PrinterTesting_NoLocationValueReg {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoLocationValueReg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Registry key not found for printer..
+        /// </summary>
+        internal static string MainForm_RTBL_PrinterTesting_NoRegKey {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoRegKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Not found.
+        /// </summary>
+        internal static string MainForm_RTBL_PrinterTesting_NotFound {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Network Storage Rights.
+        /// </summary>
+        internal static string NetworkStorageRights {
+            get {
+                return ResourceManager.GetString("NetworkStorageRights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No network share found.
+        /// </summary>
+        internal static string NoNetworkShare {
+            get {
+                return ResourceManager.GetString("NoNetworkShare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à No printer found..
+        /// </summary>
+        internal static string NoPrinterFound {
+            get {
+                return ResourceManager.GetString("NoPrinterFound", resourceCulture);
             }
         }
         
@@ -106,254 +421,290 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Office Path.
+        /// </summary>
+        internal static string OfficePath {
+            get {
+                return ResourceManager.GetString("OfficePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Office Rights.
+        /// </summary>
+        internal static string OfficeRights {
+            get {
+                return ResourceManager.GetString("OfficeRights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Office Version.
+        /// </summary>
+        internal static string OfficeVersion {
+            get {
+                return ResourceManager.GetString("OfficeVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Operating System.
+        /// </summary>
+        internal static string OperatingSystem {
+            get {
+                return ResourceManager.GetString("OperatingSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Options.
         /// </summary>
-        internal static string optionsToolStripMenuItem {
+        internal static string Options {
             get {
-                return ResourceManager.GetString("optionsToolStripMenuItem", resourceCulture);
+                return ResourceManager.GetString("Options", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Test report.
+        ///   Recherche une chaîne localisée semblable à OS Architecture.
         /// </summary>
-        internal static string RTBL_ExecutionSequentielle_1 {
+        internal static string OSArchitecture {
             get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_1", resourceCulture);
+                return ResourceManager.GetString("OSArchitecture", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Passed tests.
+        ///   Recherche une chaîne localisée semblable à Path.
         /// </summary>
-        internal static string RTBL_ExecutionSequentielle_10 {
+        internal static string Path {
             get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_10", resourceCulture);
+                return ResourceManager.GetString("Path", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Restart.
+        ///   Recherche une chaîne localisée semblable à Port.
         /// </summary>
-        internal static string RTBL_ExecutionSequentielle_11 {
+        internal static string Port {
             get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_11", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Users.
-        /// </summary>
-        internal static string RTBL_ExecutionSequentielle_2 {
-            get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Internet.
-        /// </summary>
-        internal static string RTBL_ExecutionSequentielle_3 {
-            get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Network drives.
-        /// </summary>
-        internal static string RTBL_ExecutionSequentielle_4 {
-            get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Office version.
-        /// </summary>
-        internal static string RTBL_ExecutionSequentielle_5 {
-            get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Office rights.
-        /// </summary>
-        internal static string RTBL_ExecutionSequentielle_6 {
-            get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_6", resourceCulture);
+                return ResourceManager.GetString("Port", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Printer.
         /// </summary>
-        internal static string RTBL_ExecutionSequentielle_7 {
+        internal static string Printer {
             get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_7", resourceCulture);
+                return ResourceManager.GetString("Printer", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Tests finished..
+        ///   Recherche une chaîne localisée semblable à Report.
         /// </summary>
-        internal static string RTBL_ExecutionSequentielle_8 {
+        internal static string Report {
             get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_8", resourceCulture);
+                return ResourceManager.GetString("Report", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Total time elapsed.
+        ///   Recherche une chaîne localisée semblable à Report name.
         /// </summary>
-        internal static string RTBL_ExecutionSequentielle_9 {
+        internal static string ReportName {
             get {
-                return ResourceManager.GetString("RTBL_ExecutionSequentielle_9", resourceCulture);
+                return ResourceManager.GetString("ReportName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à - Status : Connected.
+        ///   Recherche une chaîne localisée semblable à Response Time.
         /// </summary>
-        internal static string RTBL_Internet_1 {
+        internal static string ResponseTime {
             get {
-                return ResourceManager.GetString("RTBL_Internet_1", resourceCulture);
+                return ResourceManager.GetString("ResponseTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à - Status : .
+        ///   Recherche une chaîne localisée semblable à Restart.
         /// </summary>
-        internal static string RTBL_Internet_2 {
+        internal static string Restart {
             get {
-                return ResourceManager.GetString("RTBL_Internet_2", resourceCulture);
+                return ResourceManager.GetString("Restart", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Write refused.
+        ///   Recherche une chaîne localisée semblable à Rights.
         /// </summary>
-        internal static string RTBL_NetworkStorageRightsTesting_1 {
+        internal static string Rights {
             get {
-                return ResourceManager.GetString("RTBL_NetworkStorageRightsTesting_1", resourceCulture);
+                return ResourceManager.GetString("Rights", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Connexion error.
+        ///   Recherche une chaîne localisée semblable à Section.
         /// </summary>
-        internal static string RTBL_NetworkStorageRightsTesting_2 {
+        internal static string Section {
             get {
-                return ResourceManager.GetString("RTBL_NetworkStorageRightsTesting_2", resourceCulture);
+                return ResourceManager.GetString("Section", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Omitted.
+        ///   Recherche une chaîne localisée semblable à Server.
         /// </summary>
-        internal static string RTBL_NetworkStorageRightsTesting_3 {
+        internal static string Server {
             get {
-                return ResourceManager.GetString("RTBL_NetworkStorageRightsTesting_3", resourceCulture);
+                return ResourceManager.GetString("Server", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Version not found.
+        ///   Recherche une chaîne localisée semblable à Server Name.
         /// </summary>
-        internal static string RTBL_OfficeVersionTesting_1 {
+        internal static string ServerName {
             get {
-                return ResourceManager.GetString("RTBL_OfficeVersionTesting_1", resourceCulture);
+                return ResourceManager.GetString("ServerName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can create.
+        ///   Recherche une chaîne localisée semblable à Share.
         /// </summary>
-        internal static string RTBL_OfficeWRTesting_1 {
+        internal static string Share {
             get {
-                return ResourceManager.GetString("RTBL_OfficeWRTesting_1", resourceCulture);
+                return ResourceManager.GetString("Share", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can save.
+        ///   Recherche une chaîne localisée semblable à Share Name.
         /// </summary>
-        internal static string RTBL_OfficeWRTesting_2 {
+        internal static string ShareName {
             get {
-                return ResourceManager.GetString("RTBL_OfficeWRTesting_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can read.
-        /// </summary>
-        internal static string RTBL_OfficeWRTesting_3 {
-            get {
-                return ResourceManager.GetString("RTBL_OfficeWRTesting_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can write.
-        /// </summary>
-        internal static string RTBL_OfficeWRTesting_4 {
-            get {
-                return ResourceManager.GetString("RTBL_OfficeWRTesting_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Can delete.
-        /// </summary>
-        internal static string RTBL_OfficeWRTesting_5 {
-            get {
-                return ResourceManager.GetString("RTBL_OfficeWRTesting_5", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à No printer found..
-        /// </summary>
-        internal static string RTBL_PrinterTesting_1 {
-            get {
-                return ResourceManager.GetString("RTBL_PrinterTesting_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Not found.
-        /// </summary>
-        internal static string RTBL_PrinterTesting_2 {
-            get {
-                return ResourceManager.GetString("RTBL_PrinterTesting_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Location value not found in registry..
-        /// </summary>
-        internal static string RTBL_PrinterTesting_3 {
-            get {
-                return ResourceManager.GetString("RTBL_PrinterTesting_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Registry key not found for printer..
-        /// </summary>
-        internal static string RTBL_PrinterTesting_4 {
-            get {
-                return ResourceManager.GetString("RTBL_PrinterTesting_4", resourceCulture);
+                return ResourceManager.GetString("ShareName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Recherche une chaîne localisée semblable à Start.
         /// </summary>
-        internal static string StartButton {
+        internal static string Start {
             get {
-                return ResourceManager.GetString("StartButton", resourceCulture);
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Status.
+        /// </summary>
+        internal static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Tested Folder.
+        /// </summary>
+        internal static string TestedFolder {
+            get {
+                return ResourceManager.GetString("TestedFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Tested URL.
+        /// </summary>
+        internal static string TestedURL {
+            get {
+                return ResourceManager.GetString("TestedURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Test Report.
+        /// </summary>
+        internal static string TestReport {
+            get {
+                return ResourceManager.GetString("TestReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Tests finished.
+        /// </summary>
+        internal static string TestsFinished {
+            get {
+                return ResourceManager.GetString("TestsFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Total Success.
+        /// </summary>
+        internal static string TotalSuccess {
+            get {
+                return ResourceManager.GetString("TotalSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Total Tests.
+        /// </summary>
+        internal static string TotalTests {
+            get {
+                return ResourceManager.GetString("TotalTests", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Total time elapsed.
+        /// </summary>
+        internal static string TotalTimeElapsed {
+            get {
+                return ResourceManager.GetString("TotalTimeElapsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à UNC Path.
+        /// </summary>
+        internal static string UNCPath {
+            get {
+                return ResourceManager.GetString("UNCPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Username.
+        /// </summary>
+        internal static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Value.
+        /// </summary>
+        internal static string Value {
+            get {
+                return ResourceManager.GetString("Value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Version.
+        /// </summary>
+        internal static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
     }

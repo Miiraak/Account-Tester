@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Resources;
+using System.Text;
 
 namespace AccountTester
 {
@@ -37,6 +38,31 @@ namespace AccountTester
         public string Translate(string key)
         {
             return _resourceManager.GetString(key, _culture) ?? $"!{key}!";
+        }
+
+        public string TrimTranslate(string key)
+        {
+            var translation = _resourceManager.GetString(key, _culture) ?? $"!{key}!";
+            var words = translation
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(word => RemoveDiacritics(word))
+                .Select(word => char.ToUpper(word[0]) + word.Substring(1).ToLowerInvariant());
+
+            return string.Join("", words);
+        }
+
+        string RemoveDiacritics(string text)
+        {
+            var normalized = text.Normalize(NormalizationForm.FormD);
+            var sb = new StringBuilder();
+
+            foreach (var c in normalized)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                    sb.Append(c);
+            }
+
+            return sb.ToString().Normalize(NormalizationForm.FormC);
         }
 
         public string CurrentCulture => _culture.Name;
