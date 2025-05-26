@@ -57,12 +57,12 @@ namespace AccountTester
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"{"MainForm_RTBL_Internet_Others"}" + response.StatusCode + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Others")}" + response.StatusCode + Environment.NewLine);
                 }
             }
             catch (Exception ex)
             {
-                richTextBoxLogs.AppendText($"{"MainForm_RTBL_Internet_Others"}" + ex.InnerException?.Message + Environment.NewLine);
+                richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Others")}" + ex.InnerException?.Message + Environment.NewLine);
             }
 
             stopwatch.Stop();

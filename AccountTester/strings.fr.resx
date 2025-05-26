@@ -166,10 +166,10 @@
     <value>Non trouvé</value>
   </data>
   <data name="MainForm_RTBL_PrinterTesting_NoLocationValueReg" xml:space="preserve">
-    <value>Emplacemet non trouvé dans le registre.</value>
+    <value>Emplacement non trouvé dans le registre.</value>
   </data>
   <data name="MainForm_RTBL_PrinterTesting_NoRegKey" xml:space="preserve">
-    <value>Clé de registre non trouvé pour l'imprimante.</value>
+    <value>Clé de registre non trouvée pour l'imprimante.</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Démarrer</value>

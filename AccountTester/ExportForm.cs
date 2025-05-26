@@ -115,7 +115,7 @@ namespace AccountTester
             sw.WriteLine($"{T("OperatingSystem")}: {ExportVariables.General_export_DeviceOS}");
             sw.WriteLine($"{T("OSArchitecture")}: {ExportVariables.General_export_OSArchitecture}\n\n");
 
-            sw.WriteLine(T("InternetConnection"));
+            sw.WriteLine(T("InternetConnexion"));
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {ExportVariables.InternetConnexion_export_Hour}");
             sw.WriteLine($"{T("TestedURL")}: {ExportVariables.InternetConnexion_export_TestedURL}");
@@ -224,7 +224,7 @@ namespace AccountTester
             XMLW(doc, general, TT("TotalTests"), ExportVariables.General_export_TotalTests.ToString());
             XMLW(doc, general, TT("TotalSuccess"), ExportVariables.General_export_TotalSuccess.ToString());
 
-            XmlElement internetConnection = doc.CreateElement(TT("InternetConnection"));
+            XmlElement internetConnection = doc.CreateElement(TT("InternetConnexion"));
             root.AppendChild(internetConnection);
             XMLW(doc, internetConnection, TT("Hour"), ExportVariables.InternetConnexion_export_Hour);
             XMLW(doc, internetConnection, TT("TestedURL"), ExportVariables.InternetConnexion_export_TestedURL);
