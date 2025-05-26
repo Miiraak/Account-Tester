@@ -6,8 +6,8 @@ namespace AccountTester
 {
     internal class LangManager
     {
-        private static LangManager _instance;
-        private ResourceManager _resourceManager;
+        private static LangManager? _instance;
+        private readonly ResourceManager _resourceManager;
         private CultureInfo _culture;
         public event Action? LanguageChanged;
 
@@ -21,10 +21,7 @@ namespace AccountTester
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new LangManager();
-                }
+                _instance ??= new LangManager();
                 return _instance;
             }
         }
@@ -51,7 +48,7 @@ namespace AccountTester
             return string.Join("", words);
         }
 
-        string RemoveDiacritics(string text)
+        static string RemoveDiacritics(string text)
         {
             var normalized = text.Normalize(NormalizationForm.FormD);
             var sb = new StringBuilder();

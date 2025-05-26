@@ -9,7 +9,7 @@ namespace AccountTester
 {
     public partial class MainForm : Form
     {
-        string T(string key) => LangManager.Instance.Translate(key);
+        static string T(string key) => LangManager.Instance.Translate(key);
         bool _WordIsInstalled = false;
 
         public MainForm()
