@@ -5,10 +5,25 @@ namespace AccountTester
 {
     public partial class ExportForm : Form
     {
+        static string T(string key) => LangManager.Instance.Translate(key);
+        static string TT(string key) => LangManager.Instance.TrimTranslate(key);
+
         public ExportForm()
         {
             InitializeComponent();
             comboBoxExtension.SelectedIndex = 0;
+
+            UpdateTexts();
+            LangManager.Instance.LanguageChanged += UpdateTexts;
+        }
+
+        private void UpdateTexts()
+        {
+            this.Text = T("Export");
+            labelFile.Text = $"{T("FileName")} :";
+            labelPath.Text = $"{T("Path")} :";
+            labelExtension.Text = $"{T("Extension")} :";
+            buttonExport.Text = T("Export");
         }
 
         /// <summary>
@@ -37,7 +52,7 @@ namespace AccountTester
             string extension;
 
             if (textBoxFileName.Text.Trim() == "")
-                fileName = $"TestReport_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
+                fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
             else
                 fileName = textBoxFileName.Text;
 
@@ -48,7 +63,7 @@ namespace AccountTester
 
             if (comboBoxExtension.Text == "")
             {
-                MessageBox.Show("Please select a file extension.");
+                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Error")}.");
                 return;
             }
             else
@@ -76,7 +91,7 @@ namespace AccountTester
                     break;
             }
 
-            MessageBox.Show("The report has been exported successfully.");
+            MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
             this.Close();
         }
 
@@ -92,84 +107,83 @@ namespace AccountTester
 
             using StreamWriter sw = new(path);
             sw.WriteLine(fileName);
-            sw.WriteLine($"Date: {ExportVariables.General_DateAndHour}");
-            sw.WriteLine($"Username: {ExportVariables.General_export_UserName}\n\n");
+            sw.WriteLine($"{T("Date")}: {ExportVariables.General_DateAndHour}");
+            sw.WriteLine($"{T("Username")}: {ExportVariables.General_export_UserName}\n\n");
 
-            sw.WriteLine("General");
+            sw.WriteLine(T("General"));
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Operating system: {ExportVariables.General_export_DeviceOS}");
-            sw.WriteLine($"OS architectury: {ExportVariables.General_export_OSArchitecture}\n\n");
+            sw.WriteLine($"{T("OperatingSystem")}: {ExportVariables.General_export_DeviceOS}");
+            sw.WriteLine($"{T("OSArchitecture")}: {ExportVariables.General_export_OSArchitecture}\n\n");
 
-            sw.WriteLine("Internet connection");
+            sw.WriteLine(T("InternetConnexion"));
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Hour: {ExportVariables.InternetConnexion_export_Hour}");
-            sw.WriteLine($"Tested URL: {ExportVariables.InternetConnexion_export_TestedURL}");
-            sw.WriteLine($"HTML status: {ExportVariables.InternetConnexion_export_HTMLStatut}");
-            sw.WriteLine($"Response time: {ExportVariables.InternetConnexion_export_ElapsedTime} ms\n\n");
+            sw.WriteLine($"{T("Hour")}: {ExportVariables.InternetConnexion_export_Hour}");
+            sw.WriteLine($"{T("TestedURL")}: {ExportVariables.InternetConnexion_export_TestedURL}");
+            sw.WriteLine($"{T("HTMLStatus")}: {ExportVariables.InternetConnexion_export_HTMLStatut}");
+            sw.WriteLine($"{T("ResponseTime")}: {ExportVariables.InternetConnexion_export_ElapsedTime} ms\n\n");
 
-            sw.WriteLine("Network storage rights");
+            sw.WriteLine(T("NetworkStorageRights"));
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Hour: {ExportVariables.NetworkStorageRights_export_Hour}");
-            sw.WriteLine($"Connexion Type : {ExportVariables.NetworkStorageRights_export_ConnexionType}");
-            sw.WriteLine("Disk:");
+            sw.WriteLine($"{T("Hour")}: {ExportVariables.NetworkStorageRights_export_Hour}");
+            sw.WriteLine($"{T("ConnexionType")} : {ExportVariables.NetworkStorageRights_export_ConnexionType}");
+            sw.WriteLine($"{T("Disk")}:");
             if (ExportVariables.NetworkStorageRights_export_DiskLetter != null)
             {
                 foreach (string diskLetter in ExportVariables.NetworkStorageRights_export_DiskLetter)
                 {
-                    sw.WriteLine($"Letter: {diskLetter}");
-                    sw.WriteLine($"UNC path: {ExportVariables.NetworkStorageRights_export_CheminUNC?[i]}");
-                    sw.WriteLine($"Server: {ExportVariables.NetworkStorageRights_export_Serveur?[i]}");
-                    sw.WriteLine($"Share name: {ExportVariables.NetworkStorageRights_export_ShareName?[i]}");
+                    sw.WriteLine($"{T("Letter")}: {diskLetter}");
+                    sw.WriteLine($"{T("UNCPath")}: {ExportVariables.NetworkStorageRights_export_CheminUNC?[i]}");
+                    sw.WriteLine($"{T("Server")}: {ExportVariables.NetworkStorageRights_export_Serveur?[i]}");
+                    sw.WriteLine($"{T("ShareName")}: {ExportVariables.NetworkStorageRights_export_ShareName?[i]}");
                     i++;
                 }
             }
             else
             {
-                sw.WriteLine("No network share found");
+                sw.WriteLine(T("NoNetworkShare"));
             }
-            sw.WriteLine($"Time elapsed: {ExportVariables.NetworkStorageRights_export_ElapsedTime} ms\n\n");
+            sw.WriteLine($"{T("ElapsedTime")}: {ExportVariables.NetworkStorageRights_export_ElapsedTime} ms\n\n");
             i = 0;
 
-            sw.WriteLine("Office version");
+            sw.WriteLine("Office");
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Hour: {ExportVariables.OfficeVersion_export_Hour}");
-            sw.WriteLine($"Office version: {ExportVariables.OfficeVersion_export_OfficeVersion}");
-            sw.WriteLine($"Office path: {ExportVariables.OfficeVersion_export_OfficePath}");
-            sw.WriteLine($"Time elapsed: {ExportVariables.OfficeVersion_export_ElapsedTime} ms\n\n");
+            sw.WriteLine($"{T("Hour")}: {ExportVariables.OfficeVersion_export_Hour}");
+            sw.WriteLine($"{T("OfficeVersion")}: {ExportVariables.OfficeVersion_export_OfficeVersion}");
+            sw.WriteLine($"{T("OfficePath")}: {ExportVariables.OfficeVersion_export_OfficePath}");
+            sw.WriteLine($"{T("ElapsedTime")}: {ExportVariables.OfficeVersion_export_ElapsedTime} ms\n\n");
 
-            sw.WriteLine("Office rights");
+            sw.WriteLine(T("OfficeRights"));
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Hour: {ExportVariables.OfficeRights_export_Hour}");
-            sw.WriteLine($"Can write: {ExportVariables.OfficeRights_export_CanWrite}");
-            sw.WriteLine($"Can read: {ExportVariables.OfficeRights_export_CanRead}");
-            sw.WriteLine($"Can delete: {ExportVariables.OfficeRights_export_CanDelete}");
-            sw.WriteLine($"Can create: {ExportVariables.OfficeRights_export_CanCreate}");
-            sw.WriteLine($"Can save: {ExportVariables.OfficeRights_export_CanSave}");
-            sw.WriteLine("Folder tested: ");
-            sw.WriteLine($"- {ExportVariables.OfficeRights_export_FolderTested}");
-            sw.WriteLine();
-            sw.WriteLine($"Time elapsed: {ExportVariables.OfficeRights_export_ElapsedTime} ms\n\n");
+            sw.WriteLine($"{T("Hour")}: {ExportVariables.OfficeRights_export_Hour}");
+            sw.WriteLine($"{T("CanWrite")}: {ExportVariables.OfficeRights_export_CanWrite}");
+            sw.WriteLine($"{T("CanRead")}: {ExportVariables.OfficeRights_export_CanRead}");
+            sw.WriteLine($"{T("CanDelete")}: {ExportVariables.OfficeRights_export_CanDelete}");
+            sw.WriteLine($"{T("CanCreate")}: {ExportVariables.OfficeRights_export_CanCreate}");
+            sw.WriteLine($"{T("CanSave")}: {ExportVariables.OfficeRights_export_CanSave}");
+            sw.WriteLine($"{T("TestedFolder")}: ");
+            sw.WriteLine($"- {ExportVariables.OfficeRights_export_FolderTested}\n");
+            sw.WriteLine($"{T("ElapsedTime")}: {ExportVariables.OfficeRights_export_ElapsedTime} ms\n\n");
 
-            sw.WriteLine("Printer");
+            sw.WriteLine(T("Printer"));
             sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"Hour: {ExportVariables.Printer_export_Hour}");
-            sw.WriteLine("Printer name:");
+            sw.WriteLine($"{T("Hour")}: {ExportVariables.Printer_export_Hour}");
+            sw.WriteLine($"{T("Name")}:");
             if (ExportVariables.Printer_export_PrinterName != null)
             {
                 foreach (string printerName in ExportVariables.Printer_export_PrinterName)
                 {
                     sw.WriteLine($"- {printerName}");
-                    sw.WriteLine($"Status: {ExportVariables.Printer_export_PrinterStatus?[i]}");
-                    sw.WriteLine($"Printer pilots: {ExportVariables.Printer_export_PrinterDriver?[i]}");
-                    sw.WriteLine($"Printer port: {ExportVariables.Printer_export_PrinterPort?[i]}");
+                    sw.WriteLine($"{T("Status")}: {ExportVariables.Printer_export_PrinterStatus?[i]}");
+                    sw.WriteLine($"{T("Driver")}: {ExportVariables.Printer_export_PrinterDriver?[i]}");
+                    sw.WriteLine($"{T("Port")}: {ExportVariables.Printer_export_PrinterPort?[i]}");
                     i++;
                 }
             }
             else
             {
-                sw.WriteLine("No printer found");
+                sw.WriteLine(T("NoPrinterFound"));
             }
-            sw.WriteLine($"Time elapsed: {ExportVariables.Printer_export_ElapsedTime} ms\n\n");
+            sw.WriteLine($"{T("ElapsedTime")}: {ExportVariables.Printer_export_ElapsedTime} ms\n\n");
             i = 0;
 
             sw.Close();
@@ -201,58 +215,58 @@ namespace AccountTester
             XmlElement root = doc.CreateElement(fileName);
             doc.AppendChild(root);
 
-            XmlElement general = doc.CreateElement("General");
+            XmlElement general = doc.CreateElement(TT("General"));
             root.AppendChild(general);
-            JSONW(doc, general, "OperatingSystem", ExportVariables.General_export_DeviceOS);
-            JSONW(doc, general, "OSArchitecture", ExportVariables.General_export_OSArchitecture);
-            JSONW(doc, general, "Username", ExportVariables.General_export_UserName);
-            JSONW(doc, general, "Date", ExportVariables.General_DateAndHour);
-            JSONW(doc, general, "TotalTests", ExportVariables.General_export_TotalTests.ToString());
-            JSONW(doc, general, "TotalSuccess", ExportVariables.General_export_TotalSuccess.ToString());
+            XMLW(doc, general, TT("OperatingSystem"), ExportVariables.General_export_DeviceOS);
+            XMLW(doc, general, TT("OSArchitecture"), ExportVariables.General_export_OSArchitecture);
+            XMLW(doc, general, TT("Username"), ExportVariables.General_export_UserName);
+            XMLW(doc, general, TT("Date"), ExportVariables.General_DateAndHour);
+            XMLW(doc, general, TT("TotalTests"), ExportVariables.General_export_TotalTests.ToString());
+            XMLW(doc, general, TT("TotalSuccess"), ExportVariables.General_export_TotalSuccess.ToString());
 
-            XmlElement internetConnection = doc.CreateElement("InternetConnection");
+            XmlElement internetConnection = doc.CreateElement(TT("InternetConnexion"));
             root.AppendChild(internetConnection);
-            JSONW(doc, internetConnection, "Hour", ExportVariables.InternetConnexion_export_Hour);
-            JSONW(doc, internetConnection, "TestedURL", ExportVariables.InternetConnexion_export_TestedURL);
-            JSONW(doc, internetConnection, "HTMLStatus", ExportVariables.InternetConnexion_export_HTMLStatut);
-            JSONW(doc, internetConnection, "ResponseTime", ExportVariables.InternetConnexion_export_ElapsedTime);
+            XMLW(doc, internetConnection, TT("Hour"), ExportVariables.InternetConnexion_export_Hour);
+            XMLW(doc, internetConnection, TT("TestedURL"), ExportVariables.InternetConnexion_export_TestedURL);
+            XMLW(doc, internetConnection, TT("HTMLStatus"), ExportVariables.InternetConnexion_export_HTMLStatut);
+            XMLW(doc, internetConnection, TT("ResponseTime"), ExportVariables.InternetConnexion_export_ElapsedTime);
 
-            XmlElement networkStorageRights = doc.CreateElement("NetworkStorageRights");
+            XmlElement networkStorageRights = doc.CreateElement(TT("NetworkStorageRights"));
             root.AppendChild(networkStorageRights);
-            JSONW(doc, networkStorageRights, "Hour", ExportVariables.NetworkStorageRights_export_Hour);
-            JSONW(doc, networkStorageRights, "ConnexionType", ExportVariables.NetworkStorageRights_export_ConnexionType);
-            JSONWL(doc, networkStorageRights, "DiskLetter", ExportVariables.NetworkStorageRights_export_DiskLetter, "Disk");
-            JSONWL(doc, networkStorageRights, "UNCPath", ExportVariables.NetworkStorageRights_export_CheminUNC, "Path");
-            JSONWL(doc, networkStorageRights, "Server", ExportVariables.NetworkStorageRights_export_Serveur, "ServerName");
-            JSONWL(doc, networkStorageRights, "Share", ExportVariables.NetworkStorageRights_export_ShareName, "ShareName");
-            JSONW(doc, networkStorageRights, "ElapsedTime", ExportVariables.NetworkStorageRights_export_ElapsedTime);
+            XMLW(doc, networkStorageRights, TT("Hour"), ExportVariables.NetworkStorageRights_export_Hour);
+            XMLW(doc, networkStorageRights, TT("ConnexionType"), ExportVariables.NetworkStorageRights_export_ConnexionType);
+            XMLWL(doc, networkStorageRights, TT("DiskLetter"), ExportVariables.NetworkStorageRights_export_DiskLetter, TT("Disk"));
+            XMLWL(doc, networkStorageRights, TT("UNCPath"), ExportVariables.NetworkStorageRights_export_CheminUNC, TT("Path"));
+            XMLWL(doc, networkStorageRights, TT("Server"), ExportVariables.NetworkStorageRights_export_Serveur, TT("ServerName"));
+            XMLWL(doc, networkStorageRights, TT("Share"), ExportVariables.NetworkStorageRights_export_ShareName, TT("ShareName"));
+            XMLW(doc, networkStorageRights, TT("ElapsedTime"), ExportVariables.NetworkStorageRights_export_ElapsedTime);
 
-            XmlElement officeVersion = doc.CreateElement("OfficeVersion");
+            XmlElement officeVersion = doc.CreateElement(TT("OfficeVersion"));
             root.AppendChild(officeVersion);
-            JSONW(doc, officeVersion, "Hour", ExportVariables.OfficeVersion_export_Hour);
-            JSONW(doc, officeVersion, "Version", ExportVariables.OfficeVersion_export_OfficeVersion);
-            JSONW(doc, officeVersion, "Path", ExportVariables.OfficeVersion_export_OfficePath);
-            JSONW(doc, officeVersion, "ElapsedTime", ExportVariables.OfficeVersion_export_ElapsedTime);
+            XMLW(doc, officeVersion, TT("Hour"), ExportVariables.OfficeVersion_export_Hour);
+            XMLW(doc, officeVersion, TT("Version"), ExportVariables.OfficeVersion_export_OfficeVersion);
+            XMLW(doc, officeVersion, TT("Path"), ExportVariables.OfficeVersion_export_OfficePath);
+            XMLW(doc, officeVersion, TT("ElapsedTime"), ExportVariables.OfficeVersion_export_ElapsedTime);
 
-            XmlElement officeRights = doc.CreateElement("OfficeRights");
+            XmlElement officeRights = doc.CreateElement(TT("OfficeRights"));
             root.AppendChild(officeRights);
-            JSONW(doc, officeRights, "Hour", ExportVariables.OfficeRights_export_Hour);
-            JSONW(doc, officeRights, "CanWrite", ExportVariables.OfficeRights_export_CanWrite);
-            JSONW(doc, officeRights, "CanRead", ExportVariables.OfficeRights_export_CanRead);
-            JSONW(doc, officeRights, "CanDelete", ExportVariables.OfficeRights_export_CanDelete);
-            JSONW(doc, officeRights, "CanCreate", ExportVariables.OfficeRights_export_CanCreate);
-            JSONW(doc, officeRights, "CanSave", ExportVariables.OfficeRights_export_CanSave);
-            JSONW(doc, officeRights, "TestedFolder", ExportVariables.OfficeRights_export_FolderTested);
-            JSONW(doc, officeRights, "ElapsedTime", ExportVariables.OfficeRights_export_ElapsedTime);
+            XMLW(doc, officeRights, TT("Hour"), ExportVariables.OfficeRights_export_Hour);
+            XMLW(doc, officeRights, TT("CanWrite"), ExportVariables.OfficeRights_export_CanWrite);
+            XMLW(doc, officeRights, TT("CanRead"), ExportVariables.OfficeRights_export_CanRead);
+            XMLW(doc, officeRights, TT("CanDelete"), ExportVariables.OfficeRights_export_CanDelete);
+            XMLW(doc, officeRights, TT("CanCreate"), ExportVariables.OfficeRights_export_CanCreate);
+            XMLW(doc, officeRights, TT("CanSave"), ExportVariables.OfficeRights_export_CanSave);
+            XMLW(doc, officeRights, TT("TestedFolder"), ExportVariables.OfficeRights_export_FolderTested);
+            XMLW(doc, officeRights, TT("ElapsedTime"), ExportVariables.OfficeRights_export_ElapsedTime);
 
-            XmlElement printer = doc.CreateElement("Printer");
+            XmlElement printer = doc.CreateElement(TT("Printer"));
             root.AppendChild(printer);
-            JSONW(doc, printer, "Hour", ExportVariables.Printer_export_Hour);
-            JSONWL(doc, printer, "PrinterName", ExportVariables.Printer_export_PrinterName, "Printer");
-            JSONWL(doc, printer, "PrinterStatus", ExportVariables.Printer_export_PrinterStatus, "Status");
-            JSONWL(doc, printer, "PrinterDriver", ExportVariables.Printer_export_PrinterDriver, "Driver");
-            JSONWL(doc, printer, "PrinterPort", ExportVariables.Printer_export_PrinterPort, "Port");
-            JSONW(doc, printer, "ElapsedTime", ExportVariables.Printer_export_ElapsedTime);
+            XMLW(doc, printer, TT("Hour"), ExportVariables.Printer_export_Hour);
+            XMLWL(doc, printer, TT("Printer") + TT("Name"), ExportVariables.Printer_export_PrinterName, TT("Printer"));
+            XMLWL(doc, printer, TT("Printer") + TT("Status"), ExportVariables.Printer_export_PrinterStatus, TT("Status"));
+            XMLWL(doc, printer, TT("Printer") + TT("Driver"), ExportVariables.Printer_export_PrinterDriver, TT("Driver"));
+            XMLWL(doc, printer, TT("Printer") + TT("Port"), ExportVariables.Printer_export_PrinterPort, TT("Port"));
+            XMLW(doc, printer, TT("ElapsedTime"), ExportVariables.Printer_export_ElapsedTime);
 
             string path = Path.Combine(filePath, $"{fileName}.xml");
             doc.Save(path);
@@ -265,7 +279,7 @@ namespace AccountTester
         /// <param name="root">The parent node</param>
         /// <param name="title">Name of the child node</param>
         /// <param name="value">A value</param>
-        public static void JSONW(XmlDocument doc, XmlElement root, string title, string value)
+        public static void XMLW(XmlDocument doc, XmlElement root, string title, string value)
         {
             XmlElement child = doc.CreateElement(title);
             child.InnerText = value;
@@ -280,7 +294,7 @@ namespace AccountTester
         /// <param name="title">Name of the child node</param>
         /// <param name="value">A list of values</param>
         /// <param name="child_value">Name of the child node for each value</param>
-        private static void JSONWL(XmlDocument doc, XmlElement root, string title, string[]? value, string child_value)
+        private static void XMLWL(XmlDocument doc, XmlElement root, string title, string[]? value, string child_value)
         {
             XmlElement child = doc.CreateElement(title);
             if (value != null)
@@ -304,75 +318,75 @@ namespace AccountTester
         {
             string path = Path.Combine(filePath, $"{fileName}.csv");
             using StreamWriter sw = new(path);
-            CSVWL("Section", "Key", "Value", sw);
+            CSVWL(T("Section"), T("Key"), T("Value"), sw);
 
-            CSVWL("General", "Report name", fileName, sw);
-            CSVWL("General", "Date/Hour", ExportVariables.General_DateAndHour, sw);
-            CSVWL("General", "Operating system", ExportVariables.General_export_DeviceOS, sw);
-            CSVWL("General", "OS architectury", ExportVariables.General_export_OSArchitecture, sw);
-            CSVWL("General", "Username", ExportVariables.General_export_UserName, sw);
-            CSVWL("General", "Total tests", ExportVariables.General_export_TotalTests.ToString(), sw);
-            CSVWL("General", "Total succes", ExportVariables.General_export_TotalSuccess.ToString(), sw);
+            CSVWL(T("General"), T("ReportName"), fileName, sw);
+            CSVWL(T("General"), $"{T("Date")}/{T("Hour")}", ExportVariables.General_DateAndHour, sw);
+            CSVWL(T("General"), T("OperatingSystem"), ExportVariables.General_export_DeviceOS, sw);
+            CSVWL(T("General"), T("OSArchitecture"), ExportVariables.General_export_OSArchitecture, sw);
+            CSVWL(T("General"), T("Username"), ExportVariables.General_export_UserName, sw);
+            CSVWL(T("General"), T("TotalTests"), ExportVariables.General_export_TotalTests.ToString(), sw);
+            CSVWL(T("General"), T("TotalSuccess"), ExportVariables.General_export_TotalSuccess.ToString(), sw);
 
-            CSVWL("Internet Connexion", "Hour", ExportVariables.InternetConnexion_export_Hour, sw);
-            CSVWL("Internet Connexion", "Tested URL", ExportVariables.InternetConnexion_export_TestedURL, sw);
-            CSVWL("Internet Connexion", "HTML status", ExportVariables.InternetConnexion_export_HTMLStatut, sw);
-            CSVWL("Internet Connexion", "Response time (ms)", ExportVariables.InternetConnexion_export_ElapsedTime, sw);
+            CSVWL(T("InternetConnexion"), T("Hour"), ExportVariables.InternetConnexion_export_Hour, sw);
+            CSVWL(T("InternetConnexion"), T("TestedURL"), ExportVariables.InternetConnexion_export_TestedURL, sw);
+            CSVWL(T("InternetConnexion"), T("HTMLStatus"), ExportVariables.InternetConnexion_export_HTMLStatut, sw);
+            CSVWL(T("InternetConnexion"), $"{T("ResponseTime")} (ms)", ExportVariables.InternetConnexion_export_ElapsedTime, sw);
 
-            CSVWL("Network storage rights", "Hour", ExportVariables.NetworkStorageRights_export_Hour, sw);
-            CSVWL("Network storage rights", "Connexion type", ExportVariables.NetworkStorageRights_export_ConnexionType, sw);
+            CSVWL(T("NetworkStorageRights"), T("Hour"), ExportVariables.NetworkStorageRights_export_Hour, sw);
+            CSVWL(T("NetworkStorageRights"), T("ConnexionType"), ExportVariables.NetworkStorageRights_export_ConnexionType, sw);
             if (ExportVariables.NetworkStorageRights_export_DiskLetter != null)
             {
                 for (int i = 0; i < ExportVariables.NetworkStorageRights_export_DiskLetter.Length; i++)
                 {
-                    CSVWL("Network storage rights", "Disk letter", ExportVariables.NetworkStorageRights_export_DiskLetter[i], sw);
-                    CSVWL("Network storage rights", "UNC path", ExportVariables.NetworkStorageRights_export_CheminUNC?[i], sw);
-                    CSVWL("Network storage rights", "Server", ExportVariables.NetworkStorageRights_export_Serveur?[i], sw);
-                    CSVWL("Network storage rights", "Share name", ExportVariables.NetworkStorageRights_export_ShareName?[i], sw);
+                    CSVWL(T("NetworkStorageRights"), T("DiskLetter"), ExportVariables.NetworkStorageRights_export_DiskLetter[i], sw);
+                    CSVWL(T("NetworkStorageRights"), T("UNCPath"), ExportVariables.NetworkStorageRights_export_CheminUNC?[i], sw);
+                    CSVWL(T("NetworkStorageRights"), T("Server"), ExportVariables.NetworkStorageRights_export_Serveur?[i], sw);
+                    CSVWL(T("NetworkStorageRights"), T("ShareName"), ExportVariables.NetworkStorageRights_export_ShareName?[i], sw);
                 }
             }
             else
             {
-                CSVWL("Network storage rights", "No network disk found", "", sw);
+                CSVWL(T("NetworkStorageRights"), T("NoNetworkShare"), "", sw);
             }
-            CSVWL("Network storage rights", "Time elapsed (ms)", ExportVariables.NetworkStorageRights_export_ElapsedTime, sw);
+            CSVWL(T("NetworkStorageRights"), $"{T("ElapsedTime")} (ms)", ExportVariables.NetworkStorageRights_export_ElapsedTime, sw);
 
-            CSVWL("Office version", "Hour", ExportVariables.OfficeVersion_export_Hour, sw);
+            CSVWL(T("OfficeVersion"), T("Hour"), ExportVariables.OfficeVersion_export_Hour, sw);
             if (ExportVariables.OfficeVersion_export_OfficeVersion.Split(',').Length > 0)
             {
                 foreach (string version in ExportVariables.OfficeVersion_export_OfficeVersion.Split(','))
                 {
-                    CSVWL("Office version", "Version", version, sw);
+                    CSVWL(T("OfficeVersion"), T("Version"), version, sw);
                 }
             }
-            CSVWL("Office version", "Chemin d'Office", ExportVariables.OfficeVersion_export_OfficePath, sw);
-            CSVWL("Office version", "Time elapsed (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
+            CSVWL(T("OfficeVersion"), "Chemin d'Office", ExportVariables.OfficeVersion_export_OfficePath, sw);
+            CSVWL(T("OfficeVersion"), "Time elapsed (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
 
-            CSVWL("Office rights", "Hour", ExportVariables.OfficeRights_export_Hour, sw);
-            CSVWL("Office rights", "Can write", ExportVariables.OfficeRights_export_CanWrite, sw);
-            CSVWL("Office rights", "Can read", ExportVariables.OfficeRights_export_CanRead, sw);
-            CSVWL("Office rights", "Can delete", ExportVariables.OfficeRights_export_CanDelete, sw);
-            CSVWL("Office rights", "Can create", ExportVariables.OfficeRights_export_CanCreate, sw);
-            CSVWL("Office rights", "Can save", ExportVariables.OfficeRights_export_CanSave, sw);
-            CSVWL("Office rights", "Tested folder", ExportVariables.OfficeRights_export_FolderTested, sw);
-            CSVWL("Office rights", "Time elapsed (ms)", ExportVariables.OfficeRights_export_ElapsedTime, sw);
+            CSVWL(T("OfficeRights"), T("Hour"), ExportVariables.OfficeRights_export_Hour, sw);
+            CSVWL(T("OfficeRights"), T("CanWrite"), ExportVariables.OfficeRights_export_CanWrite, sw);
+            CSVWL(T("OfficeRights"), T("CanRead"), ExportVariables.OfficeRights_export_CanRead, sw);
+            CSVWL(T("OfficeRights"), T("CanDelete"), ExportVariables.OfficeRights_export_CanDelete, sw);
+            CSVWL(T("OfficeRights"), T("CanCreate"), ExportVariables.OfficeRights_export_CanCreate, sw);
+            CSVWL(T("OfficeRights"), T("CanSave"), ExportVariables.OfficeRights_export_CanSave, sw);
+            CSVWL(T("OfficeRights"), T("TestedFolder"), ExportVariables.OfficeRights_export_FolderTested, sw);
+            CSVWL(T("OfficeRights"), $"{T("ElapsedTime")} (ms)", ExportVariables.OfficeRights_export_ElapsedTime, sw);
 
-            CSVWL("Printer", "Hour", ExportVariables.Printer_export_Hour, sw);
+            CSVWL(T("Printer"), T("Hour"), ExportVariables.Printer_export_Hour, sw);
             if (ExportVariables.Printer_export_PrinterName != null)
             {
                 for (int i = 0; i < ExportVariables.Printer_export_PrinterName.Length; i++)
                 {
-                    CSVWL("Printer", "Printer name", ExportVariables.Printer_export_PrinterName[i], sw);
-                    CSVWL("Printer", "Printer status", ExportVariables.Printer_export_PrinterStatus?[i], sw);
-                    CSVWL("Printer", "Printer pilots", ExportVariables.Printer_export_PrinterDriver?[i], sw);
-                    CSVWL("Printer", "Printer port", ExportVariables.Printer_export_PrinterPort?[i], sw);
+                    CSVWL(T("Printer"), T("Name"), ExportVariables.Printer_export_PrinterName[i], sw);
+                    CSVWL(T("Printer"), T("Status"), ExportVariables.Printer_export_PrinterStatus?[i], sw);
+                    CSVWL(T("Printer"), T("Driver"), ExportVariables.Printer_export_PrinterDriver?[i], sw);
+                    CSVWL(T("Printer"), T("Port"), ExportVariables.Printer_export_PrinterPort?[i], sw);
                 }
             }
             else
             {
-                CSVWL("Printer", "No printer found", "", sw);
+                CSVWL(T("Printer"), T("NoPrinterFound"), "", sw);
             }
-            CSVWL("Printer", "Time elapsed (ms)", ExportVariables.Printer_export_ElapsedTime, sw);
+            CSVWL(T("Printer"), $"{T("ElapsedTime")} (ms)", ExportVariables.Printer_export_ElapsedTime, sw);
 
             sw.Close();
         }

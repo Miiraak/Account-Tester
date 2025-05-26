@@ -31,9 +31,9 @@
             textBoxFileName = new TextBox();
             textBoxFilePath = new TextBox();
             comboBoxExtension = new ComboBox();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
+            labelExtension = new Label();
+            labelFile = new Label();
+            labelPath = new Label();
             buttonExport = new Button();
             buttonSelectPath = new Button();
             SuspendLayout();
@@ -62,32 +62,32 @@
             comboBoxExtension.Size = new Size(223, 22);
             comboBoxExtension.TabIndex = 4;
             // 
-            // label1
+            // labelExtension
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(10, 110);
-            label1.Name = "label1";
-            label1.Size = new Size(84, 14);
-            label1.TabIndex = 5;
-            label1.Text = "Extension :";
+            labelExtension.AutoSize = true;
+            labelExtension.Location = new Point(10, 110);
+            labelExtension.Name = "labelExtension";
+            labelExtension.Size = new Size(84, 14);
+            labelExtension.TabIndex = 5;
+            labelExtension.Text = "Extension :";
             // 
-            // label2
+            // labelFile
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(12, 8);
-            label2.Name = "label2";
-            label2.Size = new Size(84, 14);
-            label2.TabIndex = 6;
-            label2.Text = "File name :";
+            labelFile.AutoSize = true;
+            labelFile.Location = new Point(12, 8);
+            labelFile.Name = "labelFile";
+            labelFile.Size = new Size(84, 14);
+            labelFile.TabIndex = 6;
+            labelFile.Text = "File name :";
             // 
-            // label3
+            // labelPath
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(10, 59);
-            label3.Name = "label3";
-            label3.Size = new Size(49, 14);
-            label3.TabIndex = 7;
-            label3.Text = "Path :";
+            labelPath.AutoSize = true;
+            labelPath.Location = new Point(10, 59);
+            labelPath.Name = "labelPath";
+            labelPath.Size = new Size(49, 14);
+            labelPath.TabIndex = 7;
+            labelPath.Text = "Path :";
             // 
             // buttonExport
             // 
@@ -117,9 +117,9 @@
             ClientSize = new Size(245, 189);
             Controls.Add(buttonSelectPath);
             Controls.Add(buttonExport);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(labelPath);
+            Controls.Add(labelFile);
+            Controls.Add(labelExtension);
             Controls.Add(comboBoxExtension);
             Controls.Add(textBoxFilePath);
             Controls.Add(textBoxFileName);
@@ -135,9 +135,9 @@
         private TextBox textBoxFileName;
         private TextBox textBoxFilePath;
         private ComboBox comboBoxExtension;
-        private Label label1;
-        private Label label2;
-        private Label label3;
+        private Label labelExtension;
+        private Label labelFile;
+        private Label labelPath;
         private Button buttonExport;
         private Button buttonSelectPath;
     }

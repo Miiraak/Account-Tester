@@ -1,0 +1,336 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="Logs" xml:space="preserve">
+    <value>Logs :</value>
+  </data>
+  <data name="nullValue" xml:space="preserve">
+    <value>null</value>
+  </data>
+  <data name="TestReport" xml:space="preserve">
+    <value>Test Report</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Internet" xml:space="preserve">
+    <value>Internet</value>
+  </data>
+  <data name="TestsFinished" xml:space="preserve">
+    <value>Tests finished</value>
+  </data>
+  <data name="MainForm_RTBL_Internet_Connected" xml:space="preserve">
+    <value>- Status : Connected</value>
+  </data>
+  <data name="MainForm_RTBL_Internet_Others" xml:space="preserve">
+    <value>- Status : </value>
+  </data>
+  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Refused" xml:space="preserve">
+    <value>Write refused</value>
+  </data>
+  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Error" xml:space="preserve">
+    <value>Connexion error</value>
+  </data>
+  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Omitted" xml:space="preserve">
+    <value>Omitted</value>
+  </data>
+  <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
+    <value>Version not found</value>
+  </data>
+  <data name="NoPrinterFound" xml:space="preserve">
+    <value>No printer found.</value>
+  </data>
+  <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
+    <value>Not found</value>
+  </data>
+  <data name="MainForm_RTBL_PrinterTesting_NoLocationValueReg" xml:space="preserve">
+    <value>Location value not found in registry.</value>
+  </data>
+  <data name="MainForm_RTBL_PrinterTesting_NoRegKey" xml:space="preserve">
+    <value>Registry key not found for printer.</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="Langage" xml:space="preserve">
+    <value>Langage</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="ExportForm_ButtonExport_MessageBox_Error" xml:space="preserve">
+    <value>Please select a file extension</value>
+  </data>
+  <data name="ExportForm_ButtonExport_MessageBox_Success" xml:space="preserve">
+    <value>The report has been exported successfully</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="OperatingSystem" xml:space="preserve">
+    <value>Operating System</value>
+  </data>
+  <data name="OSArchitecture" xml:space="preserve">
+    <value>OS Architecture</value>
+  </data>
+  <data name="TotalTests" xml:space="preserve">
+    <value>Total Tests</value>
+  </data>
+  <data name="TotalSuccess" xml:space="preserve">
+    <value>Total Success</value>
+  </data>
+  <data name="InternetConnexion" xml:space="preserve">
+    <value>Internet Connexion</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="TestedURL" xml:space="preserve">
+    <value>Tested URL</value>
+  </data>
+  <data name="HTMLStatus" xml:space="preserve">
+    <value>HTML Status</value>
+  </data>
+  <data name="ResponseTime" xml:space="preserve">
+    <value>Response Time</value>
+  </data>
+  <data name="ConnexionType" xml:space="preserve">
+    <value>Connexion Type</value>
+  </data>
+  <data name="NetworkStorageRights" xml:space="preserve">
+    <value>Network Storage Rights</value>
+  </data>
+  <data name="DiskLetter" xml:space="preserve">
+    <value>Disk Letter</value>
+  </data>
+  <data name="UNCPath" xml:space="preserve">
+    <value>UNC Path</value>
+  </data>
+  <data name="Server" xml:space="preserve">
+    <value>Server</value>
+  </data>
+  <data name="ShareName" xml:space="preserve">
+    <value>Share Name</value>
+  </data>
+  <data name="ElapsedTime" xml:space="preserve">
+    <value>Elapsed Time</value>
+  </data>
+  <data name="OfficeVersion" xml:space="preserve">
+    <value>Office Version</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="OfficeRights" xml:space="preserve">
+    <value>Office Rights</value>
+  </data>
+  <data name="CanWrite" xml:space="preserve">
+    <value>Can Write</value>
+  </data>
+  <data name="CanRead" xml:space="preserve">
+    <value>Can Read</value>
+  </data>
+  <data name="CanDelete" xml:space="preserve">
+    <value>Can Delete</value>
+  </data>
+  <data name="CanCreate" xml:space="preserve">
+    <value>Can Create</value>
+  </data>
+  <data name="CanSave" xml:space="preserve">
+    <value>Can Save</value>
+  </data>
+  <data name="TestedFolder" xml:space="preserve">
+    <value>Tested Folder</value>
+  </data>
+  <data name="Printer" xml:space="preserve">
+    <value>Printer</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Driver" xml:space="preserve">
+    <value>Driver</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Rights" xml:space="preserve">
+    <value>Rights</value>
+  </data>
+  <data name="NoNetworkShare" xml:space="preserve">
+    <value>No network share found</value>
+  </data>
+  <data name="Letter" xml:space="preserve">
+    <value>Letter</value>
+  </data>
+  <data name="Disk" xml:space="preserve">
+    <value>Disk</value>
+  </data>
+  <data name="TotalTimeElapsed" xml:space="preserve">
+    <value>Total time elapsed</value>
+  </data>
+  <data name="OfficePath" xml:space="preserve">
+    <value>Office Path</value>
+  </data>
+  <data name="ServerName" xml:space="preserve">
+    <value>Server Name</value>
+  </data>
+  <data name="ReportName" xml:space="preserve">
+    <value>Report name</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Section" xml:space="preserve">
+    <value>Section</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Key" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="Extension" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+</root>
