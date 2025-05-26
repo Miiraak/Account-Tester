@@ -20,7 +20,6 @@ AccountTester is a Windows Forms application (C#) designed to test various aspec
 ### Features in development
 | Nom | Desc. |
 |---|---|
-| **Report export formats** | Add support for `.csv`, `.json` and `.xml` export formats. | 
 | **Improved Interface** | 	Enhancing the UI for better readability and user experience. |
 | **...** | ... |
 
