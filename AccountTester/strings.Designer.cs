@@ -169,6 +169,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Excluded Apps.
+        /// </summary>
+        internal static string ExcludedApps {
+            get {
+                return ResourceManager.GetString("ExcludedApps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Export.
         /// </summary>
         internal static string Export {
@@ -286,6 +295,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Last Update Status.
+        /// </summary>
+        internal static string LastUpdateStatus {
+            get {
+                return ResourceManager.GetString("LastUpdateStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Letter.
         /// </summary>
         internal static string Letter {
@@ -349,6 +367,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Registry key not found..
+        /// </summary>
+        internal static string MainForm_RTBL_NoRegKey {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_NoRegKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Version not found.
         /// </summary>
         internal static string MainForm_RTBL_OfficeVersionTesting_NotFound {
@@ -363,15 +390,6 @@ namespace AccountTester {
         internal static string MainForm_RTBL_PrinterTesting_NoLocationValueReg {
             get {
                 return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoLocationValueReg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Registry key not found for printer..
-        /// </summary>
-        internal static string MainForm_RTBL_PrinterTesting_NoRegKey {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoRegKey", resourceCulture);
             }
         }
         

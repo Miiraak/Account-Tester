@@ -168,8 +168,8 @@
   <data name="MainForm_RTBL_PrinterTesting_NoLocationValueReg" xml:space="preserve">
     <value>Location value not found in registry.</value>
   </data>
-  <data name="MainForm_RTBL_PrinterTesting_NoRegKey" xml:space="preserve">
-    <value>Registry key not found for printer.</value>
+  <data name="MainForm_RTBL_NoRegKey" xml:space="preserve">
+    <value>Registry key not found.</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
@@ -338,5 +338,14 @@
   </data>
   <data name="IP" xml:space="preserve">
     <value>IP</value>
+  </data>
+  <data name="Culture" xml:space="preserve">
+    <value>Culture</value>
+  </data>
+  <data name="ExcludedApps" xml:space="preserve">
+    <value>Excluded Apps</value>
+  </data>
+  <data name="LastUpdateStatus" xml:space="preserve">
+    <value>Last Update Status</value>
   </data>
 </root>

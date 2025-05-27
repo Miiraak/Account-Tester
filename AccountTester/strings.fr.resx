@@ -168,8 +168,8 @@
   <data name="MainForm_RTBL_PrinterTesting_NoLocationValueReg" xml:space="preserve">
     <value>Emplacement non trouvé dans le registre.</value>
   </data>
-  <data name="MainForm_RTBL_PrinterTesting_NoRegKey" xml:space="preserve">
-    <value>Clé de registre non trouvée pour l'imprimante.</value>
+  <data name="MainForm_RTBL_NoRegKey" xml:space="preserve">
+    <value>Clé de registre non trouvée.</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Démarrer</value>
@@ -338,5 +338,14 @@
   </data>
   <data name="IP" xml:space="preserve">
     <value>IP</value>
+  </data>
+  <data name="Culture" xml:space="preserve">
+    <value>Culture</value>
+  </data>
+  <data name="ExcludedApps" xml:space="preserve">
+    <value>Applications exclues</value>
+  </data>
+  <data name="LastUpdateStatus" xml:space="preserve">
+    <value>Status dernière mise à jour</value>
   </data>
 </root>

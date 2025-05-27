@@ -149,8 +149,7 @@ namespace AccountTester
 
             try
             {
-                string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
-                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
+                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0");
                 string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
 
                 if (!string.IsNullOrEmpty(officeVersion))
@@ -175,6 +174,15 @@ namespace AccountTester
                 {
                     richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_OfficeVersionTesting_NotFound")}" + Environment.NewLine);
                 }
+
+                // Get Office path
+                ExportVariables.OfficeVersion_export_OfficePath = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Configuration", "InstallationPath");
+                // Get Office Culture
+                ExportVariables.OfficeVersion_export_OfficeCulture = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeCulture");
+                // Get Office Excluded Apps
+                ExportVariables.OfficeVersion_export_OfficeExcludedApps = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeExcludedApps");
+                // Get Office Last Update Status
+                ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\UpdateStatus", "LastUpdateResult");
             }
             catch (Exception ex)
             {
@@ -183,6 +191,16 @@ namespace AccountTester
 
             stopwatch.Stop();
             ExportVariables.OfficeVersion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+        }
+
+        private string GetRegValue(string path, string value)
+        {
+            using RegistryKey? regKey = Registry.LocalMachine.OpenSubKey(path);
+            string? str = regKey?.GetValue(value)?.ToString();
+            if (string.IsNullOrEmpty(str))
+                return "Null";
+            else
+                return str;
         }
 
         /// <summary>                                      
@@ -359,7 +377,7 @@ namespace AccountTester
                         else
                         {
                             richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                            richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoRegKey")}" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
                         }
                     }
                 }

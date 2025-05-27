@@ -148,8 +148,22 @@ namespace AccountTester
             sw.WriteLine("Office");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {ExportVariables.OfficeVersion_export_Hour}");
-            sw.WriteLine($"{T("OfficeVersion")}: {ExportVariables.OfficeVersion_export_OfficeVersion}");
-            sw.WriteLine($"{T("OfficePath")}: {ExportVariables.OfficeVersion_export_OfficePath}");
+            if (ExportVariables.OfficeVersion_export_OfficeVersion.Split(',').Length > 0)
+            {
+                sw.WriteLine($"{T("OfficeVersion")}:");
+                foreach (string version in ExportVariables.OfficeVersion_export_OfficeVersion.Split(','))
+                {
+                    sw.WriteLine($"- {version}");
+                }
+                sw.WriteLine($"{T("Path")}: {ExportVariables.OfficeVersion_export_OfficePath}");
+                sw.WriteLine($"{T("Culture")}: {ExportVariables.OfficeVersion_export_OfficeCulture}");
+                sw.WriteLine($"{T("ExcludedApps")}: {ExportVariables.OfficeVersion_export_OfficeExcludedApps}");
+                sw.WriteLine($"{T("LastUpdateStatus")}: {ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus}");
+            }
+            else
+            {
+                sw.WriteLine(T("MainForm_RTBL_PrinterTesting_NotFound"));
+            }
             sw.WriteLine($"{T("ElapsedTime")}: {ExportVariables.OfficeVersion_export_ElapsedTime} ms\n\n");
 
             sw.WriteLine(T("OfficeRights"));
@@ -246,6 +260,9 @@ namespace AccountTester
             XMLW(doc, officeVersion, TT("Hour"), ExportVariables.OfficeVersion_export_Hour);
             XMLW(doc, officeVersion, TT("Version"), ExportVariables.OfficeVersion_export_OfficeVersion);
             XMLW(doc, officeVersion, TT("Path"), ExportVariables.OfficeVersion_export_OfficePath);
+            XMLW(doc, officeVersion, TT("Culture"), ExportVariables.OfficeVersion_export_OfficeCulture);
+            XMLW(doc, officeVersion, TT("ExcludedApps"), ExportVariables.OfficeVersion_export_OfficeExcludedApps);
+            XMLW(doc, officeVersion, TT("LastUpdateStatus"), ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus);
             XMLW(doc, officeVersion, TT("ElapsedTime"), ExportVariables.OfficeVersion_export_ElapsedTime);
 
             XmlElement officeRights = doc.CreateElement(TT("OfficeRights"));
@@ -367,8 +384,11 @@ namespace AccountTester
                     CSVWL(T("OfficeVersion"), T("Version"), version, sw);
                 }
             }
-            CSVWL(T("OfficeVersion"), "Chemin d'Office", ExportVariables.OfficeVersion_export_OfficePath, sw);
-            CSVWL(T("OfficeVersion"), "Time elapsed (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
+            CSVWL(T("OfficeVersion"), T("OfficePath"), ExportVariables.OfficeVersion_export_OfficePath, sw);
+            CSVWL(T("OfficeVersion"), T("Culture"), ExportVariables.OfficeVersion_export_OfficeCulture, sw);
+            CSVWL(T("OfficeVersion"), T("ExcludedApps"), ExportVariables.OfficeVersion_export_OfficeExcludedApps, sw);
+            CSVWL(T("OfficeVersion"), T("LastUpdateStatus"), ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus, sw);
+            CSVWL(T("OfficeVersion"), $"{T("ElapsedTime")} (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
 
             CSVWL(T("OfficeRights"), T("Hour"), ExportVariables.OfficeRights_export_Hour, sw);
             CSVWL(T("OfficeRights"), T("CanWrite"), ExportVariables.OfficeRights_export_CanWrite, sw);
@@ -454,7 +474,10 @@ namespace AccountTester
             {
                 [TT("Hour")] = ExportVariables.OfficeVersion_export_Hour,
                 [TT("OfficeVersion")] = ExportVariables.OfficeVersion_export_OfficeVersion,
-                [TT("OfficePath")] = ExportVariables.OfficeVersion_export_OfficePath,
+                [TT("Path")] = ExportVariables.OfficeVersion_export_OfficePath,
+                [TT("Culture")] = ExportVariables.OfficeVersion_export_OfficeCulture,
+                [TT("ExcludedApps")] = ExportVariables.OfficeVersion_export_OfficeExcludedApps,
+                [TT("LastUpdateStatus")] = ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus,
                 [TT("ElapsedTime")] = ExportVariables.OfficeVersion_export_ElapsedTime
             };
 
