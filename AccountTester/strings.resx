@@ -174,8 +174,8 @@
   <data name="Start" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="Langage" xml:space="preserve">
-    <value>Langage</value>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
@@ -332,5 +332,11 @@
   </data>
   <data name="Extension" xml:space="preserve">
     <value>Extension</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="IP" xml:space="preserve">
+    <value>IP</value>
   </data>
 </root>

@@ -259,6 +259,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à IP.
+        /// </summary>
+        internal static string IP {
+            get {
+                return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Key.
         /// </summary>
         internal static string Key {
@@ -268,11 +277,11 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Langage.
+        ///   Recherche une chaîne localisée semblable à Language.
         /// </summary>
-        internal static string Langage {
+        internal static string Language {
             get {
-                return ResourceManager.GetString("Langage", resourceCulture);
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
@@ -642,6 +651,15 @@ namespace AccountTester {
         internal static string TestsFinished {
             get {
                 return ResourceManager.GetString("TestsFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Title.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         

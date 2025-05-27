@@ -167,15 +167,15 @@ namespace AccountTester
             sw.WriteLine(T("Printer"));
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {ExportVariables.Printer_export_Hour}");
-            sw.WriteLine($"{T("Name")}:");
             if (ExportVariables.Printer_export_PrinterName != null)
             {
                 foreach (string printerName in ExportVariables.Printer_export_PrinterName)
                 {
-                    sw.WriteLine($"- {printerName}");
-                    sw.WriteLine($"{T("Status")}: {ExportVariables.Printer_export_PrinterStatus?[i]}");
-                    sw.WriteLine($"{T("Driver")}: {ExportVariables.Printer_export_PrinterDriver?[i]}");
-                    sw.WriteLine($"{T("Port")}: {ExportVariables.Printer_export_PrinterPort?[i]}");
+                    sw.WriteLine($"{T("Name")}: {printerName}");
+                    sw.WriteLine($"- {T("IP")}: {ExportVariables.Printer_export_PrinterIP?[i]}");
+                    sw.WriteLine($"- {T("Status")}: {ExportVariables.Printer_export_PrinterStatus?[i]}");
+                    sw.WriteLine($"- {T("Driver")}: {ExportVariables.Printer_export_PrinterDriver?[i]}");
+                    sw.WriteLine($"- {T("Port")}: {ExportVariables.Printer_export_PrinterPort?[i]}");
                     i++;
                 }
             }
@@ -259,14 +259,22 @@ namespace AccountTester
             XMLW(doc, officeRights, TT("TestedFolder"), ExportVariables.OfficeRights_export_FolderTested);
             XMLW(doc, officeRights, TT("ElapsedTime"), ExportVariables.OfficeRights_export_ElapsedTime);
 
-            XmlElement printer = doc.CreateElement(TT("Printer"));
-            root.AppendChild(printer);
-            XMLW(doc, printer, TT("Hour"), ExportVariables.Printer_export_Hour);
-            XMLWL(doc, printer, TT("Printer") + TT("Name"), ExportVariables.Printer_export_PrinterName, TT("Printer"));
-            XMLWL(doc, printer, TT("Printer") + TT("Status"), ExportVariables.Printer_export_PrinterStatus, TT("Status"));
-            XMLWL(doc, printer, TT("Printer") + TT("Driver"), ExportVariables.Printer_export_PrinterDriver, TT("Driver"));
-            XMLWL(doc, printer, TT("Printer") + TT("Port"), ExportVariables.Printer_export_PrinterPort, TT("Port"));
-            XMLW(doc, printer, TT("ElapsedTime"), ExportVariables.Printer_export_ElapsedTime);
+            XmlElement printers = doc.CreateElement(TT("Printer"));
+            root.AppendChild(printers);
+            XMLW(doc, printers, TT("Hour"), ExportVariables.Printer_export_Hour);
+
+            for (int i = 0; i < ExportVariables.Printer_export_PrinterName?.Length; i++)
+            {
+                XmlElement printer = doc.CreateElement($"{TT("Printer")}_{i}");
+                printers.AppendChild(printer);
+                XMLW(doc, printer, TT("Name"), ExportVariables.Printer_export_PrinterName[i]);
+                XMLW(doc, printer, TT("IP"), ExportVariables.Printer_export_PrinterIP[i]);
+                XMLW(doc, printer, TT("Status"), ExportVariables.Printer_export_PrinterStatus[i]);
+                XMLW(doc, printer, TT("Driver"), ExportVariables.Printer_export_PrinterDriver[i]);
+                XMLW(doc, printer, TT("Port"), ExportVariables.Printer_export_PrinterPort[i]);
+            }
+
+            XMLW(doc, printers, TT("ElapsedTime"), ExportVariables.Printer_export_ElapsedTime);
 
             string path = Path.Combine(filePath, $"{fileName}.xml");
             doc.Save(path);
@@ -376,10 +384,11 @@ namespace AccountTester
             {
                 for (int i = 0; i < ExportVariables.Printer_export_PrinterName.Length; i++)
                 {
-                    CSVWL(T("Printer"), T("Name"), ExportVariables.Printer_export_PrinterName[i], sw);
-                    CSVWL(T("Printer"), T("Status"), ExportVariables.Printer_export_PrinterStatus?[i], sw);
-                    CSVWL(T("Printer"), T("Driver"), ExportVariables.Printer_export_PrinterDriver?[i], sw);
-                    CSVWL(T("Printer"), T("Port"), ExportVariables.Printer_export_PrinterPort?[i], sw);
+                    CSVWL($"{T("Printer")}_{i}", T("Name"), ExportVariables.Printer_export_PrinterName[i], sw);
+                    CSVWL($"{T("Printer")}_{i}", T("Status"), ExportVariables.Printer_export_PrinterStatus?[i], sw);
+                    CSVWL($"{T("Printer")}_{i}", T("IP"), ExportVariables.Printer_export_PrinterIP?[i], sw);
+                    CSVWL($"{T("Printer")}_{i}", T("Driver"), ExportVariables.Printer_export_PrinterDriver?[i], sw);
+                    CSVWL($"{T("Printer")}_{i}", T("Port"), ExportVariables.Printer_export_PrinterPort?[i], sw);
                 }
             }
             else
@@ -408,65 +417,89 @@ namespace AccountTester
         /// <param name="filePath">json saving path</param>
         private static void ExportToJSON(string fileName, string filePath)
         {
-            var Block = new
+            var Printers = new Dictionary<string, object>
             {
-                Title = fileName,
-                Date = ExportVariables.General_DateAndHour,
-                Username = ExportVariables.General_export_UserName,
-                General = new
-                {
-                    OperatingSystem = ExportVariables.General_export_DeviceOS,
-                    OSArchitecture = ExportVariables.General_export_OSArchitecture,
-                    TotalTests = ExportVariables.General_export_TotalTests,
-                    TotalSuccess = ExportVariables.General_export_TotalSuccess
-                },
-                InternetConnection = new
-                {
-                    Hour = ExportVariables.InternetConnexion_export_Hour,
-                    TestedURL = ExportVariables.InternetConnexion_export_TestedURL,
-                    HTMLStatus = ExportVariables.InternetConnexion_export_HTMLStatut,
-                    ResponseTime = ExportVariables.InternetConnexion_export_ElapsedTime
-                },
-                NetworkStorageRights = new
-                {
-                    Hour = ExportVariables.NetworkStorageRights_export_Hour,
-                    ConnexionType = ExportVariables.NetworkStorageRights_export_ConnexionType,
-                    DiskLetter = ExportVariables.NetworkStorageRights_export_DiskLetter,
-                    UNCPath = ExportVariables.NetworkStorageRights_export_CheminUNC,
-                    Server = ExportVariables.NetworkStorageRights_export_Serveur,
-                    ShareName = ExportVariables.NetworkStorageRights_export_ShareName,
-                    ElapsedTime = ExportVariables.NetworkStorageRights_export_ElapsedTime
-                },
-                OfficeVersion = new
-                {
-                    Hour = ExportVariables.OfficeVersion_export_Hour,
-                    OfficeVersion = ExportVariables.OfficeVersion_export_OfficeVersion,
-                    OfficePath = ExportVariables.OfficeVersion_export_OfficePath,
-                    ElapsedTime = ExportVariables.OfficeVersion_export_ElapsedTime
-                },
-                OfficeRights = new
-                {
-                    Hour = ExportVariables.OfficeRights_export_Hour,
-                    CanWrite = ExportVariables.OfficeRights_export_CanWrite,
-                    CanRead = ExportVariables.OfficeRights_export_CanRead,
-                    CanDelete = ExportVariables.OfficeRights_export_CanDelete,
-                    CanCreate = ExportVariables.OfficeRights_export_CanCreate,
-                    CanSave = ExportVariables.OfficeRights_export_CanSave,
-                    TestedFolder = ExportVariables.OfficeRights_export_FolderTested,
-                    ElapsedTime = ExportVariables.OfficeRights_export_ElapsedTime
-                },
-                Printer = new
-                {
-                    Hour = ExportVariables.Printer_export_Hour,
-                    PrinterName = ExportVariables.Printer_export_PrinterName,
-                    PrinterStatus = ExportVariables.Printer_export_PrinterStatus,
-                    PrinterDriver = ExportVariables.Printer_export_PrinterDriver,
-                    PrinterPort = ExportVariables.Printer_export_PrinterPort,
-                    ElapsedTime = ExportVariables.Printer_export_ElapsedTime
-                }
+                [TT("Hour")] = ExportVariables.Printer_export_Hour,
             };
 
-            string jsonString = JsonSerializer.Serialize(Block, CachedJsonSerializerOptions);
+            int printerCount = ExportVariables.Printer_export_PrinterName?.Length ?? 0;
+            for (int i = 0; i < printerCount; i++)
+            {
+                var printer = new Dictionary<string, object>
+                {
+                    [TT("Name")] = ExportVariables.Printer_export_PrinterName[i],
+                    [TT("IP")] = ExportVariables.Printer_export_PrinterIP[i],
+                    [TT("Status")] = ExportVariables.Printer_export_PrinterStatus[i],
+                    [TT("Driver")] = ExportVariables.Printer_export_PrinterDriver[i],
+                    [TT("Port")] = ExportVariables.Printer_export_PrinterPort[i]
+                };
+
+                Printers[$"{TT("Printer")}_{i + 1}"] = printer;
+            }
+            Printers[TT("ElapsedTime")] = ExportVariables.Printer_export_ElapsedTime;
+
+            var OfficeRights = new Dictionary<string, object>
+            {
+                [TT("Hour")] = ExportVariables.OfficeRights_export_Hour,
+                [TT("CanWrite")] = ExportVariables.OfficeRights_export_CanWrite,
+                [TT("CanRead")] = ExportVariables.OfficeRights_export_CanRead,
+                [TT("CanDelete")] = ExportVariables.OfficeRights_export_CanDelete,
+                [TT("CanCreate")] = ExportVariables.OfficeRights_export_CanCreate,
+                [TT("CanSave")] = ExportVariables.OfficeRights_export_CanSave,
+                [TT("TestedFolder")] = ExportVariables.OfficeRights_export_FolderTested,
+                [TT("ElapsedTime")] = ExportVariables.OfficeRights_export_ElapsedTime
+            };
+
+            var OfficeVersion = new Dictionary<string, object>
+            {
+                [TT("Hour")] = ExportVariables.OfficeVersion_export_Hour,
+                [TT("OfficeVersion")] = ExportVariables.OfficeVersion_export_OfficeVersion,
+                [TT("OfficePath")] = ExportVariables.OfficeVersion_export_OfficePath,
+                [TT("ElapsedTime")] = ExportVariables.OfficeVersion_export_ElapsedTime
+            };
+
+
+            var NetworkStorageRights = new Dictionary<string, object>
+            {
+                [TT("Hour")] = ExportVariables.NetworkStorageRights_export_Hour,
+                [TT("ConnexionType")] = ExportVariables.NetworkStorageRights_export_ConnexionType,
+                [TT("DiskLetter")] = ExportVariables.NetworkStorageRights_export_DiskLetter,
+                [TT("UNCPath")] = ExportVariables.NetworkStorageRights_export_CheminUNC,
+                [T("Server")] = ExportVariables.NetworkStorageRights_export_Serveur,
+                [TT("ShareName")] = ExportVariables.NetworkStorageRights_export_ShareName,
+                [TT("ElapsedTime")] = ExportVariables.NetworkStorageRights_export_ElapsedTime
+            };
+
+            var InternetConnexion = new Dictionary<string, object>
+            {
+                [TT("Hour")] = ExportVariables.InternetConnexion_export_Hour,
+                [TT("TestedURL")] = ExportVariables.InternetConnexion_export_TestedURL,
+                [TT("HTMLStatus")] = ExportVariables.InternetConnexion_export_HTMLStatut,
+                [TT("ResponseTime")] = ExportVariables.InternetConnexion_export_ElapsedTime
+            };
+
+            var General = new Dictionary<string, object>
+            {
+                [TT("OperatingSystem")] = ExportVariables.General_export_DeviceOS,
+                [TT("OSArchitecture")] = ExportVariables.General_export_OSArchitecture,
+                [TT("TotalTests")] = ExportVariables.General_export_TotalTests,
+                [TT("TotalSuccess")] = ExportVariables.General_export_TotalSuccess,
+            };
+
+            var block = new Dictionary<string, object>
+            {
+                [TT("Title")] = fileName,
+                [TT("Date")] = ExportVariables.General_DateAndHour,
+                [TT("Username")] = ExportVariables.General_export_UserName,
+                [TT("General")] = General,
+                [TT("InternetConnexion")] = InternetConnexion,
+                [TT("NetworkStorageRights")] = NetworkStorageRights,
+                [TT("OfficeVersion")] = OfficeVersion,
+                [TT("OfficeRights")] = OfficeRights,
+                [TT("Printer")] = Printers
+            };
+
+            string jsonString = JsonSerializer.Serialize(block, CachedJsonSerializerOptions);
             File.WriteAllText($"{filePath}\\{fileName}.json", jsonString);
         }
 

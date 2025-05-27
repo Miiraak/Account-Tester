@@ -29,7 +29,7 @@ namespace AccountTester
             buttonExportForm.Text = T("Export");
             buttonStart.Text = T("Start");
             optionsToolStripMenuItem.Text = T("Options");
-            langageToolStripMenuItem.Text = T("Langage");
+            languageToolStripMenuItem.Text = T("Language");
         }
 
         /// <summary>
@@ -315,10 +315,15 @@ namespace AccountTester
                         using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
                         if (printerKey != null)
                         {
+                            ExportVariables.Printer_export_PrinterName = ExportVariables.Printer_export_PrinterName.Append(printer).ToArray();
+                            ExportVariables.Printer_export_PrinterDriver = ExportVariables.Printer_export_PrinterDriver.Append(printerKey.GetValue("Printer Driver").ToString()).ToArray();
+                            ExportVariables.Printer_export_PrinterPort = ExportVariables.Printer_export_PrinterPort.Append(printerKey.GetValue("Port").ToString()).ToArray();
+
                             string? locationValue = printerKey.GetValue("Location")?.ToString();
                             if (!string.IsNullOrEmpty(locationValue))
                             {
                                 string PrinterIP = locationValue.Split("//").Last().Split(":").First();
+                                ExportVariables.Printer_export_PrinterIP = ExportVariables.Printer_export_PrinterIP.Append(PrinterIP).ToArray();
 
                                 if (!string.IsNullOrEmpty(PrinterIP))
                                 {
@@ -329,12 +334,14 @@ namespace AccountTester
                                     {
                                         richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                         richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
+                                        ExportVariables.Printer_export_PrinterStatus = ExportVariables.Printer_export_PrinterStatus.Append("OK").ToArray();
                                         ExportVariables.General_export_TotalSuccess++;
                                     }
                                     else
                                     {
                                         richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                         richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
+                                        ExportVariables.Printer_export_PrinterStatus = ExportVariables.Printer_export_PrinterStatus.Append("FAIL").ToArray();
                                     }
                                 }
                                 else
@@ -432,8 +439,6 @@ namespace AccountTester
                 stopwatch.Stop();
                 richTextBoxLogs.AppendText($"- {T("TotalTimeElapsed")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- {T("TotalSuccess")} : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
-                ExportVariables.General_export_TotalSuccess = 0;
-                ExportVariables.General_export_TotalTests = 0;
 
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
                 player.Play();
