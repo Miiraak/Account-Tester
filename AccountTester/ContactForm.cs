@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace AccountTester
+﻿namespace AccountTester
 {
     public partial class ContactForm : Form
     {

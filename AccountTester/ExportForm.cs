@@ -386,7 +386,7 @@ namespace AccountTester
             }
             CSVWL(T("OfficeVersion"), T("OfficePath"), ExportVariables.OfficeVersion_export_OfficePath, sw);
             CSVWL(T("OfficeVersion"), T("Culture"), ExportVariables.OfficeVersion_export_OfficeCulture, sw);
-            CSVWL(T("OfficeVersion"), T("ExcludedApps"), ExportVariables.OfficeVersion_export_OfficeExcludedApps, sw);
+            CSVWL(T("OfficeVersion"), T("ExcludedApps"), ExportVariables.OfficeVersion_export_OfficeExcludedApps.Replace(",", " "), sw);
             CSVWL(T("OfficeVersion"), T("LastUpdateStatus"), ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus, sw);
             CSVWL(T("OfficeVersion"), $"{T("ElapsedTime")} (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
 
