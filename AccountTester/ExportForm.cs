@@ -169,11 +169,11 @@ namespace AccountTester
             sw.WriteLine(T("OfficeRights"));
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {ExportVariables.OfficeRights_export_Hour}");
-            sw.WriteLine($"{T("CanWrite")}: {ExportVariables.OfficeRights_export_CanWrite}");
-            sw.WriteLine($"{T("CanRead")}: {ExportVariables.OfficeRights_export_CanRead}");
-            sw.WriteLine($"{T("CanDelete")}: {ExportVariables.OfficeRights_export_CanDelete}");
-            sw.WriteLine($"{T("CanCreate")}: {ExportVariables.OfficeRights_export_CanCreate}");
-            sw.WriteLine($"{T("CanSave")}: {ExportVariables.OfficeRights_export_CanSave}");
+            sw.WriteLine($"{T("Write")}: {ExportVariables.OfficeRights_export_Write}");
+            sw.WriteLine($"{T("Read")}: {ExportVariables.OfficeRights_export_Read}");
+            sw.WriteLine($"{T("Delete")}: {ExportVariables.OfficeRights_export_Delete}");
+            sw.WriteLine($"{T("Create")}: {ExportVariables.OfficeRights_export_Create}");
+            sw.WriteLine($"{T("Save")}: {ExportVariables.OfficeRights_export_Save}");
             sw.WriteLine($"{T("TestedFolder")}: ");
             sw.WriteLine($"- {ExportVariables.OfficeRights_export_FolderTested}\n");
             sw.WriteLine($"{T("ElapsedTime")}: {ExportVariables.OfficeRights_export_ElapsedTime} ms\n\n");
@@ -268,11 +268,11 @@ namespace AccountTester
             XmlElement officeRights = doc.CreateElement(TT("OfficeRights"));
             root.AppendChild(officeRights);
             XMLW(doc, officeRights, TT("Hour"), ExportVariables.OfficeRights_export_Hour);
-            XMLW(doc, officeRights, TT("CanWrite"), ExportVariables.OfficeRights_export_CanWrite);
-            XMLW(doc, officeRights, TT("CanRead"), ExportVariables.OfficeRights_export_CanRead);
-            XMLW(doc, officeRights, TT("CanDelete"), ExportVariables.OfficeRights_export_CanDelete);
-            XMLW(doc, officeRights, TT("CanCreate"), ExportVariables.OfficeRights_export_CanCreate);
-            XMLW(doc, officeRights, TT("CanSave"), ExportVariables.OfficeRights_export_CanSave);
+            XMLW(doc, officeRights, TT("Write"), ExportVariables.OfficeRights_export_Write);
+            XMLW(doc, officeRights, TT("Read"), ExportVariables.OfficeRights_export_Read);
+            XMLW(doc, officeRights, TT("Delete"), ExportVariables.OfficeRights_export_Delete);
+            XMLW(doc, officeRights, TT("Create"), ExportVariables.OfficeRights_export_Create);
+            XMLW(doc, officeRights, TT("Save"), ExportVariables.OfficeRights_export_Save);
             XMLW(doc, officeRights, TT("TestedFolder"), ExportVariables.OfficeRights_export_FolderTested);
             XMLW(doc, officeRights, TT("ElapsedTime"), ExportVariables.OfficeRights_export_ElapsedTime);
 
@@ -391,11 +391,11 @@ namespace AccountTester
             CSVWL(T("OfficeVersion"), $"{T("ElapsedTime")} (ms)", ExportVariables.OfficeVersion_export_ElapsedTime, sw);
 
             CSVWL(T("OfficeRights"), T("Hour"), ExportVariables.OfficeRights_export_Hour, sw);
-            CSVWL(T("OfficeRights"), T("CanWrite"), ExportVariables.OfficeRights_export_CanWrite, sw);
-            CSVWL(T("OfficeRights"), T("CanRead"), ExportVariables.OfficeRights_export_CanRead, sw);
-            CSVWL(T("OfficeRights"), T("CanDelete"), ExportVariables.OfficeRights_export_CanDelete, sw);
-            CSVWL(T("OfficeRights"), T("CanCreate"), ExportVariables.OfficeRights_export_CanCreate, sw);
-            CSVWL(T("OfficeRights"), T("CanSave"), ExportVariables.OfficeRights_export_CanSave, sw);
+            CSVWL(T("OfficeRights"), T("Write"), ExportVariables.OfficeRights_export_Write, sw);
+            CSVWL(T("OfficeRights"), T("Read"), ExportVariables.OfficeRights_export_Read, sw);
+            CSVWL(T("OfficeRights"), T("Delete"), ExportVariables.OfficeRights_export_Delete, sw);
+            CSVWL(T("OfficeRights"), T("Create"), ExportVariables.OfficeRights_export_Create, sw);
+            CSVWL(T("OfficeRights"), T("Save"), ExportVariables.OfficeRights_export_Save, sw);
             CSVWL(T("OfficeRights"), T("TestedFolder"), ExportVariables.OfficeRights_export_FolderTested, sw);
             CSVWL(T("OfficeRights"), $"{T("ElapsedTime")} (ms)", ExportVariables.OfficeRights_export_ElapsedTime, sw);
 
@@ -461,11 +461,11 @@ namespace AccountTester
             var OfficeRights = new Dictionary<string, object>
             {
                 [TT("Hour")] = ExportVariables.OfficeRights_export_Hour,
-                [TT("CanWrite")] = ExportVariables.OfficeRights_export_CanWrite,
-                [TT("CanRead")] = ExportVariables.OfficeRights_export_CanRead,
-                [TT("CanDelete")] = ExportVariables.OfficeRights_export_CanDelete,
-                [TT("CanCreate")] = ExportVariables.OfficeRights_export_CanCreate,
-                [TT("CanSave")] = ExportVariables.OfficeRights_export_CanSave,
+                [TT("Write")] = ExportVariables.OfficeRights_export_Write,
+                [TT("Read")] = ExportVariables.OfficeRights_export_Read,
+                [TT("Delete")] = ExportVariables.OfficeRights_export_Delete,
+                [TT("Create")] = ExportVariables.OfficeRights_export_Create,
+                [TT("Save")] = ExportVariables.OfficeRights_export_Save,
                 [TT("TestedFolder")] = ExportVariables.OfficeRights_export_FolderTested,
                 [TT("ElapsedTime")] = ExportVariables.OfficeRights_export_ElapsedTime
             };

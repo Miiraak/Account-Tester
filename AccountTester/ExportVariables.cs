@@ -26,28 +26,28 @@
         // NetworkStorageRights variables - Not OK, need to be tested with a network share
         public static string NetworkStorageRights_export_Hour { get; set; } = "Null";
         public static string NetworkStorageRights_export_ConnexionType { get; set; } = "Null"; // Not set
-        public static string[]? NetworkStorageRights_export_DiskLetter { get; set; }  // Not set
-        public static string[]? NetworkStorageRights_export_CheminUNC { get; set; } // Not set
-        public static string[]? NetworkStorageRights_export_Serveur { get; set; } // Not set
-        public static string[]? NetworkStorageRights_export_ShareName { get; set; } // Not set
+        public static string[]? NetworkStorageRights_export_DiskLetter { get; set; } = [];  // Not set
+        public static string[]? NetworkStorageRights_export_CheminUNC { get; set; } = []; // Not set
+        public static string[]? NetworkStorageRights_export_Serveur { get; set; } = [];  // Not set
+        public static string[]? NetworkStorageRights_export_ShareName { get; set; } = [];  // Not set
         public static string NetworkStorageRights_export_ElapsedTime { get; set; } = "Null";
 
         // OfficeVersion variables
         public static string OfficeVersion_export_Hour { get; set; } = "Null";
-        public static string OfficeVersion_export_OfficeVersion { get; set; } = "Null"; 
-        public static string OfficeVersion_export_OfficePath { get; set; } = "Null"; 
+        public static string OfficeVersion_export_OfficeVersion { get; set; } = "Null";
+        public static string OfficeVersion_export_OfficePath { get; set; } = "Null";
         public static string OfficeVersion_export_OfficeCulture { get; set; } = "Null";
-        public static string OfficeVersion_export_OfficeExcludedApps { get; set; } = "Null"; 
-        public static string OfficeVersion_export_OfficeLastUpdateStatus { get; set; } = "Null"; 
-        public static string OfficeVersion_export_ElapsedTime { get; set; } = "Null";    
+        public static string OfficeVersion_export_OfficeExcludedApps { get; set; } = "Null";
+        public static string OfficeVersion_export_OfficeLastUpdateStatus { get; set; } = "Null";
+        public static string OfficeVersion_export_ElapsedTime { get; set; } = "Null";
 
         // OfficeRights variables
         public static string OfficeRights_export_Hour { get; set; } = "Null";
-        public static string OfficeRights_export_CanWrite { get; set; } = "Null";
-        public static string OfficeRights_export_CanRead { get; set; } = "Null";
-        public static string OfficeRights_export_CanDelete { get; set; } = "Null";
-        public static string OfficeRights_export_CanSave { get; set; } = "Null";
-        public static string OfficeRights_export_CanCreate { get; set; } = "Null";
+        public static string OfficeRights_export_Write { get; set; } = "Null";
+        public static string OfficeRights_export_Read { get; set; } = "Null";
+        public static string OfficeRights_export_Delete { get; set; } = "Null";
+        public static string OfficeRights_export_Save { get; set; } = "Null";
+        public static string OfficeRights_export_Create { get; set; } = "Null";
 
         public static string OfficeRights_export_FolderTested = Path.GetTempPath();
         public static string OfficeRights_export_ElapsedTime { get; set; } = "Null";

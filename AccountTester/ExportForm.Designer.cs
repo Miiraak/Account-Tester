@@ -124,6 +124,7 @@
             Controls.Add(textBoxFilePath);
             Controls.Add(textBoxFileName);
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MaximizeBox = false;
             Name = "ExportForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Export";

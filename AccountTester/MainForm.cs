@@ -30,6 +30,8 @@ namespace AccountTester
             buttonStart.Text = T("Start");
             optionsToolStripMenuItem.Text = T("Options");
             languageToolStripMenuItem.Text = T("Language");
+            helpToolStripMenuItem.Text = T("Help");
+            contactToolStripMenuItem.Text = T("Contact");
         }
 
         /// <summary>
@@ -229,14 +231,14 @@ namespace AccountTester
                 doc.Close();
                 if (File.Exists(filePath))
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanCreate")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanCreate = "True";
+                    richTextBoxLogs.AppendText($"- {T("Create")} : OK" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Create = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanCreate")} : FAIL." + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanCreate = "False";
+                    richTextBoxLogs.AppendText($"- {T("Create")} : FAIL." + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Create = "False";
                     return;
                 }
 
@@ -248,32 +250,32 @@ namespace AccountTester
                 doc = wordApp.Documents.Open(filePath);
                 if (doc.Content.Text.Contains("Adding more fox over the lazy dog"))
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanSave")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanSave = "True";
+                    richTextBoxLogs.AppendText($"- {T("Save")} : OK" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Save = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanSave")} : FAIL" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanSave = "False";
+                    richTextBoxLogs.AppendText($"- {T("Save")} : FAIL" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Save = "False";
                 }
                 doc.Close();
 
                 doc = wordApp.Documents.Open(filePath);
                 if (doc.Content.Text.Contains("The quick brown fox jumps over the lazy dog"))
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanRead")} : OK" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {T("CanWrite")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanRead = "True";
-                    ExportVariables.OfficeRights_export_CanWrite = "True";
+                    richTextBoxLogs.AppendText($"- {T("Read")} : OK" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("Write")} : OK" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Read = "True";
+                    ExportVariables.OfficeRights_export_Write = "True";
                     ExportVariables.General_export_TotalSuccess += 2;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanRead")} : FAIL" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {T("CanWrite")} : FAIL" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanRead = "False";
-                    ExportVariables.OfficeRights_export_CanWrite = "False";
+                    richTextBoxLogs.AppendText($"- {T("Read")} : FAIL" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"- {T("Write")} : FAIL" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Read = "False";
+                    ExportVariables.OfficeRights_export_Write = "False";
                 }
                 doc.Close();
 
@@ -284,14 +286,14 @@ namespace AccountTester
                 File.Delete(filePath);
                 if (!File.Exists(filePath))
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanDelete")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanDelete = "True";
+                    richTextBoxLogs.AppendText($"- {T("Delete")} : OK" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Delete = "True";
                     ExportVariables.General_export_TotalSuccess++;
                 }
                 else
                 {
-                    richTextBoxLogs.AppendText($"- {T("CanDelete")} : FAIL" + Environment.NewLine);
-                    ExportVariables.OfficeRights_export_CanDelete = "False";
+                    richTextBoxLogs.AppendText($"- {T("Delete")} : FAIL" + Environment.NewLine);
+                    ExportVariables.OfficeRights_export_Delete = "False";
                 }
                 stopwatch.Stop();
                 ExportVariables.OfficeRights_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
@@ -485,14 +487,20 @@ namespace AccountTester
             Clipboard.SetText(richTextBoxLogs.Text);
         }
 
-        private void enUSToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EnUSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LangManager.Instance.SetLanguage("en-US");
         }
 
-        private void frFRToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FrFRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LangManager.Instance.SetLanguage("fr-FR");
+        }
+
+        private void ContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContactForm contactForm = new();
+            contactForm.ShowDialog();
         }
     }
 }

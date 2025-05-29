@@ -39,6 +39,8 @@
             languageToolStripMenuItem = new ToolStripMenuItem();
             enUSToolStripMenuItem = new ToolStripMenuItem();
             frFRToolStripMenuItem = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            contactToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -47,7 +49,7 @@
             // 
             buttonStart.Location = new Point(12, 352);
             buttonStart.Name = "buttonStart";
-            buttonStart.Size = new Size(88, 21);
+            buttonStart.Size = new Size(94, 21);
             buttonStart.TabIndex = 0;
             buttonStart.Text = "Start";
             buttonStart.UseVisualStyleBackColor = true;
@@ -98,7 +100,7 @@
             // menuStrip1
             // 
             menuStrip1.BackColor = SystemColors.ButtonFace;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(328, 24);
@@ -124,14 +126,28 @@
             enUSToolStripMenuItem.Name = "enUSToolStripMenuItem";
             enUSToolStripMenuItem.Size = new Size(180, 22);
             enUSToolStripMenuItem.Text = "en-US";
-            enUSToolStripMenuItem.Click += enUSToolStripMenuItem_Click;
+            enUSToolStripMenuItem.Click += EnUSToolStripMenuItem_Click;
             // 
             // frFRToolStripMenuItem
             // 
             frFRToolStripMenuItem.Name = "frFRToolStripMenuItem";
             frFRToolStripMenuItem.Size = new Size(180, 22);
             frFRToolStripMenuItem.Text = "fr-FR";
-            frFRToolStripMenuItem.Click += frFRToolStripMenuItem_Click;
+            frFRToolStripMenuItem.Click += FrFRToolStripMenuItem_Click;
+            // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { contactToolStripMenuItem });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Text = "Help";
+            // 
+            // contactToolStripMenuItem
+            // 
+            contactToolStripMenuItem.Name = "contactToolStripMenuItem";
+            contactToolStripMenuItem.Size = new Size(180, 22);
+            contactToolStripMenuItem.Text = "Contact";
+            contactToolStripMenuItem.Click += ContactToolStripMenuItem_Click;
             // 
             // label1
             // 
@@ -155,6 +171,7 @@
             Controls.Add(buttonStart);
             Controls.Add(menuStrip1);
             Controls.Add(label1);
+            Cursor = Cursors.Cross;
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -182,5 +199,7 @@
         private ToolStripMenuItem enUSToolStripMenuItem;
         private ToolStripMenuItem frFRToolStripMenuItem;
         private Label label1;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem contactToolStripMenuItem;
     }
 }
