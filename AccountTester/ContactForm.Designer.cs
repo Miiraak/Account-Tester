@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContactForm));
             linkLabelMail = new LinkLabel();
             labelMail = new Label();
             labelRepository = new Label();
@@ -115,6 +116,7 @@
             Controls.Add(labelMail);
             Controls.Add(linkLabelMail);
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ContactForm";

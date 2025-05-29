@@ -118,20 +118,20 @@
             // 
             languageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { enUSToolStripMenuItem, frFRToolStripMenuItem });
             languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            languageToolStripMenuItem.Size = new Size(180, 22);
+            languageToolStripMenuItem.Size = new Size(126, 22);
             languageToolStripMenuItem.Text = "Language";
             // 
             // enUSToolStripMenuItem
             // 
             enUSToolStripMenuItem.Name = "enUSToolStripMenuItem";
-            enUSToolStripMenuItem.Size = new Size(180, 22);
+            enUSToolStripMenuItem.Size = new Size(106, 22);
             enUSToolStripMenuItem.Text = "en-US";
             enUSToolStripMenuItem.Click += EnUSToolStripMenuItem_Click;
             // 
             // frFRToolStripMenuItem
             // 
             frFRToolStripMenuItem.Name = "frFRToolStripMenuItem";
-            frFRToolStripMenuItem.Size = new Size(180, 22);
+            frFRToolStripMenuItem.Size = new Size(106, 22);
             frFRToolStripMenuItem.Text = "fr-FR";
             frFRToolStripMenuItem.Click += FrFRToolStripMenuItem_Click;
             // 
@@ -145,7 +145,7 @@
             // contactToolStripMenuItem
             // 
             contactToolStripMenuItem.Name = "contactToolStripMenuItem";
-            contactToolStripMenuItem.Size = new Size(180, 22);
+            contactToolStripMenuItem.Size = new Size(116, 22);
             contactToolStripMenuItem.Text = "Contact";
             contactToolStripMenuItem.Click += ContactToolStripMenuItem_Click;
             // 
@@ -177,6 +177,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Account Tester v0.7.8.2";
