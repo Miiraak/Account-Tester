@@ -255,20 +255,20 @@
   <data name="OfficeRights" xml:space="preserve">
     <value>Office Rights</value>
   </data>
-  <data name="CanWrite" xml:space="preserve">
-    <value>Can Write</value>
+  <data name="Write" xml:space="preserve">
+    <value>Write</value>
   </data>
-  <data name="CanRead" xml:space="preserve">
-    <value>Can Read</value>
+  <data name="Read" xml:space="preserve">
+    <value>Read</value>
   </data>
-  <data name="CanDelete" xml:space="preserve">
-    <value>Can Delete</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
-  <data name="CanCreate" xml:space="preserve">
-    <value>Can Create</value>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
   </data>
-  <data name="CanSave" xml:space="preserve">
-    <value>Can Save</value>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="TestedFolder" xml:space="preserve">
     <value>Tested Folder</value>
@@ -347,5 +347,20 @@
   </data>
   <data name="LastUpdateStatus" xml:space="preserve">
     <value>Last Update Status</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Repository</value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
   </data>
 </root>

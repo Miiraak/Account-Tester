@@ -255,20 +255,20 @@
   <data name="OfficeRights" xml:space="preserve">
     <value>Droits Office</value>
   </data>
-  <data name="CanWrite" xml:space="preserve">
-    <value>Peut écrire</value>
+  <data name="Write" xml:space="preserve">
+    <value>Écrire</value>
   </data>
-  <data name="CanRead" xml:space="preserve">
-    <value>Peut lire</value>
+  <data name="Read" xml:space="preserve">
+    <value>Lire</value>
   </data>
-  <data name="CanDelete" xml:space="preserve">
-    <value>Peut supprimer</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
   </data>
-  <data name="CanCreate" xml:space="preserve">
-    <value>Peut créer</value>
+  <data name="Create" xml:space="preserve">
+    <value>Créer</value>
   </data>
-  <data name="CanSave" xml:space="preserve">
-    <value>Peut sauvegarder</value>
+  <data name="Save" xml:space="preserve">
+    <value>Sauvegarder</value>
   </data>
   <data name="TestedFolder" xml:space="preserve">
     <value>Dossier testé</value>
@@ -347,5 +347,20 @@
   </data>
   <data name="LastUpdateStatus" xml:space="preserve">
     <value>Status dernière mise à jour</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Aide</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Mail" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="Repository" xml:space="preserve">
+    <value>Dépôt </value>
+  </data>
+  <data name="Site" xml:space="preserve">
+    <value>Site</value>
   </data>
 </root>
