@@ -29,7 +29,7 @@ namespace AccountTester
             buttonExportForm.Text = T("Export");
             buttonStart.Text = T("Start");
             optionsToolStripMenuItem.Text = T("Options");
-            langageToolStripMenuItem.Text = T("Langage");
+            languageToolStripMenuItem.Text = T("Language");
         }
 
         /// <summary>
@@ -149,8 +149,7 @@ namespace AccountTester
 
             try
             {
-                string registryPath = @"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0";
-                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(registryPath);
+                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0");
                 string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
 
                 if (!string.IsNullOrEmpty(officeVersion))
@@ -175,6 +174,15 @@ namespace AccountTester
                 {
                     richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_OfficeVersionTesting_NotFound")}" + Environment.NewLine);
                 }
+
+                // Get Office path
+                ExportVariables.OfficeVersion_export_OfficePath = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Configuration", "InstallationPath");
+                // Get Office Culture
+                ExportVariables.OfficeVersion_export_OfficeCulture = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeCulture");
+                // Get Office Excluded Apps
+                ExportVariables.OfficeVersion_export_OfficeExcludedApps = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeExcludedApps");
+                // Get Office Last Update Status
+                ExportVariables.OfficeVersion_export_OfficeLastUpdateStatus = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\UpdateStatus", "LastUpdateResult");
             }
             catch (Exception ex)
             {
@@ -183,6 +191,16 @@ namespace AccountTester
 
             stopwatch.Stop();
             ExportVariables.OfficeVersion_export_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+        }
+
+        private string GetRegValue(string path, string value)
+        {
+            using RegistryKey? regKey = Registry.LocalMachine.OpenSubKey(path);
+            string? str = regKey?.GetValue(value)?.ToString();
+            if (string.IsNullOrEmpty(str))
+                return "Null";
+            else
+                return str;
         }
 
         /// <summary>                                      
@@ -315,10 +333,15 @@ namespace AccountTester
                         using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
                         if (printerKey != null)
                         {
+                            ExportVariables.Printer_export_PrinterName = ExportVariables.Printer_export_PrinterName.Append(printer).ToArray();
+                            ExportVariables.Printer_export_PrinterDriver = ExportVariables.Printer_export_PrinterDriver.Append(printerKey.GetValue("Printer Driver").ToString()).ToArray();
+                            ExportVariables.Printer_export_PrinterPort = ExportVariables.Printer_export_PrinterPort.Append(printerKey.GetValue("Port").ToString()).ToArray();
+
                             string? locationValue = printerKey.GetValue("Location")?.ToString();
                             if (!string.IsNullOrEmpty(locationValue))
                             {
                                 string PrinterIP = locationValue.Split("//").Last().Split(":").First();
+                                ExportVariables.Printer_export_PrinterIP = ExportVariables.Printer_export_PrinterIP.Append(PrinterIP).ToArray();
 
                                 if (!string.IsNullOrEmpty(PrinterIP))
                                 {
@@ -329,12 +352,14 @@ namespace AccountTester
                                     {
                                         richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                         richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
+                                        ExportVariables.Printer_export_PrinterStatus = ExportVariables.Printer_export_PrinterStatus.Append("OK").ToArray();
                                         ExportVariables.General_export_TotalSuccess++;
                                     }
                                     else
                                     {
                                         richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                         richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
+                                        ExportVariables.Printer_export_PrinterStatus = ExportVariables.Printer_export_PrinterStatus.Append("FAIL").ToArray();
                                     }
                                 }
                                 else
@@ -352,7 +377,7 @@ namespace AccountTester
                         else
                         {
                             richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                            richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoRegKey")}" + Environment.NewLine);
+                            richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
                         }
                     }
                 }
@@ -432,8 +457,6 @@ namespace AccountTester
                 stopwatch.Stop();
                 richTextBoxLogs.AppendText($"- {T("TotalTimeElapsed")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- {T("TotalSuccess")} : {ExportVariables.General_export_TotalSuccess}/{ExportVariables.General_export_TotalTests}");
-                ExportVariables.General_export_TotalSuccess = 0;
-                ExportVariables.General_export_TotalTests = 0;
 
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
                 player.Play();

@@ -169,6 +169,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Excluded Apps.
+        /// </summary>
+        internal static string ExcludedApps {
+            get {
+                return ResourceManager.GetString("ExcludedApps", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Export.
         /// </summary>
         internal static string Export {
@@ -259,6 +268,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à IP.
+        /// </summary>
+        internal static string IP {
+            get {
+                return ResourceManager.GetString("IP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Key.
         /// </summary>
         internal static string Key {
@@ -268,11 +286,20 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Langage.
+        ///   Recherche une chaîne localisée semblable à Language.
         /// </summary>
-        internal static string Langage {
+        internal static string Language {
             get {
-                return ResourceManager.GetString("Langage", resourceCulture);
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Last Update Status.
+        /// </summary>
+        internal static string LastUpdateStatus {
+            get {
+                return ResourceManager.GetString("LastUpdateStatus", resourceCulture);
             }
         }
         
@@ -340,6 +367,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Registry key not found..
+        /// </summary>
+        internal static string MainForm_RTBL_NoRegKey {
+            get {
+                return ResourceManager.GetString("MainForm_RTBL_NoRegKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Version not found.
         /// </summary>
         internal static string MainForm_RTBL_OfficeVersionTesting_NotFound {
@@ -354,15 +390,6 @@ namespace AccountTester {
         internal static string MainForm_RTBL_PrinterTesting_NoLocationValueReg {
             get {
                 return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoLocationValueReg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Registry key not found for printer..
-        /// </summary>
-        internal static string MainForm_RTBL_PrinterTesting_NoRegKey {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoRegKey", resourceCulture);
             }
         }
         
@@ -642,6 +669,15 @@ namespace AccountTester {
         internal static string TestsFinished {
             get {
                 return ResourceManager.GetString("TestsFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Title.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
