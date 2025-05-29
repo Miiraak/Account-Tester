@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExportForm));
             textBoxFileName = new TextBox();
             textBoxFilePath = new TextBox();
             comboBoxExtension = new ComboBox();
@@ -124,6 +125,7 @@
             Controls.Add(textBoxFilePath);
             Controls.Add(textBoxFileName);
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "ExportForm";
             StartPosition = FormStartPosition.CenterParent;

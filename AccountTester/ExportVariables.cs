@@ -26,10 +26,10 @@
         // NetworkStorageRights variables - Not OK, need to be tested with a network share
         public static string NetworkStorageRights_export_Hour { get; set; } = "Null";
         public static string NetworkStorageRights_export_ConnexionType { get; set; } = "Null"; // Not set
-        public static string[]? NetworkStorageRights_export_DiskLetter { get; set; } = [];  // Not set
-        public static string[]? NetworkStorageRights_export_CheminUNC { get; set; } = []; // Not set
-        public static string[]? NetworkStorageRights_export_Serveur { get; set; } = [];  // Not set
-        public static string[]? NetworkStorageRights_export_ShareName { get; set; } = [];  // Not set
+        public static string[]? NetworkStorageRights_export_DiskLetter { get; set; }  // Not set
+        public static string[]? NetworkStorageRights_export_CheminUNC { get; set; } // Not set
+        public static string[]? NetworkStorageRights_export_Serveur { get; set; }   // Not set
+        public static string[]? NetworkStorageRights_export_ShareName { get; set; } // Not set
         public static string NetworkStorageRights_export_ElapsedTime { get; set; } = "Null";
 
         // OfficeVersion variables
