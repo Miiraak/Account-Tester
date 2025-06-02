@@ -225,9 +225,6 @@
   <data name="ResponseTime" xml:space="preserve">
     <value>Temps réponse</value>
   </data>
-  <data name="ConnexionType" xml:space="preserve">
-    <value>Type de connexion</value>
-  </data>
   <data name="NetworkStorageRights" xml:space="preserve">
     <value>Droits stockage réseau</value>
   </data>
@@ -362,5 +359,17 @@
   </data>
   <data name="Site" xml:space="preserve">
     <value>Site</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Inconnu</value>
+  </data>
+  <data name="UnauthorizedAccess" xml:space="preserve">
+    <value>Accès non autorisé</value>
+  </data>
+  <data name="IOError" xml:space="preserve">
+    <value>Erreur IO</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Aucun</value>
   </data>
 </root>

@@ -61,15 +61,6 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Connexion Type.
-        /// </summary>
-        internal static string ConnexionType {
-            get {
-                return ResourceManager.GetString("ConnexionType", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Contact.
         /// </summary>
         internal static string Contact {
@@ -259,6 +250,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à IO Error.
+        /// </summary>
+        internal static string IOError {
+            get {
+                return ResourceManager.GetString("IOError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à IP.
         /// </summary>
         internal static string IP {
@@ -417,6 +417,15 @@ namespace AccountTester {
         internal static string NetworkStorageRights {
             get {
                 return ResourceManager.GetString("NetworkStorageRights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à None.
+        /// </summary>
+        internal static string None {
+            get {
+                return ResourceManager.GetString("None", resourceCulture);
             }
         }
         
@@ -745,11 +754,29 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unauthorized access.
+        /// </summary>
+        internal static string UnauthorizedAccess {
+            get {
+                return ResourceManager.GetString("UnauthorizedAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à UNC Path.
         /// </summary>
         internal static string UNCPath {
             get {
                 return ResourceManager.GetString("UNCPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unknown.
+        /// </summary>
+        internal static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
         
