@@ -23,12 +23,12 @@
         public static string InternetConnexion_HTMLStatut { get; set; } = "Null";
         public static string InternetConnexion_ElapsedTime { get; set; } = "Null";
 
-        // NetworkStorageRights variables - Not OK and need to be tested with a network share 
+        // NetworkStorageRights variables
         public static string NetworkStorageRights_Hour { get; set; } = "Null";
-        public static string[] NetworkStorageRights_DiskLetter { get; set; } = [];  // Ok with local disk, not test with network share
-        public static string[] NetworkStorageRights_CheminUNC { get; set; } = Array.Empty<string>(); // OK with local disk, not test with network share
-        public static string[] NetworkStorageRights_Serveur { get; set; } = [];   // Ok with local disk, not test with network share
-        public static string[] NetworkStorageRights_ShareName { get; set; } = []; // Ok with local disk, not test with network share
+        public static string[] NetworkStorageRights_DiskLetter { get; set; } = [];
+        public static string[] NetworkStorageRights_CheminUNC { get; set; } = Array.Empty<string>();
+        public static string[] NetworkStorageRights_Serveur { get; set; } = [];
+        public static string[] NetworkStorageRights_ShareName { get; set; } = [];
         public static string NetworkStorageRights_ElapsedTime { get; set; } = "Null";
 
         // OfficeVersion variables

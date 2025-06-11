@@ -22,14 +22,14 @@ namespace AccountTester {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class strings {
+    internal class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal strings() {
+        internal Strings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AccountTester {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AccountTester.strings", typeof(strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AccountTester.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace AccountTester {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Auto-Export.
+        /// </summary>
+        internal static string AutoExport {
+            get {
+                return ResourceManager.GetString("AutoExport", resourceCulture);
             }
         }
         
@@ -183,6 +192,15 @@ namespace AccountTester {
         internal static string Extension {
             get {
                 return ResourceManager.GetString("Extension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Extension by default :.
+        /// </summary>
+        internal static string ExtensionByDefault {
+            get {
+                return ResourceManager.GetString("ExtensionByDefault", resourceCulture);
             }
         }
         
@@ -349,15 +367,6 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Omitted.
-        /// </summary>
-        internal static string MainForm_RTBL_NetworkStorageRightsTesting_Omitted {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_NetworkStorageRightsTesting_Omitted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Write refused.
         /// </summary>
         internal static string MainForm_RTBL_NetworkStorageRightsTesting_Refused {
@@ -439,7 +448,7 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à No printer found..
+        ///   Recherche une chaîne localisée semblable à No printer found.
         /// </summary>
         internal static string NoPrinterFound {
             get {
@@ -480,6 +489,15 @@ namespace AccountTester {
         internal static string OfficeVersion {
             get {
                 return ResourceManager.GetString("OfficeVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Omitted.
+        /// </summary>
+        internal static string Omitted {
+            get {
+                return ResourceManager.GetString("Omitted", resourceCulture);
             }
         }
         

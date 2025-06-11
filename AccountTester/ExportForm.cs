@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using BlobPE;
+using System.Text.Json;
 using System.Xml;
 
 namespace AccountTester
@@ -11,7 +12,10 @@ namespace AccountTester
         public ExportForm()
         {
             InitializeComponent();
-            comboBoxExtension.SelectedIndex = 0;
+            if (Blob.Get("") != null && Blob.Get("BaseExtension") is string lang)
+                comboBoxExtension.Text = Blob.Get("BaseExtension");
+            else
+                comboBoxExtension.SelectedIndex = 0;
 
             UpdateTexts();
             LangManager.Instance.LanguageChanged += UpdateTexts;
@@ -100,7 +104,7 @@ namespace AccountTester
         /// </summary>
         /// <param name="fileName">txt file name</param>
         /// <param name="filePath">txt saving path</param>
-        private static void ExportToTxt(string fileName, string filePath)
+        internal static void ExportToTxt(string fileName, string filePath)
         {
             string path = Path.Combine(filePath, $"{fileName}.txt");
             int i = 0;
@@ -207,7 +211,7 @@ namespace AccountTester
         /// </summary>
         /// <param name="fileName">log file name</param>
         /// <param name="filePath">log saving path</param>
-        private static void ExportToLog(string fileName, string filePath)
+        internal static void ExportToLog(string fileName, string filePath)
         {
             string path = Path.Combine(filePath, $"{fileName}.log");
             using StreamWriter sw = new(path);
@@ -221,7 +225,7 @@ namespace AccountTester
         /// </summary>
         /// <param name="fileName">xml file name</param>
         /// <param name="filePath">xml saving path</param>
-        private static void ExportToXML(string fileName, string filePath)
+        internal static void ExportToXML(string fileName, string filePath)
         {
             XmlDocument doc = new();
 
@@ -284,15 +288,22 @@ namespace AccountTester
             root.AppendChild(printers);
             XMLW(doc, printers, TT("Hour"), ExportVariables.Printer_Hour);
 
-            for (int i = 0; i < ExportVariables.Printer_PrinterName?.Length; i++)
+            if (ExportVariables.Printer_PrinterName != null)
             {
-                XmlElement printer = doc.CreateElement($"{TT("Printer")}_{i}");
-                printers.AppendChild(printer);
-                XMLW(doc, printer, TT("Name"), ExportVariables.Printer_PrinterName[i]);
-                XMLW(doc, printer, TT("IP"), ExportVariables.Printer_PrinterIP[i]);
-                XMLW(doc, printer, TT("Status"), ExportVariables.Printer_PrinterStatus[i]);
-                XMLW(doc, printer, TT("Driver"), ExportVariables.Printer_PrinterDriver[i]);
-                XMLW(doc, printer, TT("Port"), ExportVariables.Printer_PrinterPort[i]);
+                for (int i = 0; i < ExportVariables.Printer_PrinterName?.Length; i++)
+                {
+                    XmlElement printer = doc.CreateElement($"{TT("Printer")}_{i}");
+                    printers.AppendChild(printer);
+                    XMLW(doc, printer, TT("Name"), ExportVariables.Printer_PrinterName[i]);
+                    XMLW(doc, printer, TT("IP"), ExportVariables.Printer_PrinterIP[i]);
+                    XMLW(doc, printer, TT("Status"), ExportVariables.Printer_PrinterStatus[i]);
+                    XMLW(doc, printer, TT("Driver"), ExportVariables.Printer_PrinterDriver[i]);
+                    XMLW(doc, printer, TT("Port"), ExportVariables.Printer_PrinterPort[i]);
+                }
+            }
+            else
+            {
+                XMLW(doc, printers, TT("NoPrinterFound"), string.Empty);
             }
 
             XMLW(doc, printers, TT("ElapsedTime"), ExportVariables.Printer_ElapsedTime);
@@ -316,34 +327,11 @@ namespace AccountTester
         }
 
         /// <summary>
-        /// Write a list of values in the XML file.
-        /// </summary>
-        /// <param name="doc">The XML document</param>
-        /// <param name="root">The parent node</param>
-        /// <param name="title">Name of the child node</param>
-        /// <param name="value">A list of values</param>
-        /// <param name="child_value">Name of the child node for each value</param>
-        private static void XMLWL(XmlDocument doc, XmlElement root, string title, string[]? value, string child_value)
-        {
-            XmlElement child = doc.CreateElement(title);
-            if (value != null)
-            {
-                foreach (string item in value)
-                {
-                    XmlElement itemChild = doc.CreateElement(child_value);
-                    itemChild.InnerText = item;
-                    child.AppendChild(itemChild);
-                }
-            }
-            root.AppendChild(child);
-        }
-
-        /// <summary>
         /// Export the report to a CSV file.
         /// </summary>
         /// <param name="fileName">csv file name</param>
         /// <param name="filePath">csv saving path</param>
-        private static void ExportToCSV(string fileName, string filePath)
+        internal static void ExportToCSV(string fileName, string filePath)
         {
             string path = Path.Combine(filePath, $"{fileName}.csv");
             using StreamWriter sw = new(path);
@@ -361,7 +349,7 @@ namespace AccountTester
             CSVWL(T("InternetConnexion"), T("TestedURL"), ExportVariables.InternetConnexion_TestedURL, sw);
             CSVWL(T("InternetConnexion"), T("HTMLStatus"), ExportVariables.InternetConnexion_HTMLStatut, sw);
             CSVWL(T("InternetConnexion"), $"{T("ResponseTime")} (ms)", ExportVariables.InternetConnexion_ElapsedTime, sw);
-            
+
             CSVWL(T("NetworkStorageRights"), T("Hour"), ExportVariables.NetworkStorageRights_Hour, sw);
             if (ExportVariables.NetworkStorageRights_DiskLetter != null)
             {
@@ -438,7 +426,7 @@ namespace AccountTester
         /// </summary>
         /// <param name="fileName">json file name</param>
         /// <param name="filePath">json saving path</param>
-        private static void ExportToJSON(string fileName, string filePath)
+        internal static void ExportToJSON(string fileName, string filePath)
         {
             var Printers = new Dictionary<string, object>
             {
@@ -446,19 +434,24 @@ namespace AccountTester
             };
 
             int printerCount = ExportVariables.Printer_PrinterName?.Length ?? 0;
-            for (int i = 0; i < printerCount; i++)
+            if (printerCount > 0)
             {
-                var printer = new Dictionary<string, object>
+                for (int i = 0; i < printerCount; i++)
                 {
-                    [TT("Name")] = ExportVariables.Printer_PrinterName[i],
-                    [TT("IP")] = ExportVariables.Printer_PrinterIP[i],
-                    [TT("Status")] = ExportVariables.Printer_PrinterStatus[i],
-                    [TT("Driver")] = ExportVariables.Printer_PrinterDriver[i],
-                    [TT("Port")] = ExportVariables.Printer_PrinterPort[i]
-                };
-
-                Printers[$"{TT("Printer")}_{i + 1}"] = printer;
+                    var printer = new Dictionary<string, object>
+                    {
+                        [TT("Name")] = ExportVariables.Printer_PrinterName[i],
+                        [TT("IP")] = ExportVariables.Printer_PrinterIP[i],
+                        [TT("Status")] = ExportVariables.Printer_PrinterStatus[i],
+                        [TT("Driver")] = ExportVariables.Printer_PrinterDriver[i],
+                        [TT("Port")] = ExportVariables.Printer_PrinterPort[i]
+                    };
+                    Printers[$"{TT("Printer")}_{i + 1}"] = printer;
+                }
             }
+            else
+                Printers[TT("NoPrinterFound")] = string.Empty;
+
             Printers[TT("ElapsedTime")] = ExportVariables.Printer_ElapsedTime;
 
             var OfficeRights = new Dictionary<string, object>
@@ -542,7 +535,7 @@ namespace AccountTester
         /// </summary>
         /// <param name="fileName">zip file name</param>
         /// <param name="filePath">zip saving path</param>
-        private static void ExportToZip(string fileName, string filePath)
+        internal static void ExportToZip(string fileName, string filePath)
         {
             string tempFolder = Path.GetTempPath();
 
@@ -557,11 +550,9 @@ namespace AccountTester
 
             string zipPath = Path.Combine(filePath, $"{fileName}.zip");
             if (File.Exists(zipPath))
-            {
                 File.Delete(zipPath);
-            }
-            System.IO.Compression.ZipFile.CreateFromDirectory(tempPath, zipPath);
 
+            System.IO.Compression.ZipFile.CreateFromDirectory(tempPath, zipPath);
             Directory.Delete(tempPath, true);
         }
     }

@@ -153,14 +153,14 @@
   <data name="MainForm_RTBL_NetworkStorageRightsTesting_Error" xml:space="preserve">
     <value>Connexion error</value>
   </data>
-  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Omitted" xml:space="preserve">
+  <data name="Omitted" xml:space="preserve">
     <value>Omitted</value>
   </data>
   <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
     <value>Version not found</value>
   </data>
   <data name="NoPrinterFound" xml:space="preserve">
-    <value>No printer found.</value>
+    <value>No printer found</value>
   </data>
   <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
     <value>Not found</value>
@@ -371,5 +371,11 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="AutoExport" xml:space="preserve">
+    <value>Auto-Export</value>
+  </data>
+  <data name="ExtensionByDefault" xml:space="preserve">
+    <value>Extension by default :</value>
   </data>
 </root>

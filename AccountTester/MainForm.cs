@@ -1,8 +1,9 @@
+using BlobPE;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
-using Microsoft.Win32;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace AccountTester
@@ -15,23 +16,56 @@ namespace AccountTester
         public MainForm()
         {
             InitializeComponent();
+            Blob.RemoveUpdateFiles();
             richTextBoxLogs.Font = new Font("Consolas", 10);
-            buttonExportForm.Enabled = false;
+            exportToolStripMenuItem.Enabled = false;
 
             UpdateTexts();
             LangManager.Instance.LanguageChanged += UpdateTexts;
         }
 
+        public void MainFormLoad(object sender, EventArgs e)
+        {
+            toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension");
+
+            string savedLanguage = Blob.Get("Langage") ?? "en-US";
+            switch (savedLanguage)
+            {
+                case "en-US":
+                    enUSToolStripMenuItem.Checked = true;
+                    ChangeCheck(enUSToolStripMenuItem);
+                    LangManager.Instance.SetLanguage("en-US");
+                    break;
+                case "fr-FR":
+                    frFRToolStripMenuItem.Checked = true;
+                    ChangeCheck(frFRToolStripMenuItem);
+                    LangManager.Instance.SetLanguage("fr-FR");
+                    break;
+                default:
+                    enUSToolStripMenuItem.Checked = true;
+                    ChangeCheck(enUSToolStripMenuItem);
+                    LangManager.Instance.SetLanguage("en-US");
+                    break;
+            }
+
+            autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
+
+        }
+
         private void UpdateTexts()
         {
             labelLogs.Text = T("Logs");
-            buttonCopier.Text = T("Copy");
-            buttonExportForm.Text = T("Export");
-            buttonStart.Text = T("Start");
+            copyToolStripMenuItem.Text = T("Copy");
+            exportToolStripMenuItem.Text = T("Export");
+            startToolStripMenuItem.Text = T("Start");
             optionsToolStripMenuItem.Text = T("Options");
             languageToolStripMenuItem.Text = T("Language");
             helpToolStripMenuItem.Text = T("Help");
             contactToolStripMenuItem.Text = T("Contact");
+            reportsToolStripMenuItem.Text = T("Report");
+            autoExportToolStripMenuItem.Text = T("AutoExport");
+            extensionByDefaultToolStripMenuItem.Text = T("ExtensionByDefault");
+            saveToolStripMenuItem.Text = T("Save");
         }
 
         /// <summary>
@@ -142,7 +176,7 @@ namespace AccountTester
                         ExportVariables.NetworkStorageRights_Serveur = ExportVariables.NetworkStorageRights_Serveur.Append("localhost").ToArray();
                         ExportVariables.NetworkStorageRights_ShareName = ExportVariables.NetworkStorageRights_ShareName.Append(T("None")).ToArray();
 
-                        richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Omitted")}" + Environment.NewLine);
+                        richTextBoxLogs.AppendText($@"- {drive.Name} : {T("Omitted")}" + Environment.NewLine);
                         ExportVariables.General_TotalSuccess++;
                     }
                 }
@@ -381,19 +415,35 @@ namespace AccountTester
                                 {
                                     richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                     richTextBoxLogs.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
+                                    ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                                    ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                                    ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                                    ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                                 }
                             }
                             else
                             {
                                 richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                 richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
+                                ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                                ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                                ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                                ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                             }
                         }
                         else
                         {
                             richTextBoxLogs.AppendText(printer + Environment.NewLine);
                             richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
+                            ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                            ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                            ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                            ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                         }
+                    }
+                    else
+                    {
+                        richTextBoxLogs.AppendText($"{printer} : {T("Omitted")}" + Environment.NewLine);
                     }
                 }
             }
@@ -407,11 +457,8 @@ namespace AccountTester
         /// </summary>
         private void ButtonStart_Click(object sender, EventArgs e)
         {
-            buttonStart.Enabled = false;
             Task.Run(() => ExecutionSequentielle()).Wait();
-            buttonCopier.Enabled = true;
-            buttonExportForm.Enabled = true;
-            buttonStart.Enabled = true;
+            exportToolStripMenuItem.Enabled = true;
         }
 
         /// <summary>
@@ -422,8 +469,7 @@ namespace AccountTester
         {
             ExportVariables.General_TotalSuccess = 0;
             ExportVariables.General_TotalTests = 0;
-            buttonCopier.Enabled = false;
-            buttonExportForm.Enabled = false;
+            exportToolStripMenuItem.Enabled = false;
             richTextBoxLogs.Clear();
 
             try
@@ -476,7 +522,8 @@ namespace AccountTester
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
                 player.Play();
 
-                buttonStart.Text = T("Restart");
+                startToolStripMenuItem.Text = T("Restart");
+                exportToolStripMenuItem.Enabled = true;
 
                 ExportVariables.General_Resume = richTextBoxLogs.Text;
             }
@@ -486,34 +533,104 @@ namespace AccountTester
             }
         }
 
-        /// <summary>
-        /// Event handler for the Export button click event.
-        /// </summary>
-        private void ButtonExport_Click(object sender, EventArgs e)
-        {
-            ExportForm exportForm = new();
-            exportForm.ShowDialog();
-        }
-
-        private void ButtonCopier_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(richTextBoxLogs.Text);
-        }
-
         private void EnUSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LangManager.Instance.SetLanguage("en-US");
+            ChangeCheck(enUSToolStripMenuItem);
         }
 
         private void FrFRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LangManager.Instance.SetLanguage("fr-FR");
+            ChangeCheck(frFRToolStripMenuItem);
         }
 
         private void ContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ContactForm contactForm = new();
             contactForm.ShowDialog();
+        }
+
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (richTextBoxLogs.Text.Length > 0)
+                Clipboard.SetText(richTextBoxLogs.Text);
+        }
+
+        private void ChangeCheck(object MenuStipItem)
+        {
+            foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
+            {
+                if (item == MenuStipItem)
+                    item.Checked = true;
+                else
+                    item.Checked = false;
+            }
+        }
+
+        private void ExportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportForm exportForm = new();
+            exportForm.ShowDialog();
+        }
+
+        private void StartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            startToolStripMenuItem.Enabled = false;
+            Task.Run(() => ExecutionSequentielle()).Wait();
+            exportToolStripMenuItem.Enabled = true;
+            startToolStripMenuItem.Enabled = true;
+
+            if (autoExportToolStripMenuItem.Checked && toolStripComboBoxExtensionByDefault.Text != String.Empty)
+                ExportReport();
+        }
+
+        internal void ExportReport()
+        {
+            string fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
+            string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string extension;
+
+            switch (toolStripComboBoxExtensionByDefault.Text)
+            {
+                case ".csv":
+                    ExportForm.ExportToCSV(fileName, filePath);
+                    break;
+                case ".xml":
+                    ExportForm.ExportToXML(fileName, filePath);
+                    break;
+                case ".json":
+                    ExportForm.ExportToJSON(fileName, filePath);
+                    break;
+                case ".txt":
+                    ExportForm.ExportToTxt(fileName, filePath);
+                    break;
+                case ".log":
+                    ExportForm.ExportToLog(fileName, filePath);
+                    break;
+                case ".zip":
+                    ExportForm.ExportToZip(fileName, filePath);
+                    break;
+            }
+
+            MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
+        }
+
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Retrieve the texte of the currently selected toolstrip menu item from languageToolStripMenuItem
+            string selectedLanguage = languageToolStripMenuItem.DropDownItems.Cast<ToolStripMenuItem>().FirstOrDefault(item => item.Checked)?.Text ?? "en-US";
+            string defaultExtension;
+            if (toolStripComboBoxExtensionByDefault.SelectedItem != null)
+                defaultExtension = toolStripComboBoxExtensionByDefault.Text;
+            else
+                defaultExtension = ".txt";
+            bool autoExport = autoExportToolStripMenuItem.Checked;
+
+            Blob.Set("Langage", selectedLanguage);
+            Blob.Set("BaseExtension", defaultExtension);
+            Blob.Set("AutoExport", autoExport.ToString());
+            Blob.Save();
         }
     }
 }
