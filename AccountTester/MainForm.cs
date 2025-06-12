@@ -27,7 +27,7 @@ namespace AccountTester
 
         public void MainFormLoad(object sender, EventArgs e)
         {
-            toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension");
+            toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension") ?? ".zip";
 
             string savedLanguage = Blob.Get("Langage") ?? "en-US";
             switch (savedLanguage)
@@ -51,6 +51,12 @@ namespace AccountTester
 
             autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
             autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
+
+            if (ExportVariables.IsAutoRun)
+            {
+                Autorun();
+                Application.Exit();
+            }
         }
 
         private void UpdateTexts()
@@ -577,13 +583,27 @@ namespace AccountTester
 
         private void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            StartExec();
+        }
+
+        internal void StartExec()
+        {
             startToolStripMenuItem.Enabled = false;
             Task.Run(() => ExecutionSequentielle()).Wait();
             exportToolStripMenuItem.Enabled = true;
             startToolStripMenuItem.Enabled = true;
 
             if (autoExportToolStripMenuItem.Checked && toolStripComboBoxExtensionByDefault.Text != String.Empty)
+            {
                 ExportReport();
+                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
+            }
+        }
+
+        internal void Autorun()
+        {
+            Task.Run(() => ExecutionSequentielle()).Wait();
+            ExportReport();
         }
 
         internal void ExportReport()
@@ -591,7 +611,7 @@ namespace AccountTester
             string fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            switch (toolStripComboBoxExtensionByDefault.Text)
+            switch (toolStripComboBoxExtensionByDefault.Text ?? ".zip")
             {
                 case ".csv":
                     ExportForm.ExportToCSV(fileName, filePath);
@@ -612,8 +632,6 @@ namespace AccountTester
                     ExportForm.ExportToZip(fileName, filePath);
                     break;
             }
-
-            MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
         }
 
         /// <summary>

@@ -382,7 +382,7 @@
     <value>Démarrage auto. activé</value>
   </data>
   <data name="AutorunDisabled" xml:space="preserve">
-    <value>Démarrage auto. échec</value>
+    <value>Démarrage auto. désactivé</value>
   </data>
   <data name="WantEnableAutorun" xml:space="preserve">
     <value>Voulez-vous activer le démarrage automatique ?</value>

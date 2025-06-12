@@ -19,6 +19,9 @@ namespace AccountTester
             };
             Blob.CheckForUpdates(args, defaultData);
 
+            if (args.Length > 0 && args[0] == "--autorun")
+                ExportVariables.IsAutoRun = true;
+
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

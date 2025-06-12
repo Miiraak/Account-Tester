@@ -59,5 +59,9 @@
         public static string[] Printer_PrinterDriver { get; set; } = [];
         public static string[] Printer_PrinterPort { get; set; } = [];
         public static string Printer_ElapsedTime { get; set; } = "Null";
+
+
+        // Miscellaneous variables
+        public static bool IsAutoRun = false;
     }
 }
