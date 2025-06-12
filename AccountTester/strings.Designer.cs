@@ -61,11 +61,38 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Attention.
+        /// </summary>
+        internal static string Attention {
+            get {
+                return ResourceManager.GetString("Attention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Auto-Export.
         /// </summary>
         internal static string AutoExport {
             get {
                 return ResourceManager.GetString("AutoExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Autorun Disabled.
+        /// </summary>
+        internal static string AutorunDisabled {
+            get {
+                return ResourceManager.GetString("AutorunDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Autorun Enabled.
+        /// </summary>
+        internal static string AutorunEnabled {
+            get {
+                return ResourceManager.GetString("AutorunEnabled", resourceCulture);
             }
         }
         
@@ -111,6 +138,15 @@ namespace AccountTester {
         internal static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Denied.
+        /// </summary>
+        internal static string Denied {
+            get {
+                return ResourceManager.GetString("Denied", resourceCulture);
             }
         }
         
@@ -619,6 +655,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à This function require elevated rights, would you like to restart as administrator ?.
+        /// </summary>
+        internal static string RunAsAdminRequired {
+            get {
+                return ResourceManager.GetString("RunAsAdminRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Save.
         /// </summary>
         internal static string Save {
@@ -696,6 +741,15 @@ namespace AccountTester {
         internal static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Success.
+        /// </summary>
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
             }
         }
         
@@ -822,6 +876,15 @@ namespace AccountTester {
         internal static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Do you want to enable autorun ?.
+        /// </summary>
+        internal static string WantEnableAutorun {
+            get {
+                return ResourceManager.GetString("WantEnableAutorun", resourceCulture);
             }
         }
         

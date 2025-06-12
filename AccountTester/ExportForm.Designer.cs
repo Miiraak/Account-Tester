@@ -127,6 +127,7 @@
             Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ExportForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Export";

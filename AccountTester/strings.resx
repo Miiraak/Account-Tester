@@ -378,4 +378,25 @@
   <data name="ExtensionByDefault" xml:space="preserve">
     <value>Extension by default :</value>
   </data>
+  <data name="AutorunEnabled" xml:space="preserve">
+    <value>Autorun Enabled</value>
+  </data>
+  <data name="AutorunDisabled" xml:space="preserve">
+    <value>Autorun Disabled</value>
+  </data>
+  <data name="WantEnableAutorun" xml:space="preserve">
+    <value>Do you want to enable autorun ?</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="RunAsAdminRequired" xml:space="preserve">
+    <value>This function require elevated rights, would you like to restart as administrator ?</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Denied" xml:space="preserve">
+    <value>Denied</value>
+  </data>
 </root>

@@ -14,7 +14,8 @@ namespace AccountTester
             {
                 { "Langage", 5 },
                 { "BaseExtension", 5 },
-                { "AutoExport", 5 }
+                { "AutoExport", 5 },
+                { "Autorun", 5 }
             };
             Blob.CheckForUpdates(args, defaultData);
 

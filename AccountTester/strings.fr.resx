@@ -378,4 +378,25 @@
   <data name="ExtensionByDefault" xml:space="preserve">
     <value>Extension par défaut :</value>
   </data>
+  <data name="AutorunEnabled" xml:space="preserve">
+    <value>Démarrage auto. activé</value>
+  </data>
+  <data name="AutorunDisabled" xml:space="preserve">
+    <value>Démarrage auto. échec</value>
+  </data>
+  <data name="WantEnableAutorun" xml:space="preserve">
+    <value>Voulez-vous activer le démarrage automatique ?</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="RunAsAdminRequired" xml:space="preserve">
+    <value>Cette fonction nécessite des droits élevés, souhaitez-vous redémarrer en tant qu’administrateur ?</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Succès</value>
+  </data>
+  <data name="Denied" xml:space="preserve">
+    <value>Refusé</value>
+  </data>
 </root>

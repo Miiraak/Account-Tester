@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace AccountTester
@@ -19,7 +20,7 @@ namespace AccountTester
             Blob.RemoveUpdateFiles();
             richTextBoxLogs.Font = new Font("Consolas", 10);
             exportToolStripMenuItem.Enabled = false;
-
+          
             UpdateTexts();
             LangManager.Instance.LanguageChanged += UpdateTexts;
         }
@@ -49,7 +50,7 @@ namespace AccountTester
             }
 
             autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
-
+            autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
         }
 
         private void UpdateTexts()
@@ -589,7 +590,6 @@ namespace AccountTester
         {
             string fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            string extension;
 
             switch (toolStripComboBoxExtensionByDefault.Text)
             {
@@ -616,9 +616,18 @@ namespace AccountTester
             MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
         }
 
+        /// <summary>
+        /// Handles the click event for the "Save" menu item, saving the current application settings.
+        /// </summary>
+        /// <remarks>This method saves the following settings: <list type="bullet"> <item><description>The
+        /// selected language from the language menu.</description></item> <item><description>The default file extension
+        /// from the extension dropdown.</description></item> <item><description>The auto-export
+        /// preference.</description></item> <item><description>The autorun preference.</description></item> </list> The
+        /// settings are persisted using the <c>Blob</c> storage mechanism.</remarks>
+        /// <param name="sender">The source of the event, typically the "Save" menu item.</param>
+        /// <param name="e">The event data associated with the click event.</param>
         private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Retrieve the texte of the currently selected toolstrip menu item from languageToolStripMenuItem
             string selectedLanguage = languageToolStripMenuItem.DropDownItems.Cast<ToolStripMenuItem>().FirstOrDefault(item => item.Checked)?.Text ?? "en-US";
             string defaultExtension;
             if (toolStripComboBoxExtensionByDefault.SelectedItem != null)
@@ -630,7 +639,76 @@ namespace AccountTester
             Blob.Set("Langage", selectedLanguage);
             Blob.Set("BaseExtension", defaultExtension);
             Blob.Set("AutoExport", autoExport.ToString());
+            Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
             Blob.Save();
+        }
+
+        /// <summary>
+        /// Toggles the application's autorun setting by adding or removing it from the system's startup registry.
+        /// </summary>
+        /// <remarks>This method requires the application to be running with administrative privileges. If
+        /// the user does not have  the necessary permissions, a message box will prompt them to restart the application
+        /// as an administrator.  When enabling autorun, the application is added to the Windows registry under 
+        /// <c>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run</c>. If the operation is successful, 
+        /// the autorun setting is updated and saved. When disabling autorun, the corresponding registry entry is
+        /// removed.  The method also updates the state of the associated menu item's checked property to reflect the
+        /// current autorun status.</remarks>
+        /// <param name="sender">The source of the event, typically the menu item that was clicked.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        private void autorunToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool IsElevated = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+            if (!IsElevated)
+            {
+                // If the application is not running with administrative privileges, prompt the user to restart as admin.
+                DialogResult result = MessageBox.Show(T("RunAsAdminRequired"), T("Attention"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    // Restart the application with administrative privileges.
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = Application.ExecutablePath,
+                        UseShellExecute = true,
+                        Verb = "runas" // This will prompt for admin rights
+                    };
+                    Process.Start(startInfo);
+                    Application.Exit();
+                }
+                return;
+            }
+
+            if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "AccountTester", null) == null)
+            {
+                if (MessageBox.Show(T("WantEnableAutorun"), T("Attention"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                    return;
+                else
+                {
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "AccountTester", $"\"{Application.ExecutablePath}\" --autorun");
+
+                    if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "AccountTester", null) != null)
+                    {
+                        Blob.Set("Autorun", "true");
+                        MessageBox.Show(T("AutorunEnabled"), T("Success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        autoExportToolStripMenuItem.Checked = false;
+                        Blob.Set("AutoExport", "false");
+                    }
+                    else
+                        MessageBox.Show(T("AutorunError"));
+                }
+            }
+            else
+            {
+                using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                key.DeleteValue("AccountTester", false);
+                Blob.Set("Autorun", "false");
+                MessageBox.Show(T("AutorunDisabled"), T("Success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            Blob.Save();
+
+            // Need to add function and login in the program.cs to handle --autorun args functionality.
+            // That run the app at startup, start tests and export the report automatically to the desktop in .zip format.
+            // The programme need a total checkup and refactorisation.
         }
     }
 }
