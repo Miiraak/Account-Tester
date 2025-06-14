@@ -1,11 +1,8 @@
 using BlobPE;
 using Microsoft.Win32;
 using System.Diagnostics;
-using System.Drawing.Printing;
-using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
 using System.Security.Principal;
-using Word = Microsoft.Office.Interop.Word;
+
 
 namespace AccountTester
 {
@@ -76,390 +73,6 @@ namespace AccountTester
         }
 
         /// <summary>
-        /// Method for testing internet connection
-        /// </summary>
-        private async Task InternetConnexionTest()
-        {
-            Variables.General_TotalTests++;
-            Stopwatch stopwatch = new();
-
-            try
-            {
-                stopwatch.Start();
-                using HttpClient client = new();
-                client.Timeout = TimeSpan.FromSeconds(5);
-                HttpResponseMessage response = await client.GetAsync(Variables.InternetConnexion_TestedURL);
-
-                Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
-                Variables.InternetConnexion_HTMLStatut = response.StatusCode.ToString();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Connected")}" + Environment.NewLine);
-                    Variables.General_TotalSuccess++;
-                }
-                else
-                {
-                    richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Others")}" + response.StatusCode + Environment.NewLine);
-                }
-            }
-            catch (Exception ex)
-            {
-                richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Others")}" + ex.InnerException?.Message + Environment.NewLine);
-            }
-
-            stopwatch.Stop();
-            Variables.InternetConnexion_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-        }
-
-        /// <summary>
-        /// Method for testing network storage rights by checking if the user can read and write to network drives.
-        /// </summary>
-        private void NetworkStorageRightsTesting()
-        {
-            Variables.NetworkStorageRights_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
-
-            try
-            {
-                foreach (var drive in DriveInfo.GetDrives())
-                {
-                    Variables.General_TotalTests++;
-                    Variables.NetworkStorageRights_DiskLetter = Variables.NetworkStorageRights_DiskLetter.Append(drive.Name).ToArray();
-
-                    if (drive.DriveType == DriveType.Network)
-                    {
-                        string cheminUNC = drive.RootDirectory.FullName;
-                        string serveur = "";
-                        string shareName = "";
-
-                        var uncParts = cheminUNC.TrimEnd('\\').Split('\\');
-                        if (uncParts.Length >= 4)
-                        {
-                            serveur = uncParts[2];
-                            shareName = uncParts[3];
-                        }
-                        else
-                        {
-                            serveur = T("Unknown");
-                            shareName = T("Unknown");
-                        }
-
-                        try
-                        {
-                            string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
-                            File.WriteAllText(testFile, "test");
-
-                            if (File.Exists(testFile))
-                            {
-                                richTextBoxLogs.AppendText($@"- {drive.Name} : OK" + Environment.NewLine);
-                                Variables.General_TotalSuccess++;
-                                Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(cheminUNC).ToArray();
-                                Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(serveur).ToArray();
-                                Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(shareName).ToArray();
-                            }
-
-                            File.Delete(testFile);
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Refused")}" + Environment.NewLine);
-                            Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(T("UnauthorizedAccess")).ToArray();
-                            Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(T("UnauthorizedAccess")).ToArray();
-                            Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("UnauthorizedAccess")).ToArray();
-                        }
-                        catch (IOException)
-                        {
-                            richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Error")}" + Environment.NewLine);
-                            Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(T("IOError")).ToArray();
-                            Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(T("IOError")).ToArray();
-                            Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("IOError")).ToArray();
-                        }
-                    }
-                    else
-                    {
-                        Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(drive.Name).ToArray();
-                        Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append("localhost").ToArray();
-                        Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("None")).ToArray();
-
-                        richTextBoxLogs.AppendText($@"- {drive.Name} : {T("Omitted")}" + Environment.NewLine);
-                        Variables.General_TotalSuccess++;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error NetworkStorageRights : " + Environment.NewLine + ex);
-            }
-
-            stopwatch.Stop();
-            Variables.NetworkStorageRights_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-        }
-
-        /// <summary>
-        /// Method for testing Office version on the system
-        /// </summary>
-        private void OfficeVersionTesting()
-        {
-            Variables.General_TotalTests++;
-            Variables.OfficeVersion_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
-
-            try
-            {
-                using RegistryKey? key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0");
-                string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
-
-                if (!string.IsNullOrEmpty(officeVersion))
-                {
-                    Variables.OfficeVersion_OfficeVersion = officeVersion;
-
-                    if (officeVersion.Contains(','))
-                    {
-                        foreach (string version in officeVersion.Split(','))
-                        {
-                            richTextBoxLogs.AppendText($"- {version}" + Environment.NewLine);
-                        }
-                    }
-                    else
-                    {
-                        richTextBoxLogs.AppendText($"- {officeVersion}" + Environment.NewLine);
-                    }
-                    Variables.General_TotalSuccess++;
-                    Variables.WordIsInstalled = true;
-                }
-                else
-                {
-                    richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_OfficeVersionTesting_NotFound")}" + Environment.NewLine);
-                }
-
-                Variables.OfficeVersion_OfficePath = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Configuration", "InstallationPath");
-                Variables.OfficeVersion_OfficeCulture = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeCulture");
-                Variables.OfficeVersion_OfficeExcludedApps = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeExcludedApps");
-                Variables.OfficeVersion_OfficeLastUpdateStatus = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\UpdateStatus", "LastUpdateResult");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error OfficeVersion : " + Environment.NewLine + ex.Message);
-            }
-
-            stopwatch.Stop();
-            Variables.OfficeVersion_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-        }
-
-        private static string GetRegValue(string path, string value)
-        {
-            using RegistryKey? regKey = Registry.LocalMachine.OpenSubKey(path);
-            string? str = regKey?.GetValue(value)?.ToString();
-            if (string.IsNullOrEmpty(str))
-                return "Null";
-            else
-                return str;
-        }
-
-        /// <summary>                                      
-        /// Method for testing Office Write and Read rights on the system by simulating a Word document creation and editing.
-        /// </summary>
-        private void OfficeWRTesting()
-        {
-            Variables.General_TotalTests += 5;
-            Variables.OfficeRights_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-
-            try
-            {
-                stopwatch.Start();
-
-                string fileName = $"temp_{Guid.NewGuid()}.doc";   // Guid named file to avoid collision.
-                string filePath = Path.Combine(Path.GetTempPath(), fileName);
-                Word.Application wordApp = new()
-                {
-                    Visible = false
-                };
-
-                Word.Document doc = wordApp.Documents.Add();
-                doc.Content.Text = "The quick brown fox jumps over the lazy dog";
-                doc.SaveAs2(filePath);
-                doc.Close();
-                if (File.Exists(filePath))
-                {
-                    richTextBoxLogs.AppendText($"- {T("Create")} : OK" + Environment.NewLine);
-                    Variables.OfficeRights_Create = "True";
-                    Variables.General_TotalSuccess++;
-                }
-                else
-                {
-                    richTextBoxLogs.AppendText($"- {T("Create")} : FAIL." + Environment.NewLine);
-                    Variables.OfficeRights_Create = "False";
-                    return;
-                }
-
-                doc = wordApp.Documents.Open(filePath);
-                doc.Content.Text += "\nAdding more fox over the lazy dog.";
-                doc.Save();
-                doc.Close();
-
-                doc = wordApp.Documents.Open(filePath);
-                if (doc.Content.Text.Contains("Adding more fox over the lazy dog"))
-                {
-                    richTextBoxLogs.AppendText($"- {T("Save")} : OK" + Environment.NewLine);
-                    Variables.OfficeRights_Save = "True";
-                    Variables.General_TotalSuccess++;
-                }
-                else
-                {
-                    richTextBoxLogs.AppendText($"- {T("Save")} : FAIL" + Environment.NewLine);
-                    Variables.OfficeRights_Save = "False";
-                }
-                doc.Close();
-
-                doc = wordApp.Documents.Open(filePath);
-                if (doc.Content.Text.Contains("The quick brown fox jumps over the lazy dog"))
-                {
-                    richTextBoxLogs.AppendText($"- {T("Read")} : OK" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {T("Write")} : OK" + Environment.NewLine);
-                    Variables.OfficeRights_Read = "True";
-                    Variables.OfficeRights_Write = "True";
-                    Variables.General_TotalSuccess += 2;
-                }
-                else
-                {
-                    richTextBoxLogs.AppendText($"- {T("Read")} : FAIL" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"- {T("Write")} : FAIL" + Environment.NewLine);
-                    Variables.OfficeRights_Read = "False";
-                    Variables.OfficeRights_Write = "False";
-                }
-                doc.Close();
-
-                wordApp.Quit();
-                Marshal.ReleaseComObject(doc);
-                Marshal.ReleaseComObject(wordApp);
-
-                File.Delete(filePath);
-                if (!File.Exists(filePath))
-                {
-                    richTextBoxLogs.AppendText($"- {T("Delete")} : OK" + Environment.NewLine);
-                    Variables.OfficeRights_Delete = "True";
-                    Variables.General_TotalSuccess++;
-                }
-                else
-                {
-                    richTextBoxLogs.AppendText($"- {T("Delete")} : FAIL" + Environment.NewLine);
-                    Variables.OfficeRights_Delete = "False";
-                }
-                stopwatch.Stop();
-                Variables.OfficeRights_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error OfficeRights: " + Environment.NewLine + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// Method for testing printers on the system
-        /// </summary>
-        private void PrinterTesting()
-        {
-            Variables.Printer_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
-
-            if (PrinterSettings.InstalledPrinters.Count == 0)
-            {
-                Variables.General_TotalTests++;
-                richTextBoxLogs.AppendText(T("NoPrinterFound") + Environment.NewLine);
-                Variables.General_TotalSuccess++;
-                stopwatch.Stop();
-                Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-            }
-            else
-            {
-                foreach (string printer in PrinterSettings.InstalledPrinters)
-                {
-                    if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) &&
-                        !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
-                        !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Variables.General_TotalTests++;
-                        string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
-
-                        using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
-                        if (printerKey != null)
-                        {
-                            Variables.Printer_PrinterName = Variables.Printer_PrinterName.Append(printer).ToArray();
-                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver").ToString()).ToArray();
-                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port").ToString()).ToArray();
-
-                            string? locationValue = printerKey.GetValue("Location")?.ToString();
-                            if (!string.IsNullOrEmpty(locationValue))
-                            {
-                                string PrinterIP = locationValue.Split("//").Last().Split(":").First();
-                                Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(PrinterIP).ToArray();
-
-                                if (!string.IsNullOrEmpty(PrinterIP))
-                                {
-                                    Ping ping = new();
-                                    PingReply reply = ping.Send(PrinterIP, 1000);
-
-                                    if (reply.Status == IPStatus.Success)
-                                    {
-                                        richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                        richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
-                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("OK").ToArray();
-                                        Variables.General_TotalSuccess++;
-                                    }
-                                    else
-                                    {
-                                        richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                        richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
-                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("FAIL").ToArray();
-                                    }
-                                }
-                                else
-                                {
-                                    richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                    richTextBoxLogs.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
-                                    Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                    Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                    Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                    Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
-                                }
-                            }
-                            else
-                            {
-                                richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                                richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
-                                Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
-                            }
-                        }
-                        else
-                        {
-                            richTextBoxLogs.AppendText(printer + Environment.NewLine);
-                            richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
-                            Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
-                        }
-                    }
-                    else
-                    {
-                        richTextBoxLogs.AppendText($"{printer} : {T("Omitted")}" + Environment.NewLine);
-                    }
-                }
-            }
-
-            stopwatch.Stop();
-            Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-        }
-
-        /// <summary>
         /// Method for executing all tests sequentially, displaying the results in the richTextBoxLogs.
         /// </summary>
         /// <returns></returns>
@@ -485,30 +98,30 @@ namespace AccountTester
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("Internet")} :" + Environment.NewLine);
-                await InternetConnexionTest();
+                await Tests.InternetConnexionTest(richTextBoxLogs);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("NetworkStorageRights")} :" + Environment.NewLine);
-                NetworkStorageRightsTesting();
+                Tests.NetworkStorageRightsTesting(richTextBoxLogs);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("OfficeVersion")} :" + Environment.NewLine);
-                OfficeVersionTesting();
+                Tests.OfficeVersionTesting(richTextBoxLogs);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 if (Variables.WordIsInstalled)
                 {
                     richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("OfficeRights")} :" + Environment.NewLine);
-                    OfficeWRTesting();
+                    Tests.OfficeWRTesting(richTextBoxLogs);
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("Printer")} :" + Environment.NewLine);
-                PrinterTesting();
+                Tests.PrinterTesting(richTextBoxLogs);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);

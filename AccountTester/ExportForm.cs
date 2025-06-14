@@ -20,7 +20,7 @@ namespace AccountTester
 
             UpdateTexts();
             LangManager.Instance.LanguageChanged += UpdateTexts;
-        } 
+        }
 
         private void UpdateTexts()
         {
