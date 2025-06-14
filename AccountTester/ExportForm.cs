@@ -14,7 +14,7 @@ namespace AccountTester
             InitializeComponent();
             var baseExtension = Blob.Get("BaseExtension");
             if (baseExtension != null && baseExtension is string lang)
-                comboBoxExtension.Text = Blob.Get("BaseExtension");
+                comboBoxExtension.Text = baseExtension;
             else
                 comboBoxExtension.SelectedIndex = 0;
 
