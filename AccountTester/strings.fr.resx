@@ -399,4 +399,7 @@
   <data name="Denied" xml:space="preserve">
     <value>Refusé</value>
   </data>
+  <data name="AutorunError" xml:space="preserve">
+    <value>Une erreur s'est produite lors de l'ajout de la clé de registre. Veuillez redémarrer en administrateur.</value>
+  </data>
 </root>

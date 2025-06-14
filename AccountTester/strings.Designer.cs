@@ -97,6 +97,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Something went wrong when trying to add registry key. Please restart as administrator..
+        /// </summary>
+        internal static string AutorunError {
+            get {
+                return ResourceManager.GetString("AutorunError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Contact.
         /// </summary>
         internal static string Contact {

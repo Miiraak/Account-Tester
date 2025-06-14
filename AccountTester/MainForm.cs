@@ -591,11 +591,11 @@ namespace AccountTester
                 Clipboard.SetText(richTextBoxLogs.Text);
         }
 
-        private void ChangeCheck(object MenuStipItem)
+        private void ChangeCheck(object MenuStripItem)
         {
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
             {
-                if (item == MenuStipItem)
+                if (item == MenuStripItem)
                     item.Checked = true;
                 else
                     item.Checked = false;

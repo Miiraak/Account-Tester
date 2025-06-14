@@ -399,4 +399,7 @@
   <data name="Denied" xml:space="preserve">
     <value>Denied</value>
   </data>
+  <data name="AutorunError" xml:space="preserve">
+    <value>Something went wrong when trying to add registry key. Please restart as administrator.</value>
+  </data>
 </root>

@@ -12,7 +12,8 @@ namespace AccountTester
         public ExportForm()
         {
             InitializeComponent();
-            if (Blob.Get("BaseExtension") != null && Blob.Get("BaseExtension") is string lang)
+            var baseExtension = Blob.Get("BaseExtension");
+            if (baseExtension != null && baseExtension is string lang)
                 comboBoxExtension.Text = Blob.Get("BaseExtension");
             else
                 comboBoxExtension.SelectedIndex = 0;
@@ -487,7 +488,7 @@ namespace AccountTester
                 {
                     [TT("DiskLetter")] = Variables.NetworkStorageRights_DiskLetter[i],
                     [TT("UNCPath")] = Variables.NetworkStorageRights_CheminUNC[i],
-                    [T("Server")] = Variables.NetworkStorageRights_Serveur[i],
+                    [TT("Server")] = Variables.NetworkStorageRights_Serveur[i],
                     [TT("ShareName")] = Variables.NetworkStorageRights_ShareName[i]
                 };
 
