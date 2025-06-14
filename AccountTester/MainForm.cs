@@ -659,7 +659,7 @@ namespace AccountTester
         /// current autorun status.</remarks>
         /// <param name="sender">The source of the event, typically the menu item that was clicked.</param>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
-        private void autorunToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AutorunToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bool IsElevated = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
             if (!IsElevated)
@@ -669,7 +669,7 @@ namespace AccountTester
                 if (result == DialogResult.Yes)
                 {
                     // Restart the application with administrative privileges.
-                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    ProcessStartInfo startInfo = new()
                     {
                         FileName = Application.ExecutablePath,
                         UseShellExecute = true,

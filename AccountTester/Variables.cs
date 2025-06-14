@@ -2,7 +2,7 @@
 {
     internal class Variables
     {
-        // Variables for ExportForm, valus are set by the MainForm functions
+        // Variables for ExportForm, values are set by the MainForm functions
         // General variables
         public static string General_DeviceOS = Convert.ToUInt32(Environment.OSVersion.Version.ToString().Split('.')[2]) >= 22631 ? "Windows 11" : "Windows 10";
 

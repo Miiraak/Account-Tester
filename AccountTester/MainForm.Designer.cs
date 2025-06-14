@@ -128,7 +128,7 @@
             autorunToolStripMenuItem.Name = "autorunToolStripMenuItem";
             autorunToolStripMenuItem.Size = new Size(130, 22);
             autorunToolStripMenuItem.Text = "Autorun";
-            autorunToolStripMenuItem.Click += autorunToolStripMenuItem_Click;
+            autorunToolStripMenuItem.Click += AutorunToolStripMenuItem_Click;
             // 
             // languageToolStripMenuItem
             // 

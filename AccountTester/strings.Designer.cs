@@ -655,7 +655,7 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à This function require elevated rights, would you like to restart as administrator ?.
+        ///   Recherche une chaîne localisée semblable à This function requires elevated rights, would you like to restart as administrator ?.
         /// </summary>
         internal static string RunAsAdminRequired {
             get {

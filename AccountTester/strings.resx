@@ -391,7 +391,7 @@
     <value>Attention</value>
   </data>
   <data name="RunAsAdminRequired" xml:space="preserve">
-    <value>This function require elevated rights, would you like to restart as administrator ?</value>
+    <value>This function requires elevated rights, would you like to restart as administrator ?</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Success</value>

@@ -12,14 +12,14 @@ namespace AccountTester
         public ExportForm()
         {
             InitializeComponent();
-            if (Blob.Get("") != null && Blob.Get("BaseExtension") is string lang)
+            if (Blob.Get("BaseExtension") != null && Blob.Get("BaseExtension") is string lang)
                 comboBoxExtension.Text = Blob.Get("BaseExtension");
             else
                 comboBoxExtension.SelectedIndex = 0;
 
             UpdateTexts();
             LangManager.Instance.LanguageChanged += UpdateTexts;
-        }
+        } 
 
         private void UpdateTexts()
         {
