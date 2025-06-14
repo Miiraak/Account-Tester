@@ -12,20 +12,20 @@ namespace AccountTester
     public partial class MainForm : Form
     {
         static string T(string key) => LangManager.Instance.Translate(key);
-        bool _WordIsInstalled = false;
 
         public MainForm()
         {
             InitializeComponent();
-            Blob.RemoveUpdateFiles();
             richTextBoxLogs.Font = new Font("Consolas", 10);
             exportToolStripMenuItem.Enabled = false;
-          
+
+            Blob.RemoveUpdateFiles();
+
             UpdateTexts();
             LangManager.Instance.LanguageChanged += UpdateTexts;
         }
 
-        public void MainFormLoad(object sender, EventArgs e)
+        internal void MainFormLoad(object sender, EventArgs e)
         {
             toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension") ?? ".zip";
 
@@ -52,7 +52,7 @@ namespace AccountTester
             autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
             autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
 
-            if (ExportVariables.IsAutoRun)
+            if (Variables.IsAutoRun)
             {
                 Autorun();
                 Application.Exit();
@@ -80,7 +80,7 @@ namespace AccountTester
         /// </summary>
         private async Task InternetConnexionTest()
         {
-            ExportVariables.General_TotalTests++;
+            Variables.General_TotalTests++;
             Stopwatch stopwatch = new();
 
             try
@@ -88,15 +88,15 @@ namespace AccountTester
                 stopwatch.Start();
                 using HttpClient client = new();
                 client.Timeout = TimeSpan.FromSeconds(5);
-                HttpResponseMessage response = await client.GetAsync(ExportVariables.InternetConnexion_TestedURL);
+                HttpResponseMessage response = await client.GetAsync(Variables.InternetConnexion_TestedURL);
 
-                ExportVariables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
-                ExportVariables.InternetConnexion_HTMLStatut = response.StatusCode.ToString();
+                Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
+                Variables.InternetConnexion_HTMLStatut = response.StatusCode.ToString();
 
                 if (response.IsSuccessStatusCode)
                 {
                     richTextBoxLogs.AppendText($"{T("MainForm_RTBL_Internet_Connected")}" + Environment.NewLine);
-                    ExportVariables.General_TotalSuccess++;
+                    Variables.General_TotalSuccess++;
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace AccountTester
             }
 
             stopwatch.Stop();
-            ExportVariables.InternetConnexion_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+            Variables.InternetConnexion_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace AccountTester
         /// </summary>
         private void NetworkStorageRightsTesting()
         {
-            ExportVariables.NetworkStorageRights_Hour = DateTime.Now.ToString("HH:mm:ss");
+            Variables.NetworkStorageRights_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
@@ -125,8 +125,8 @@ namespace AccountTester
             {
                 foreach (var drive in DriveInfo.GetDrives())
                 {
-                    ExportVariables.General_TotalTests++;
-                    ExportVariables.NetworkStorageRights_DiskLetter = ExportVariables.NetworkStorageRights_DiskLetter.Append(drive.Name).ToArray();
+                    Variables.General_TotalTests++;
+                    Variables.NetworkStorageRights_DiskLetter = Variables.NetworkStorageRights_DiskLetter.Append(drive.Name).ToArray();
 
                     if (drive.DriveType == DriveType.Network)
                     {
@@ -154,10 +154,10 @@ namespace AccountTester
                             if (File.Exists(testFile))
                             {
                                 richTextBoxLogs.AppendText($@"- {drive.Name} : OK" + Environment.NewLine);
-                                ExportVariables.General_TotalSuccess++;
-                                ExportVariables.NetworkStorageRights_CheminUNC = ExportVariables.NetworkStorageRights_CheminUNC.Append(cheminUNC).ToArray();
-                                ExportVariables.NetworkStorageRights_Serveur = ExportVariables.NetworkStorageRights_Serveur.Append(serveur).ToArray();
-                                ExportVariables.NetworkStorageRights_ShareName = ExportVariables.NetworkStorageRights_ShareName.Append(shareName).ToArray();
+                                Variables.General_TotalSuccess++;
+                                Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(cheminUNC).ToArray();
+                                Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(serveur).ToArray();
+                                Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(shareName).ToArray();
                             }
 
                             File.Delete(testFile);
@@ -165,26 +165,26 @@ namespace AccountTester
                         catch (UnauthorizedAccessException)
                         {
                             richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Refused")}" + Environment.NewLine);
-                            ExportVariables.NetworkStorageRights_CheminUNC = ExportVariables.NetworkStorageRights_CheminUNC.Append(T("UnauthorizedAccess")).ToArray();
-                            ExportVariables.NetworkStorageRights_Serveur = ExportVariables.NetworkStorageRights_Serveur.Append(T("UnauthorizedAccess")).ToArray();
-                            ExportVariables.NetworkStorageRights_ShareName = ExportVariables.NetworkStorageRights_ShareName.Append(T("UnauthorizedAccess")).ToArray();
+                            Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(T("UnauthorizedAccess")).ToArray();
+                            Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(T("UnauthorizedAccess")).ToArray();
+                            Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("UnauthorizedAccess")).ToArray();
                         }
                         catch (IOException)
                         {
                             richTextBoxLogs.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Error")}" + Environment.NewLine);
-                            ExportVariables.NetworkStorageRights_CheminUNC = ExportVariables.NetworkStorageRights_CheminUNC.Append(T("IOError")).ToArray();
-                            ExportVariables.NetworkStorageRights_Serveur = ExportVariables.NetworkStorageRights_Serveur.Append(T("IOError")).ToArray();
-                            ExportVariables.NetworkStorageRights_ShareName = ExportVariables.NetworkStorageRights_ShareName.Append(T("IOError")).ToArray();
+                            Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(T("IOError")).ToArray();
+                            Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(T("IOError")).ToArray();
+                            Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("IOError")).ToArray();
                         }
                     }
                     else
                     {
-                        ExportVariables.NetworkStorageRights_CheminUNC = ExportVariables.NetworkStorageRights_CheminUNC.Append(drive.Name).ToArray();
-                        ExportVariables.NetworkStorageRights_Serveur = ExportVariables.NetworkStorageRights_Serveur.Append("localhost").ToArray();
-                        ExportVariables.NetworkStorageRights_ShareName = ExportVariables.NetworkStorageRights_ShareName.Append(T("None")).ToArray();
+                        Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(drive.Name).ToArray();
+                        Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append("localhost").ToArray();
+                        Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("None")).ToArray();
 
                         richTextBoxLogs.AppendText($@"- {drive.Name} : {T("Omitted")}" + Environment.NewLine);
-                        ExportVariables.General_TotalSuccess++;
+                        Variables.General_TotalSuccess++;
                     }
                 }
             }
@@ -194,7 +194,7 @@ namespace AccountTester
             }
 
             stopwatch.Stop();
-            ExportVariables.NetworkStorageRights_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+            Variables.NetworkStorageRights_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>
@@ -202,8 +202,8 @@ namespace AccountTester
         /// </summary>
         private void OfficeVersionTesting()
         {
-            ExportVariables.General_TotalTests++;
-            ExportVariables.OfficeVersion_Hour = DateTime.Now.ToString("HH:mm:ss");
+            Variables.General_TotalTests++;
+            Variables.OfficeVersion_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
@@ -214,7 +214,7 @@ namespace AccountTester
 
                 if (!string.IsNullOrEmpty(officeVersion))
                 {
-                    ExportVariables.OfficeVersion_OfficeVersion = officeVersion;
+                    Variables.OfficeVersion_OfficeVersion = officeVersion;
 
                     if (officeVersion.Contains(','))
                     {
@@ -227,18 +227,18 @@ namespace AccountTester
                     {
                         richTextBoxLogs.AppendText($"- {officeVersion}" + Environment.NewLine);
                     }
-                    ExportVariables.General_TotalSuccess++;
-                    _WordIsInstalled = true;
+                    Variables.General_TotalSuccess++;
+                    Variables.WordIsInstalled = true;
                 }
                 else
                 {
                     richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_OfficeVersionTesting_NotFound")}" + Environment.NewLine);
                 }
 
-                ExportVariables.OfficeVersion_OfficePath = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Configuration", "InstallationPath");
-                ExportVariables.OfficeVersion_OfficeCulture = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeCulture");
-                ExportVariables.OfficeVersion_OfficeExcludedApps = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeExcludedApps");
-                ExportVariables.OfficeVersion_OfficeLastUpdateStatus = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\UpdateStatus", "LastUpdateResult");
+                Variables.OfficeVersion_OfficePath = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Configuration", "InstallationPath");
+                Variables.OfficeVersion_OfficeCulture = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeCulture");
+                Variables.OfficeVersion_OfficeExcludedApps = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0", "OfficeExcludedApps");
+                Variables.OfficeVersion_OfficeLastUpdateStatus = GetRegValue(@"SOFTWARE\Microsoft\Office\ClickToRun\UpdateStatus", "LastUpdateResult");
             }
             catch (Exception ex)
             {
@@ -246,7 +246,7 @@ namespace AccountTester
             }
 
             stopwatch.Stop();
-            ExportVariables.OfficeVersion_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+            Variables.OfficeVersion_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         private static string GetRegValue(string path, string value)
@@ -264,8 +264,8 @@ namespace AccountTester
         /// </summary>
         private void OfficeWRTesting()
         {
-            ExportVariables.General_TotalTests += 5;
-            ExportVariables.OfficeRights_Hour = DateTime.Now.ToString("HH:mm:ss");
+            Variables.General_TotalTests += 5;
+            Variables.OfficeRights_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
 
             try
@@ -286,13 +286,13 @@ namespace AccountTester
                 if (File.Exists(filePath))
                 {
                     richTextBoxLogs.AppendText($"- {T("Create")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Create = "True";
-                    ExportVariables.General_TotalSuccess++;
+                    Variables.OfficeRights_Create = "True";
+                    Variables.General_TotalSuccess++;
                 }
                 else
                 {
                     richTextBoxLogs.AppendText($"- {T("Create")} : FAIL." + Environment.NewLine);
-                    ExportVariables.OfficeRights_Create = "False";
+                    Variables.OfficeRights_Create = "False";
                     return;
                 }
 
@@ -305,13 +305,13 @@ namespace AccountTester
                 if (doc.Content.Text.Contains("Adding more fox over the lazy dog"))
                 {
                     richTextBoxLogs.AppendText($"- {T("Save")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Save = "True";
-                    ExportVariables.General_TotalSuccess++;
+                    Variables.OfficeRights_Save = "True";
+                    Variables.General_TotalSuccess++;
                 }
                 else
                 {
                     richTextBoxLogs.AppendText($"- {T("Save")} : FAIL" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Save = "False";
+                    Variables.OfficeRights_Save = "False";
                 }
                 doc.Close();
 
@@ -320,16 +320,16 @@ namespace AccountTester
                 {
                     richTextBoxLogs.AppendText($"- {T("Read")} : OK" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"- {T("Write")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Read = "True";
-                    ExportVariables.OfficeRights_Write = "True";
-                    ExportVariables.General_TotalSuccess += 2;
+                    Variables.OfficeRights_Read = "True";
+                    Variables.OfficeRights_Write = "True";
+                    Variables.General_TotalSuccess += 2;
                 }
                 else
                 {
                     richTextBoxLogs.AppendText($"- {T("Read")} : FAIL" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"- {T("Write")} : FAIL" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Read = "False";
-                    ExportVariables.OfficeRights_Write = "False";
+                    Variables.OfficeRights_Read = "False";
+                    Variables.OfficeRights_Write = "False";
                 }
                 doc.Close();
 
@@ -341,16 +341,16 @@ namespace AccountTester
                 if (!File.Exists(filePath))
                 {
                     richTextBoxLogs.AppendText($"- {T("Delete")} : OK" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Delete = "True";
-                    ExportVariables.General_TotalSuccess++;
+                    Variables.OfficeRights_Delete = "True";
+                    Variables.General_TotalSuccess++;
                 }
                 else
                 {
                     richTextBoxLogs.AppendText($"- {T("Delete")} : FAIL" + Environment.NewLine);
-                    ExportVariables.OfficeRights_Delete = "False";
+                    Variables.OfficeRights_Delete = "False";
                 }
                 stopwatch.Stop();
-                ExportVariables.OfficeRights_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+                Variables.OfficeRights_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
             }
             catch (Exception ex)
             {
@@ -363,17 +363,17 @@ namespace AccountTester
         /// </summary>
         private void PrinterTesting()
         {
-            ExportVariables.Printer_Hour = DateTime.Now.ToString("HH:mm:ss");
+            Variables.Printer_Hour = DateTime.Now.ToString("HH:mm:ss");
             Stopwatch stopwatch = new();
             stopwatch.Start();
 
             if (PrinterSettings.InstalledPrinters.Count == 0)
             {
-                ExportVariables.General_TotalTests++;
+                Variables.General_TotalTests++;
                 richTextBoxLogs.AppendText(T("NoPrinterFound") + Environment.NewLine);
-                ExportVariables.General_TotalSuccess++;
+                Variables.General_TotalSuccess++;
                 stopwatch.Stop();
-                ExportVariables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+                Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
             }
             else
             {
@@ -383,21 +383,21 @@ namespace AccountTester
                         !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
                         !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
                     {
-                        ExportVariables.General_TotalTests++;
+                        Variables.General_TotalTests++;
                         string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
 
                         using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
                         if (printerKey != null)
                         {
-                            ExportVariables.Printer_PrinterName = ExportVariables.Printer_PrinterName.Append(printer).ToArray();
-                            ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver").ToString()).ToArray();
-                            ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(printerKey.GetValue("Port").ToString()).ToArray();
+                            Variables.Printer_PrinterName = Variables.Printer_PrinterName.Append(printer).ToArray();
+                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver").ToString()).ToArray();
+                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port").ToString()).ToArray();
 
                             string? locationValue = printerKey.GetValue("Location")?.ToString();
                             if (!string.IsNullOrEmpty(locationValue))
                             {
                                 string PrinterIP = locationValue.Split("//").Last().Split(":").First();
-                                ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(PrinterIP).ToArray();
+                                Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(PrinterIP).ToArray();
 
                                 if (!string.IsNullOrEmpty(PrinterIP))
                                 {
@@ -408,44 +408,44 @@ namespace AccountTester
                                     {
                                         richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                         richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
-                                        ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append("OK").ToArray();
-                                        ExportVariables.General_TotalSuccess++;
+                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("OK").ToArray();
+                                        Variables.General_TotalSuccess++;
                                     }
                                     else
                                     {
                                         richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                         richTextBoxLogs.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
-                                        ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append("FAIL").ToArray();
+                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("FAIL").ToArray();
                                     }
                                 }
                                 else
                                 {
                                     richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                     richTextBoxLogs.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
-                                    ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                    ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                    ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                    ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
+                                    Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                                    Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                                    Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                                    Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                                 }
                             }
                             else
                             {
                                 richTextBoxLogs.AppendText(printer + Environment.NewLine);
                                 richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
-                                ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
+                                Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                                Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                                Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                                Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                             }
                         }
                         else
                         {
                             richTextBoxLogs.AppendText(printer + Environment.NewLine);
                             richTextBoxLogs.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
-                            ExportVariables.Printer_PrinterIP = ExportVariables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                            ExportVariables.Printer_PrinterStatus = ExportVariables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                            ExportVariables.Printer_PrinterDriver = ExportVariables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                            ExportVariables.Printer_PrinterPort = ExportVariables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
+                            Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                         }
                     }
                     else
@@ -456,16 +456,7 @@ namespace AccountTester
             }
 
             stopwatch.Stop();
-            ExportVariables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-        }
-
-        /// <summary>
-        /// For output formatting, see the ExecutionSequentielle method instead.
-        /// </summary>
-        private void ButtonStart_Click(object sender, EventArgs e)
-        {
-            Task.Run(() => ExecutionSequentielle()).Wait();
-            exportToolStripMenuItem.Enabled = true;
+            Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
         }
 
         /// <summary>
@@ -474,8 +465,8 @@ namespace AccountTester
         /// <returns></returns>
         async Task ExecutionSequentielle()
         {
-            ExportVariables.General_TotalSuccess = 0;
-            ExportVariables.General_TotalTests = 0;
+            Variables.General_TotalSuccess = 0;
+            Variables.General_TotalTests = 0;
             exportToolStripMenuItem.Enabled = false;
             richTextBoxLogs.Clear();
 
@@ -489,7 +480,7 @@ namespace AccountTester
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("Username")} :" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"- {ExportVariables.General_UserName}" + Environment.NewLine);
+                richTextBoxLogs.AppendText($"- {Variables.General_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
@@ -507,7 +498,7 @@ namespace AccountTester
                 OfficeVersionTesting();
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                if (_WordIsInstalled)
+                if (Variables.WordIsInstalled)
                 {
                     richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("OfficeRights")} :" + Environment.NewLine);
@@ -524,7 +515,7 @@ namespace AccountTester
                 richTextBoxLogs.AppendText($"#### {T("TestsFinished")} :" + Environment.NewLine);
                 stopwatch.Stop();
                 richTextBoxLogs.AppendText($"- {T("TotalTimeElapsed")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"- {T("TotalSuccess")} : {ExportVariables.General_TotalSuccess}/{ExportVariables.General_TotalTests}");
+                richTextBoxLogs.AppendText($"- {T("TotalSuccess")} : {Variables.General_TotalSuccess}/{Variables.General_TotalTests}");
 
                 System.Media.SoundPlayer player = new(@"C:\Windows\Media\Windows Message Nudge.wav");
                 player.Play();
@@ -532,78 +523,12 @@ namespace AccountTester
                 startToolStripMenuItem.Text = T("Restart");
                 exportToolStripMenuItem.Enabled = true;
 
-                ExportVariables.General_Resume = richTextBoxLogs.Text;
+                Variables.General_Resume = richTextBoxLogs.Text;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Sequential Execution Error : " + Environment.NewLine + ex.Message);
             }
-        }
-
-        private void EnUSToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LangManager.Instance.SetLanguage("en-US");
-            ChangeCheck(enUSToolStripMenuItem);
-        }
-
-        private void FrFRToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LangManager.Instance.SetLanguage("fr-FR");
-            ChangeCheck(frFRToolStripMenuItem);
-        }
-
-        private void ContactToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ContactForm contactForm = new();
-            contactForm.ShowDialog();
-        }
-
-        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (richTextBoxLogs.Text.Length > 0)
-                Clipboard.SetText(richTextBoxLogs.Text);
-        }
-
-        private void ChangeCheck(object MenuStipItem)
-        {
-            foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
-            {
-                if (item == MenuStipItem)
-                    item.Checked = true;
-                else
-                    item.Checked = false;
-            }
-        }
-
-        private void ExportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExportForm exportForm = new();
-            exportForm.ShowDialog();
-        }
-
-        private void StartToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            StartExec();
-        }
-
-        internal void StartExec()
-        {
-            startToolStripMenuItem.Enabled = false;
-            Task.Run(() => ExecutionSequentielle()).Wait();
-            exportToolStripMenuItem.Enabled = true;
-            startToolStripMenuItem.Enabled = true;
-
-            if (autoExportToolStripMenuItem.Checked && toolStripComboBoxExtensionByDefault.Text != String.Empty)
-            {
-                ExportReport();
-                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
-            }
-        }
-
-        internal void Autorun()
-        {
-            Task.Run(() => ExecutionSequentielle()).Wait();
-            ExportReport();
         }
 
         internal void ExportReport()
@@ -632,6 +557,67 @@ namespace AccountTester
                     ExportForm.ExportToZip(fileName, filePath);
                     break;
             }
+        }
+
+        internal void Autorun()
+        {
+            Task.Run(() => ExecutionSequentielle()).Wait();
+            ExportReport();
+        }
+
+        private void StartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            startToolStripMenuItem.Enabled = false;
+            Task.Run(() => ExecutionSequentielle()).Wait();
+            exportToolStripMenuItem.Enabled = true;
+            startToolStripMenuItem.Enabled = true;
+
+            if (autoExportToolStripMenuItem.Checked && toolStripComboBoxExtensionByDefault.Text != String.Empty)
+            {
+                ExportReport();
+                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
+            }
+        }
+
+        private void ExportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportForm exportForm = new();
+            exportForm.ShowDialog();
+        }
+
+        private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (richTextBoxLogs.Text.Length > 0)
+                Clipboard.SetText(richTextBoxLogs.Text);
+        }
+
+        private void ChangeCheck(object MenuStipItem)
+        {
+            foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
+            {
+                if (item == MenuStipItem)
+                    item.Checked = true;
+                else
+                    item.Checked = false;
+            }
+        }
+
+        private void EnUSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LangManager.Instance.SetLanguage("en-US");
+            ChangeCheck(enUSToolStripMenuItem);
+        }
+
+        private void FrFRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LangManager.Instance.SetLanguage("fr-FR");
+            ChangeCheck(frFRToolStripMenuItem);
+        }
+
+        private void ContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContactForm contactForm = new();
+            contactForm.ShowDialog();
         }
 
         /// <summary>
@@ -723,10 +709,6 @@ namespace AccountTester
             }
 
             Blob.Save();
-
-            // Need to add function and login in the program.cs to handle --autorun args functionality.
-            // That run the app at startup, start tests and export the report automatically to the desktop in .zip format.
-            // The programme need a total checkup and refactorisation.
         }
     }
 }

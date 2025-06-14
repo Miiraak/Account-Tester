@@ -9,13 +9,12 @@
     <ApplicationIcon>account_tester.ico</ApplicationIcon>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 	<Authors>Miiraak</Authors>
-	<Description>A software for automated user account rights testing.</Description>
+	<Title></Title>
 	<Copyright>© 2025 Miiraak</Copyright>
-	<RepositoryUrl>https://github.com/Miiraak/BlobPE</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
 	<Version>0.8.0</Version>
 	<FileVersion>0.8.0</FileVersion>
-  </PropertyGroup>
+	<FileDescription>A software for automated user account rights testing.</FileDescription>
+</PropertyGroup>
 
   <ItemGroup>
     <Content Include="account_tester.ico" />

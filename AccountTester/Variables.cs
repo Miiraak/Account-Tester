@@ -1,9 +1,8 @@
 ﻿namespace AccountTester
 {
-    internal class ExportVariables
+    internal class Variables
     {
         // Variables for ExportForm, valus are set by the MainForm functions
-
         // General variables
         public static string General_DeviceOS = Convert.ToUInt32(Environment.OSVersion.Version.ToString().Split('.')[2]) >= 22631 ? "Windows 11" : "Windows 10";
 
@@ -61,7 +60,8 @@
         public static string Printer_ElapsedTime { get; set; } = "Null";
 
 
-        // Miscellaneous variables
-        public static bool IsAutoRun = false;
+        // Miscellaneous variables for program functions
+        public static bool IsAutoRun { get; set; } = false;
+        public static bool WordIsInstalled { get; set; } = false;
     }
 }
