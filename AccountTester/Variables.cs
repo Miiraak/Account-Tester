@@ -1,9 +1,8 @@
 ﻿namespace AccountTester
 {
-    internal class ExportVariables
+    internal class Variables
     {
-        // Variables for ExportForm, valus are set by the MainForm functions
-
+        // Variables for ExportForm, values are set by the MainForm functions
         // General variables
         public static string General_DeviceOS = Convert.ToUInt32(Environment.OSVersion.Version.ToString().Split('.')[2]) >= 22631 ? "Windows 11" : "Windows 10";
 
@@ -23,12 +22,12 @@
         public static string InternetConnexion_HTMLStatut { get; set; } = "Null";
         public static string InternetConnexion_ElapsedTime { get; set; } = "Null";
 
-        // NetworkStorageRights variables - Not OK and need to be tested with a network share 
+        // NetworkStorageRights variables
         public static string NetworkStorageRights_Hour { get; set; } = "Null";
-        public static string[] NetworkStorageRights_DiskLetter { get; set; } = [];  // Ok with local disk, not test with network share
-        public static string[] NetworkStorageRights_CheminUNC { get; set; } = Array.Empty<string>(); // OK with local disk, not test with network share
-        public static string[] NetworkStorageRights_Serveur { get; set; } = [];   // Ok with local disk, not test with network share
-        public static string[] NetworkStorageRights_ShareName { get; set; } = []; // Ok with local disk, not test with network share
+        public static string[] NetworkStorageRights_DiskLetter { get; set; } = [];
+        public static string[] NetworkStorageRights_CheminUNC { get; set; } = Array.Empty<string>();
+        public static string[] NetworkStorageRights_Serveur { get; set; } = [];
+        public static string[] NetworkStorageRights_ShareName { get; set; } = [];
         public static string NetworkStorageRights_ElapsedTime { get; set; } = "Null";
 
         // OfficeVersion variables
@@ -59,5 +58,12 @@
         public static string[] Printer_PrinterDriver { get; set; } = [];
         public static string[] Printer_PrinterPort { get; set; } = [];
         public static string Printer_ElapsedTime { get; set; } = "Null";
+
+
+        // Miscellaneous variables for program functions
+        public static bool IsAutoRun { get; set; } = false;
+        public static bool WordIsInstalled { get; set; } = false;
+
+        public static int Timeout { get; set; } = 5; // Timeout in seconds
     }
 }

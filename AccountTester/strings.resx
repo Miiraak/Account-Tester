@@ -153,14 +153,14 @@
   <data name="MainForm_RTBL_NetworkStorageRightsTesting_Error" xml:space="preserve">
     <value>Connexion error</value>
   </data>
-  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Omitted" xml:space="preserve">
+  <data name="Omitted" xml:space="preserve">
     <value>Omitted</value>
   </data>
   <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
     <value>Version not found</value>
   </data>
   <data name="NoPrinterFound" xml:space="preserve">
-    <value>No printer found.</value>
+    <value>No printer found</value>
   </data>
   <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
     <value>Not found</value>
@@ -371,5 +371,50 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="AutoExport" xml:space="preserve">
+    <value>Auto-Export</value>
+  </data>
+  <data name="ExtensionByDefault" xml:space="preserve">
+    <value>Extension by default :</value>
+  </data>
+  <data name="AutorunEnabled" xml:space="preserve">
+    <value>Autorun Enabled</value>
+  </data>
+  <data name="AutorunDisabled" xml:space="preserve">
+    <value>Autorun Disabled</value>
+  </data>
+  <data name="WantEnableAutorun" xml:space="preserve">
+    <value>Do you want to enable autorun ?</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="RunAsAdminRequired" xml:space="preserve">
+    <value>This function requires elevated rights, would you like to restart as administrator ?</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="Denied" xml:space="preserve">
+    <value>Denied</value>
+  </data>
+  <data name="AutorunError" xml:space="preserve">
+    <value>Something went wrong when trying to add registry key. Please restart as administrator.</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="NetworkStorage" xml:space="preserve">
+    <value>Network storage</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout (s)</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Invalid</value>
   </data>
 </root>

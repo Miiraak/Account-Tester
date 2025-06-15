@@ -153,14 +153,14 @@
   <data name="MainForm_RTBL_NetworkStorageRightsTesting_Error" xml:space="preserve">
     <value>Erreur de connexion</value>
   </data>
-  <data name="MainForm_RTBL_NetworkStorageRightsTesting_Omitted" xml:space="preserve">
+  <data name="Omitted" xml:space="preserve">
     <value>Omis</value>
   </data>
   <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
     <value>Version non trouvée</value>
   </data>
   <data name="NoPrinterFound" xml:space="preserve">
-    <value>Aucune imprimante trouvée.</value>
+    <value>Aucune imprimante trouvée</value>
   </data>
   <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
     <value>Non trouvé</value>
@@ -371,5 +371,50 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>Aucun</value>
+  </data>
+  <data name="AutoExport" xml:space="preserve">
+    <value>Auto-exportation</value>
+  </data>
+  <data name="ExtensionByDefault" xml:space="preserve">
+    <value>Extension par défaut :</value>
+  </data>
+  <data name="AutorunEnabled" xml:space="preserve">
+    <value>Démarrage auto. activé</value>
+  </data>
+  <data name="AutorunDisabled" xml:space="preserve">
+    <value>Démarrage auto. désactivé</value>
+  </data>
+  <data name="WantEnableAutorun" xml:space="preserve">
+    <value>Voulez-vous activer le démarrage automatique ?</value>
+  </data>
+  <data name="Attention" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="RunAsAdminRequired" xml:space="preserve">
+    <value>Cette fonction nécessite des droits élevés, souhaitez-vous redémarrer en tant qu’administrateur ?</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Succès</value>
+  </data>
+  <data name="Denied" xml:space="preserve">
+    <value>Refusé</value>
+  </data>
+  <data name="AutorunError" xml:space="preserve">
+    <value>Une erreur s'est produite lors de l'ajout de la clé de registre. Veuillez redémarrer en administrateur.</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Réinitialiser</value>
+  </data>
+  <data name="NetworkStorage" xml:space="preserve">
+    <value>Stockage réseau</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Réessayer</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Délai (s)</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Invalide</value>
   </data>
 </root>

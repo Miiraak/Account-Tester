@@ -22,14 +22,14 @@ namespace AccountTester {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class strings {
+    internal class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal strings() {
+        internal Strings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AccountTester {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AccountTester.strings", typeof(strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AccountTester.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,51 @@ namespace AccountTester {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Attention.
+        /// </summary>
+        internal static string Attention {
+            get {
+                return ResourceManager.GetString("Attention", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Auto-Export.
+        /// </summary>
+        internal static string AutoExport {
+            get {
+                return ResourceManager.GetString("AutoExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Autorun Disabled.
+        /// </summary>
+        internal static string AutorunDisabled {
+            get {
+                return ResourceManager.GetString("AutorunDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Autorun Enabled.
+        /// </summary>
+        internal static string AutorunEnabled {
+            get {
+                return ResourceManager.GetString("AutorunEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Something went wrong when trying to add registry key. Please restart as administrator..
+        /// </summary>
+        internal static string AutorunError {
+            get {
+                return ResourceManager.GetString("AutorunError", resourceCulture);
             }
         }
         
@@ -102,6 +147,15 @@ namespace AccountTester {
         internal static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Denied.
+        /// </summary>
+        internal static string Denied {
+            get {
+                return ResourceManager.GetString("Denied", resourceCulture);
             }
         }
         
@@ -187,6 +241,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Extension by default :.
+        /// </summary>
+        internal static string ExtensionByDefault {
+            get {
+                return ResourceManager.GetString("ExtensionByDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à File Name.
         /// </summary>
         internal static string FileName {
@@ -246,6 +309,15 @@ namespace AccountTester {
         internal static string InternetConnexion {
             get {
                 return ResourceManager.GetString("InternetConnexion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Invalid.
+        /// </summary>
+        internal static string Invalid {
+            get {
+                return ResourceManager.GetString("Invalid", resourceCulture);
             }
         }
         
@@ -349,15 +421,6 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Omitted.
-        /// </summary>
-        internal static string MainForm_RTBL_NetworkStorageRightsTesting_Omitted {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_NetworkStorageRightsTesting_Omitted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Write refused.
         /// </summary>
         internal static string MainForm_RTBL_NetworkStorageRightsTesting_Refused {
@@ -412,6 +475,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Network storage.
+        /// </summary>
+        internal static string NetworkStorage {
+            get {
+                return ResourceManager.GetString("NetworkStorage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Network Storage Rights.
         /// </summary>
         internal static string NetworkStorageRights {
@@ -439,7 +511,7 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à No printer found..
+        ///   Recherche une chaîne localisée semblable à No printer found.
         /// </summary>
         internal static string NoPrinterFound {
             get {
@@ -480,6 +552,15 @@ namespace AccountTester {
         internal static string OfficeVersion {
             get {
                 return ResourceManager.GetString("OfficeVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Omitted.
+        /// </summary>
+        internal static string Omitted {
+            get {
+                return ResourceManager.GetString("Omitted", resourceCulture);
             }
         }
         
@@ -574,6 +655,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Reset.
+        /// </summary>
+        internal static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Response Time.
         /// </summary>
         internal static string ResponseTime {
@@ -592,11 +682,29 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Retry.
+        /// </summary>
+        internal static string Retry {
+            get {
+                return ResourceManager.GetString("Retry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Rights.
         /// </summary>
         internal static string Rights {
             get {
                 return ResourceManager.GetString("Rights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à This function requires elevated rights, would you like to restart as administrator ?.
+        /// </summary>
+        internal static string RunAsAdminRequired {
+            get {
+                return ResourceManager.GetString("RunAsAdminRequired", resourceCulture);
             }
         }
         
@@ -682,6 +790,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Success.
+        /// </summary>
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Tested Folder.
         /// </summary>
         internal static string TestedFolder {
@@ -714,6 +831,15 @@ namespace AccountTester {
         internal static string TestsFinished {
             get {
                 return ResourceManager.GetString("TestsFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Timeout (s).
+        /// </summary>
+        internal static string Timeout {
+            get {
+                return ResourceManager.GetString("Timeout", resourceCulture);
             }
         }
         
@@ -804,6 +930,15 @@ namespace AccountTester {
         internal static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Do you want to enable autorun ?.
+        /// </summary>
+        internal static string WantEnableAutorun {
+            get {
+                return ResourceManager.GetString("WantEnableAutorun", resourceCulture);
             }
         }
         
