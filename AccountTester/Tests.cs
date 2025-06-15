@@ -29,7 +29,7 @@ namespace AccountTester
             {
                 stopwatch.Start();
                 using HttpClient client = new();
-                client.Timeout = TimeSpan.FromSeconds(5);
+                client.Timeout = TimeSpan.FromSeconds(Variables.Timeout);
                 HttpResponseMessage response = await client.GetAsync(Variables.InternetConnexion_TestedURL);
 
                 Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");

@@ -94,7 +94,7 @@ namespace AccountTester
                     break;
             }
 
-            MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
+            MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.", $"{T("Export")}", MessageBoxButtons.OK, MessageBoxIcon.Information);
             this.Close();
         }
 

@@ -14,6 +14,7 @@ namespace AccountTester
             {
                 { "Langage", 5 },
                 { "BaseExtension", 5 },
+                { "Timeout", 3 },
                 { "AutoExport", 5 },
                 { "Autorun", 5 }
             };

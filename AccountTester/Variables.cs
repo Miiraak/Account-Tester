@@ -63,5 +63,7 @@
         // Miscellaneous variables for program functions
         public static bool IsAutoRun { get; set; } = false;
         public static bool WordIsInstalled { get; set; } = false;
+
+        public static int Timeout { get; set; } = 5; // Timeout in seconds
     }
 }

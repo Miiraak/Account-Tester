@@ -402,4 +402,19 @@
   <data name="AutorunError" xml:space="preserve">
     <value>Something went wrong when trying to add registry key. Please restart as administrator.</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="NetworkStorage" xml:space="preserve">
+    <value>Network storage</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Timeout" xml:space="preserve">
+    <value>Timeout (s)</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
 </root>

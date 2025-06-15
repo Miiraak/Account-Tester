@@ -31,20 +31,22 @@ namespace AccountTester
             {
                 case "en-US":
                     enUSToolStripMenuItem.Checked = true;
-                    ChangeCheck(enUSToolStripMenuItem);
+                    LangChangeCheck(enUSToolStripMenuItem);
                     LangManager.Instance.SetLanguage("en-US");
                     break;
                 case "fr-FR":
                     frFRToolStripMenuItem.Checked = true;
-                    ChangeCheck(frFRToolStripMenuItem);
+                    LangChangeCheck(frFRToolStripMenuItem);
                     LangManager.Instance.SetLanguage("fr-FR");
                     break;
                 default:
                     enUSToolStripMenuItem.Checked = true;
-                    ChangeCheck(enUSToolStripMenuItem);
+                    LangChangeCheck(enUSToolStripMenuItem);
                     LangManager.Instance.SetLanguage("en-US");
                     break;
             }
+
+            TimeoutToolStripTextBox.Text = Blob.GetInt("Timeout").ToString();
 
             autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
             autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
@@ -70,6 +72,11 @@ namespace AccountTester
             autoExportToolStripMenuItem.Text = T("AutoExport");
             extensionByDefaultToolStripMenuItem.Text = T("ExtensionByDefault");
             saveToolStripMenuItem.Text = T("Save");
+            ResetToolStripMenuItem.Text = T("Reset");
+            InternetToolStripMenuItem.Text = T("Internet");
+            NetworkStorageToolStripMenuItem.Text = T("NetworkStorage");
+            PrinterToolStripMenuItem.Text = T("Printer");
+            TimeoutToolStripMenuItem.Text = $"{T("Timeout")} :";
         }
 
         /// <summary>
@@ -96,33 +103,45 @@ namespace AccountTester
                 richTextBoxLogs.AppendText($"- {Variables.General_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("Internet")} :" + Environment.NewLine);
-                await Tests.InternetConnexionTest(richTextBoxLogs);
-                richTextBoxLogs.AppendText(Environment.NewLine);
-
-                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("NetworkStorageRights")} :" + Environment.NewLine);
-                Tests.NetworkStorageRightsTesting(richTextBoxLogs);
-                richTextBoxLogs.AppendText(Environment.NewLine);
-
-                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("OfficeVersion")} :" + Environment.NewLine);
-                Tests.OfficeVersionTesting(richTextBoxLogs);
-                richTextBoxLogs.AppendText(Environment.NewLine);
-
-                if (Variables.WordIsInstalled)
+                if (InternetToolStripMenuItem.Checked)
                 {
                     richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                    richTextBoxLogs.AppendText($"#### {T("OfficeRights")} :" + Environment.NewLine);
-                    Tests.OfficeWRTesting(richTextBoxLogs);
+                    richTextBoxLogs.AppendText($"#### {T("Internet")} :" + Environment.NewLine);
+                    await Tests.InternetConnexionTest(richTextBoxLogs);
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
-                richTextBoxLogs.AppendText($"#### {T("Printer")} :" + Environment.NewLine);
-                Tests.PrinterTesting(richTextBoxLogs);
-                richTextBoxLogs.AppendText(Environment.NewLine);
+                if (NetworkStorageToolStripMenuItem.Checked)
+                {
+                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"#### {T("NetworkStorageRights")} :" + Environment.NewLine);
+                    Tests.NetworkStorageRightsTesting(richTextBoxLogs);
+                    richTextBoxLogs.AppendText(Environment.NewLine);
+                }
+
+                if (OfficeToolStripMenuItem.Checked)
+                {
+                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"#### {T("OfficeVersion")} :" + Environment.NewLine);
+                    Tests.OfficeVersionTesting(richTextBoxLogs);
+                    richTextBoxLogs.AppendText(Environment.NewLine);
+
+                    if (Variables.WordIsInstalled)
+                    {
+                        richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                        richTextBoxLogs.AppendText($"#### {T("OfficeRights")} :" + Environment.NewLine);
+                        Tests.OfficeWRTesting(richTextBoxLogs);
+                        richTextBoxLogs.AppendText(Environment.NewLine);
+                    }
+                }
+
+                if (PrinterToolStripMenuItem.Checked)
+                {
+                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText($"#### {T("Printer")} :" + Environment.NewLine);
+                    Tests.PrinterTesting(richTextBoxLogs);
+                    richTextBoxLogs.AppendText(Environment.NewLine);
+                }
 
                 richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("TestsFinished")} :" + Environment.NewLine);
@@ -188,7 +207,7 @@ namespace AccountTester
             if (autoExportToolStripMenuItem.Checked && toolStripComboBoxExtensionByDefault.Text != String.Empty)
             {
                 ExportReport();
-                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.");
+                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.", $"{T("Export")}", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -204,7 +223,7 @@ namespace AccountTester
                 Clipboard.SetText(richTextBoxLogs.Text);
         }
 
-        private void ChangeCheck(object MenuStripItem)
+        private void LangChangeCheck(object MenuStripItem)
         {
             foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
             {
@@ -218,13 +237,13 @@ namespace AccountTester
         private void EnUSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LangManager.Instance.SetLanguage("en-US");
-            ChangeCheck(enUSToolStripMenuItem);
+            LangChangeCheck(enUSToolStripMenuItem);
         }
 
         private void FrFRToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LangManager.Instance.SetLanguage("fr-FR");
-            ChangeCheck(frFRToolStripMenuItem);
+            LangChangeCheck(frFRToolStripMenuItem);
         }
 
         private void ContactToolStripMenuItem_Click(object sender, EventArgs e)
@@ -255,6 +274,7 @@ namespace AccountTester
 
             Blob.Set("Langage", selectedLanguage);
             Blob.Set("BaseExtension", defaultExtension);
+            Blob.Set("Timeout", TimeoutToolStripTextBox.Text);
             Blob.Set("AutoExport", autoExport.ToString());
             Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
             Blob.Save();
@@ -322,6 +342,27 @@ namespace AccountTester
             }
 
             Blob.Save();
+        }
+
+        private void ClearFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Remove all related app files,
+            // including update files, logs, and other temporary files.
+
+            // Remove update files in temp
+            // Remove logs 
+            // Remove exported reports
+            // Remove the registry entry for autorun if it exists
+            // Reset the Blob storage
+            // Remove other temporary files
+        }
+
+        private void TestsToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
+        {
+            if (int.TryParse(TimeoutToolStripTextBox.Text, out int timeout) && timeout > 0)
+                Variables.Timeout = timeout;
+            else
+                TimeoutToolStripTextBox.Text = Variables.Timeout.ToString();
         }
     }
 }
