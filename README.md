@@ -3,7 +3,7 @@
     <img src=".github/App.gif">
   
 ## Description
-AccountTester is a Windows Forms application (C#) designed to test various aspects of user accounts on a system. It performs checks such as Internet connectivity, access rights to network drives, Office presence and permissions, as well as printer availability. A detailed test report export is now available.
+AccountTester is a Windows Forms application (C#) designed to test various aspects of user accounts on a system. It performs checks such as Internet connectivity, access rights to network drives, Office presence and permissions, as well as printer availability.
 
 ## Features
 - **Internet Connectivity Test:** Verifies if the computer can access the Internet by sending a request to Google.
@@ -12,10 +12,13 @@ AccountTester is a Windows Forms application (C#) designed to test various aspec
 - **Office Read/Write Permissions Test:** Creates, edits, and reads a Word document to verify user permissions with interop.word.
 - **Installed Printers List:** Displays all printers available on the system.
 - **Detailed Test Report:** Export the full test report in `.txt`, `.json`, `.log`, `.csv` or `.xml`. Use `.zip` for all in one.
-- **Language:** Now you can change the language of the application and the report ! 
-    - Langage available :
+- **Options:**
+    - Autorun : _Execute a test when a user is logged in._
+    - Language available :
         - `EN` - `100%`
         - `FR` - `100%`
+    - Auto Report : _Export automatically the report to the selected format when tests finish._
+    - Tests selection : _Enable/Disable tests_
 
 ### Features in development
 | Nom | Desc. |
@@ -40,16 +43,6 @@ Before running the project, make sure you have the following:
 6. Choose a name (a default name will be used if left empty).
 7. Choose the save location.
 8. Select the export format.
-
-## Contributing
-Contributions are welcome! To contribute to this project, please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature (git checkout -b my-new-feature).
-3. Make your changes.
-4. Commit your changes (git commit -m 'Add my new feature').
-5. Push your branch (git push origin my-new-feature).
-6. Open a Pull Request.
 
 ## Issues and Suggestions
 If you encounter issues or have suggestions to improve the project, please use the [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
