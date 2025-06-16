@@ -22,9 +22,22 @@ namespace AccountTester
             LangManager.Instance.LanguageChanged += UpdateTexts;
         }
 
+        /// <summary>
+        /// Handles the initialization of the main form when it is loaded.
+        /// </summary>
+        /// <remarks>This method sets up the initial state of the main form by loading user preferences
+        /// and application settings. It configures default values for UI elements such as language selection, timeout
+        /// settings, and feature toggles. If the application is configured for autorun, the method triggers the autorun
+        /// process and exits the application.</remarks>
+        /// <param name="sender">The source of the event, typically the main form.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing event data.</param>
         internal void MainFormLoad(object sender, EventArgs e)
         {
-            toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension") ?? ".zip";
+            // Check if BaseExtension is null or whitespace, and set a default value if so.
+            if (string.IsNullOrWhiteSpace(Blob.Get("BaseExtension")))
+                toolStripComboBoxExtensionByDefault.Text = ".zip";
+            else
+                toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension");
 
             string savedLanguage = Blob.Get("Langage") ?? "en-US";
             switch (savedLanguage)
@@ -80,8 +93,13 @@ namespace AccountTester
         }
 
         /// <summary>
-        /// Method for executing all tests sequentially, displaying the results in the richTextBoxLogs.
+        /// Executes a series of diagnostic tests sequentially and logs the results.
         /// </summary>
+        /// <remarks>This method performs various system tests based on user-selected options, including
+        /// internet connectivity,  network storage rights, Office version and permissions, and printer functionality.
+        /// The results of each test  are logged to a rich text box for review. Upon completion, a summary of the tests,
+        /// including the total  successes and elapsed time, is displayed. If an error occurs during execution, an error
+        /// message is shown.</remarks>
         /// <returns></returns>
         async Task ExecutionSequentielle()
         {
@@ -197,6 +215,14 @@ namespace AccountTester
             ExportReport();
         }
 
+        /// <summary>
+        /// Handles the click event for the "Start" menu item, initiating a sequential execution process.
+        /// </summary>
+        /// <remarks>This method disables the "Start" menu item while the execution process is running and
+        /// re-enables it upon completion. If the "Auto Export" option is enabled and a default file extension is
+        /// specified, the method automatically exports the report and displays a success message.</remarks>
+        /// <param name="sender">The source of the event, typically the "Start" menu item.</param>
+        /// <param name="e">The event data associated with the click event.</param>
         private void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             startToolStripMenuItem.Enabled = false;
@@ -344,19 +370,57 @@ namespace AccountTester
             Blob.Save();
         }
 
+        /// <summary>
+        /// Handles the click event for the "Clear Files" menu item. Clears application logs, resets internal state,
+        /// removes update files, and deletes the "AccountTester" registry entry if it exists.
+        /// </summary>
+        /// <remarks>This method performs multiple cleanup operations, including clearing logs, resetting
+        /// application state,  and removing a specific registry entry. Use this method to ensure the application is
+        /// returned to a clean state.</remarks>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data associated with the click event.</param>
         private void ClearFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Remove all related app files,
-            // including update files, logs, and other temporary files.
+            bool IsElevated = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+            if (!IsElevated)
+            {
+                // If the application is not running with administrative privileges, prompt the user to restart as admin.
+                DialogResult result = MessageBox.Show(T("RunAsAdminRequired"), T("Attention"), MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    // Restart the application with administrative privileges.
+                    ProcessStartInfo startInfo = new()
+                    {
+                        FileName = Application.ExecutablePath,
+                        UseShellExecute = true,
+                        Verb = "runas" // This will prompt for admin rights
+                    };
+                    Process.Start(startInfo);
+                    Application.Exit();
+                }
+                return;
+            }
 
-            // Remove update files in temp
-            // Remove logs 
-            // Remove exported reports
-            // Remove the registry entry for autorun if it exists
-            // Reset the Blob storage
-            // Remove other temporary files
+            Blob.RemoveUpdateFiles();
+
+            if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "AccountTester", null) != null)
+            {
+                using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+                key.DeleteValue("AccountTester", false);
+            }
+
+            Blob.Reset();
         }
 
+        /// <summary>
+        /// Handles the DropDownClosed event for the TestsToolStripMenuItem. Updates the timeout value based on the
+        /// input in the TimeoutToolStripTextBox.
+        /// </summary>
+        /// <remarks>If the input in the TimeoutToolStripTextBox is a valid positive integer, the timeout
+        /// value is updated. Otherwise, the TimeoutToolStripTextBox is reset to display the current timeout
+        /// value.</remarks>
+        /// <param name="sender">The source of the event, typically the TestsToolStripMenuItem.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing event data.</param>
         private void TestsToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
         {
             if (int.TryParse(TimeoutToolStripTextBox.Text, out int timeout) && timeout > 0)

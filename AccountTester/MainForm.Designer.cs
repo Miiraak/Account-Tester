@@ -275,6 +275,7 @@
             TimeoutToolStripTextBox.BackColor = SystemColors.Menu;
             TimeoutToolStripTextBox.Name = "TimeoutToolStripTextBox";
             TimeoutToolStripTextBox.Size = new Size(100, 23);
+            TimeoutToolStripTextBox.Text = "5";
             // 
             // toolStripSeparator4
             // 
@@ -298,19 +299,19 @@
             // contactToolStripMenuItem
             // 
             contactToolStripMenuItem.Name = "contactToolStripMenuItem";
-            contactToolStripMenuItem.Size = new Size(180, 22);
+            contactToolStripMenuItem.Size = new Size(123, 22);
             contactToolStripMenuItem.Text = "Contact";
             contactToolStripMenuItem.Click += ContactToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(120, 6);
             // 
             // ResetToolStripMenuItem
             // 
             ResetToolStripMenuItem.Name = "ResetToolStripMenuItem";
-            ResetToolStripMenuItem.Size = new Size(180, 22);
+            ResetToolStripMenuItem.Size = new Size(123, 22);
             ResetToolStripMenuItem.Text = "Reset";
             ResetToolStripMenuItem.Click += ClearFilesToolStripMenuItem_Click;
             // 
