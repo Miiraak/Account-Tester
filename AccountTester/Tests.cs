@@ -350,6 +350,8 @@ namespace AccountTester
                 }
                 else
                 {
+                    string[] foundPrinter = [];
+
                     foreach (string printerName in PrinterSettings.InstalledPrinters)
                     {
                         string printer = printerName;
@@ -360,6 +362,7 @@ namespace AccountTester
                             !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
                             !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
                         {
+                            foundPrinter = foundPrinter.Append(printer).ToArray();
                             Variables.General_TotalTests++;
                             string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
 
@@ -424,6 +427,17 @@ namespace AccountTester
                                 Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
                                 Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                             }
+                        }
+                    }
+
+                    string[] printerList = Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToArray();
+                    foreach (string printer in printerList)
+                    {
+                        if (!foundPrinter.Contains(printer))
+                        {
+                            rtb.AppendText($"{printer} ({ T("Missing")})" + Environment.NewLine);
+                            rtb.AppendText($"- {T("NoPrinterFound")}" + Environment.NewLine);
+                            Variables.General_TotalTests++;
                         }
                     }
                 }

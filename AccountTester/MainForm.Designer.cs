@@ -53,6 +53,7 @@
             NetworkStorageToolStripMenuItem = new ToolStripMenuItem();
             OfficeToolStripMenuItem = new ToolStripMenuItem();
             PrinterToolStripMenuItem = new ToolStripMenuItem();
+            setPrinterListToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
             TimeoutToolStripMenuItem = new ToolStripMenuItem();
             TimeoutToolStripTextBox = new ToolStripTextBox();
@@ -63,6 +64,7 @@
             toolStripSeparator2 = new ToolStripSeparator();
             ResetToolStripMenuItem = new ToolStripMenuItem();
             label1 = new Label();
+            toolStripMenuItem1 = new ToolStripMenuItem();
             contextMenuStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -108,7 +110,7 @@
             // 
             menuStrip1.BackColor = SystemColors.Control;
             menuStrip1.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { startToolStripMenuItem, exportToolStripMenuItem, optionsToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { startToolStripMenuItem, exportToolStripMenuItem, optionsToolStripMenuItem, helpToolStripMenuItem, toolStripMenuItem1 });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(328, 24);
@@ -253,10 +255,18 @@
             PrinterToolStripMenuItem.Checked = true;
             PrinterToolStripMenuItem.CheckOnClick = true;
             PrinterToolStripMenuItem.CheckState = CheckState.Checked;
+            PrinterToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { setPrinterListToolStripMenuItem });
             PrinterToolStripMenuItem.Name = "PrinterToolStripMenuItem";
             PrinterToolStripMenuItem.Size = new Size(179, 22);
             PrinterToolStripMenuItem.Tag = "test";
             PrinterToolStripMenuItem.Text = "Printer";
+            // 
+            // setPrinterListToolStripMenuItem
+            // 
+            setPrinterListToolStripMenuItem.Name = "setPrinterListToolStripMenuItem";
+            setPrinterListToolStripMenuItem.Size = new Size(186, 22);
+            setPrinterListToolStripMenuItem.Text = "Set Printer list";
+            setPrinterListToolStripMenuItem.Click += setPrinterListToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
@@ -324,6 +334,11 @@
             label1.TabIndex = 8;
             label1.Text = "______________________________________________";
             // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(12, 20);
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 14F);
@@ -386,5 +401,7 @@
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem TitleTestsToolStripMenuItem;
+        private ToolStripMenuItem setPrinterListToolStripMenuItem;
+        private ToolStripMenuItem toolStripMenuItem1;
     }
 }
