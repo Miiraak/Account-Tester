@@ -11,6 +11,8 @@ namespace AccountTester
     {
         static string T(string key) => LangManager.Instance.Translate(key);
 
+        static Stopwatch stopwatch = new();
+
         /// <summary>
         /// Tests the internet connection by sending an HTTP GET request to a predefined URL.
         /// </summary>
@@ -23,11 +25,10 @@ namespace AccountTester
         internal static async Task InternetConnexionTest(RichTextBox rtb)
         {
             Variables.General_TotalTests++;
-            Stopwatch stopwatch = new();
 
             try
             {
-                stopwatch.Start();
+                stopwatch.Restart();
                 using HttpClient client = new();
                 client.Timeout = TimeSpan.FromSeconds(Variables.Timeout);
                 HttpResponseMessage response = await client.GetAsync(Variables.InternetConnexion_TestedURL);
@@ -65,11 +66,11 @@ namespace AccountTester
         internal static void NetworkStorageRightsTesting(RichTextBox rtb)
         {
             Variables.NetworkStorageRights_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
 
             try
             {
+                stopwatch.Restart();
+
                 foreach (var drive in DriveInfo.GetDrives())
                 {
                     Variables.General_TotalTests++;
@@ -156,11 +157,11 @@ namespace AccountTester
         {
             Variables.General_TotalTests++;
             Variables.OfficeVersion_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
 
             try
             {
+                stopwatch.Restart();
+
                 using RegistryKey? key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Office\ClickToRun\Inventory\Office\16.0");
                 string? officeVersion = key?.GetValue("OfficeProductReleaseIds")?.ToString();
 
@@ -231,11 +232,10 @@ namespace AccountTester
         {
             Variables.General_TotalTests += 5;
             Variables.OfficeRights_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
 
             try
             {
-                stopwatch.Start();
+                stopwatch.Restart();
 
                 string fileName = $"temp_{Guid.NewGuid()}.doc";   // Guid named file to avoid collision.
                 string filePath = Path.Combine(Path.GetTempPath(), fileName);
@@ -335,68 +335,80 @@ namespace AccountTester
         internal static void PrinterTesting(RichTextBox rtb)
         {
             Variables.Printer_Hour = DateTime.Now.ToString("HH:mm:ss");
-            Stopwatch stopwatch = new();
-            stopwatch.Start();
 
-            if (PrinterSettings.InstalledPrinters.Count == 0)
+            try
             {
-                Variables.General_TotalTests++;
-                rtb.AppendText(T("NoPrinterFound") + Environment.NewLine);
-                Variables.General_TotalSuccess++;
-                stopwatch.Stop();
-                Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
-            }
-            else
-            {
-                foreach (string printerName in PrinterSettings.InstalledPrinters)
+                stopwatch.Restart();
+
+                if (PrinterSettings.InstalledPrinters.Count == 0)
                 {
-                    string printer = printerName;
-                    if (printer.Contains('\\', StringComparison.Ordinal))
-                        printer = printer.Split('\\').Last();
-
-                    if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) &&
-                        !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
-                        !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
+                    Variables.General_TotalTests++;
+                    rtb.AppendText(T("NoPrinterFound") + Environment.NewLine);
+                    Variables.General_TotalSuccess++;
+                    stopwatch.Stop();
+                    Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+                }
+                else
+                {
+                    foreach (string printerName in PrinterSettings.InstalledPrinters)
                     {
-                        Variables.General_TotalTests++;
-                        string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
+                        string printer = printerName;
+                        if (printer.Contains('\\', StringComparison.Ordinal))
+                            printer = printer.Split('\\').Last();
 
-                        using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
-                        if (printerKey != null)
+                        if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) &&
+                            !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
+                            !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
                         {
-                            Variables.Printer_PrinterName = Variables.Printer_PrinterName.Append(printer).ToArray();
-                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver")?.ToString() ?? T("Unknown")).ToArray();
-                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port")?.ToString() ?? T("Unknown")).ToArray();
+                            Variables.General_TotalTests++;
+                            string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
 
-                            string? locationValue = printerKey.GetValue("Location")?.ToString();
-                            if (!string.IsNullOrEmpty(locationValue))
+                            using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
+                            if (printerKey != null)
                             {
-                                string PrinterIP = locationValue.Split("//").Last().Split(":").First();
-                                Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(PrinterIP).ToArray();
+                                Variables.Printer_PrinterName = Variables.Printer_PrinterName.Append(printer).ToArray();
+                                Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver")?.ToString() ?? T("Unknown")).ToArray();
+                                Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port")?.ToString() ?? T("Unknown")).ToArray();
 
-                                if (!string.IsNullOrEmpty(PrinterIP))
+                                string? locationValue = printerKey.GetValue("Location")?.ToString();
+                                if (!string.IsNullOrEmpty(locationValue))
                                 {
-                                    Ping ping = new();
-                                    PingReply reply = ping.Send(PrinterIP, 1000);
+                                    string PrinterIP = locationValue.Split("//").Last().Split(":").First();
+                                    Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(PrinterIP).ToArray();
 
-                                    if (reply.Status == IPStatus.Success)
+                                    if (!string.IsNullOrEmpty(PrinterIP))
                                     {
-                                        rtb.AppendText(printer + Environment.NewLine);
-                                        rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
-                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("OK").ToArray();
-                                        Variables.General_TotalSuccess++;
+                                        Ping ping = new();
+                                        PingReply reply = ping.Send(PrinterIP, 1000);
+
+                                        if (reply.Status == IPStatus.Success)
+                                        {
+                                            rtb.AppendText(printer + Environment.NewLine);
+                                            rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
+                                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("OK").ToArray();
+                                            Variables.General_TotalSuccess++;
+                                        }
+                                        else
+                                        {
+                                            rtb.AppendText(printer + Environment.NewLine);
+                                            rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
+                                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("FAIL").ToArray();
+                                        }
                                     }
                                     else
                                     {
                                         rtb.AppendText(printer + Environment.NewLine);
-                                        rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
-                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("FAIL").ToArray();
+                                        rtb.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
+                                        Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
+                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
+                                        Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
+                                        Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                                     }
                                 }
                                 else
                                 {
                                     rtb.AppendText(printer + Environment.NewLine);
-                                    rtb.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
+                                    rtb.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
                                     Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
                                     Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
                                     Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
@@ -406,28 +418,23 @@ namespace AccountTester
                             else
                             {
                                 rtb.AppendText(printer + Environment.NewLine);
-                                rtb.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
+                                rtb.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
                                 Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
                                 Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
                                 Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
                                 Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                             }
                         }
-                        else
-                        {
-                            rtb.AppendText(printer + Environment.NewLine);
-                            rtb.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
-                            Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
-                        }
                     }
                 }
-            }
 
-            stopwatch.Stop();
-            Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+                stopwatch.Stop();
+                Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

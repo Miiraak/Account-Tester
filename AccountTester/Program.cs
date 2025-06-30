@@ -10,7 +10,9 @@ namespace AccountTester
         [STAThread]
         static void Main(string[] args)
         {
-            Dictionary<string, int> defaultData = new Dictionary<string, int>
+            try
+            {
+                Dictionary<string, int> defaultData = new Dictionary<string, int>
             {
                 { "Langage", 5 },
                 { "BaseExtension", 5 },
@@ -18,10 +20,16 @@ namespace AccountTester
                 { "AutoExport", 5 },
                 { "Autorun", 5 }
             };
-            Blob.CheckForUpdates(args, defaultData);
+                Blob.CheckForUpdates(args, defaultData);
 
-            if (args.Length > 0 && args[0] == "--autorun")
-                Variables.IsAutoRun = true;
+                if (args.Length > 0 && args[0] == "--autorun")
+                    Variables.IsAutoRun = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.

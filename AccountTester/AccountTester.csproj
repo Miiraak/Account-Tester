@@ -11,8 +11,8 @@
 	<Authors>Miiraak</Authors>
 	<Title></Title>
 	<Copyright>© 2025 Miiraak</Copyright>
-	<Version>0.8.0.1</Version>
-	<FileVersion>0.8.0.1</FileVersion>
+	<Version>0.8.0.2</Version>
+	<FileVersion>0.8.0.2</FileVersion>
 	<FileDescription>A software for automated user account rights testing.</FileDescription>
 	<Platforms>AnyCPU</Platforms>
 	<Configurations>Debug;Release;AMD</Configurations>

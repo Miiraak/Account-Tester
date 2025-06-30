@@ -16,10 +16,17 @@ namespace AccountTester
             richTextBoxLogs.Font = new Font("Consolas", 10);
             exportToolStripMenuItem.Enabled = false;
 
-            Blob.RemoveUpdateFiles();
+            try
+            {
+                Blob.RemoveUpdateFiles();
 
-            UpdateTexts();
-            LangManager.Instance.LanguageChanged += UpdateTexts;
+                UpdateTexts();
+                LangManager.Instance.LanguageChanged += UpdateTexts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -33,41 +40,47 @@ namespace AccountTester
         /// <param name="e">An <see cref="EventArgs"/> instance containing event data.</param>
         internal void MainFormLoad(object sender, EventArgs e)
         {
-            // Check if BaseExtension is null or whitespace, and set a default value if so.
-            if (string.IsNullOrWhiteSpace(Blob.Get("BaseExtension")))
-                toolStripComboBoxExtensionByDefault.Text = ".zip";
-            else
-                toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension");
-
-            string savedLanguage = Blob.Get("Langage") ?? "en-US";
-            switch (savedLanguage)
+            try
             {
-                case "en-US":
-                    enUSToolStripMenuItem.Checked = true;
-                    LangChangeCheck(enUSToolStripMenuItem);
-                    LangManager.Instance.SetLanguage("en-US");
-                    break;
-                case "fr-FR":
-                    frFRToolStripMenuItem.Checked = true;
-                    LangChangeCheck(frFRToolStripMenuItem);
-                    LangManager.Instance.SetLanguage("fr-FR");
-                    break;
-                default:
-                    enUSToolStripMenuItem.Checked = true;
-                    LangChangeCheck(enUSToolStripMenuItem);
-                    LangManager.Instance.SetLanguage("en-US");
-                    break;
+                if (string.IsNullOrWhiteSpace(Blob.Get("BaseExtension")))
+                    toolStripComboBoxExtensionByDefault.Text = ".zip";
+                else
+                    toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension");
+
+                string savedLanguage = Blob.Get("Langage") ?? "en-US";
+                switch (savedLanguage)
+                {
+                    case "en-US":
+                        enUSToolStripMenuItem.Checked = true;
+                        LangChangeCheck(enUSToolStripMenuItem);
+                        LangManager.Instance.SetLanguage("en-US");
+                        break;
+                    case "fr-FR":
+                        frFRToolStripMenuItem.Checked = true;
+                        LangChangeCheck(frFRToolStripMenuItem);
+                        LangManager.Instance.SetLanguage("fr-FR");
+                        break;
+                    default:
+                        enUSToolStripMenuItem.Checked = true;
+                        LangChangeCheck(enUSToolStripMenuItem);
+                        LangManager.Instance.SetLanguage("en-US");
+                        break;
+                }
+
+                TimeoutToolStripTextBox.Text = Blob.GetInt("Timeout").ToString();
+
+                autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
+                autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
+
+                if (Variables.IsAutoRun)
+                {
+                    Autorun();
+                    Application.Exit();
+                }
             }
-
-            TimeoutToolStripTextBox.Text = Blob.GetInt("Timeout").ToString();
-
-            autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
-            autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
-
-            if (Variables.IsAutoRun)
+            catch (Exception ex)
             {
-                Autorun();
-                Application.Exit();
+                MessageBox.Show(ex.ToString(), T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -177,8 +190,7 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Sequential Execution Error");
-                
+                MessageBox.Show(ex.ToString(), T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
