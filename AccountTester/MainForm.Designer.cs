@@ -63,8 +63,8 @@
             contactToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator2 = new ToolStripSeparator();
             ResetToolStripMenuItem = new ToolStripMenuItem();
-            label1 = new Label();
             toolStripMenuItem1 = new ToolStripMenuItem();
+            label1 = new Label();
             contextMenuStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -325,6 +325,11 @@
             ResetToolStripMenuItem.Text = "Reset";
             ResetToolStripMenuItem.Click += ClearFilesToolStripMenuItem_Click;
             // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(12, 20);
+            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -333,11 +338,6 @@
             label1.Size = new Size(329, 14);
             label1.TabIndex = 8;
             label1.Text = "______________________________________________";
-            // 
-            // toolStripMenuItem1
-            // 
-            toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(12, 20);
             // 
             // MainForm
             // 
@@ -358,7 +358,7 @@
             MinimizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Account Tester v0.8.0.2";
+            Text = "Account Tester v0.8.1";
             Load += MainFormLoad;
             contextMenuStrip1.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);
