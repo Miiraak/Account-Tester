@@ -18,7 +18,8 @@ namespace AccountTester
                 { "BaseExtension", 5 },
                 { "Timeout", 3 },
                 { "AutoExport", 5 },
-                { "Autorun", 5 }
+                { "Autorun", 5 },
+                { "PrinterList", 100}
             };
                 Blob.CheckForUpdates(args, defaultData);
 

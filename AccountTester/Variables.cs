@@ -64,5 +64,6 @@
         public static bool IsAutoRun { get; set; } = false;
         public static bool WordIsInstalled { get; set; } = false;
         public static int Timeout { get; set; } = 5; // Timeout in seconds
+        public static string PrinterList { get; set; } = string.Empty; // List of printers that will normally be shared with the user, spearated by semicolons
     }
 }

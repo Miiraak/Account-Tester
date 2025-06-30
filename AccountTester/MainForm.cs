@@ -67,6 +67,8 @@ namespace AccountTester
                         break;
                 }
 
+                Variables.PrinterList = Blob.Get("PrinterList") ?? string.Empty;
+
                 TimeoutToolStripTextBox.Text = Blob.GetInt("Timeout").ToString();
 
                 autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
@@ -103,6 +105,7 @@ namespace AccountTester
             NetworkStorageToolStripMenuItem.Text = T("NetworkStorage");
             PrinterToolStripMenuItem.Text = T("Printer");
             TimeoutToolStripMenuItem.Text = $"{T("Timeout")} :";
+            setPrinterListToolStripMenuItem.Text = T("PrinterList");
         }
 
         /// <summary>
@@ -316,6 +319,7 @@ namespace AccountTester
             Blob.Set("Timeout", TimeoutToolStripTextBox.Text);
             Blob.Set("AutoExport", autoExport.ToString());
             Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
+            Blob.Set("PrinterList", Variables.PrinterList);
             Blob.Save();
         }
 
@@ -440,6 +444,12 @@ namespace AccountTester
                 Variables.Timeout = timeout;
             else
                 TimeoutToolStripTextBox.Text = Variables.Timeout.ToString();
+        }
+
+        private void setPrinterListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionPrinter optionPrinterForm = new();
+            optionPrinterForm.ShowDialog();
         }
     }
 }

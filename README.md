@@ -1,4 +1,4 @@
-# AccountTester [![Security Checks](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml/badge.svg)](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml)
+# AccountTester [![Security Checks](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml/badge.svg)](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Miiraak/Account-Tester?label=Version)
 <p align="center">
     <img src=".github/App.gif">
   
@@ -18,7 +18,8 @@ AccountTester is a Windows Forms application (C#) designed to test various aspec
         - `EN` - `100%`
         - `FR` - `100%`
     - Auto Report : _Export automatically the report to the selected format when tests finish._
-    - Tests selection : _Enable/Disable tests_
+    - Tests selection : _Enable/Disable tests._
+    - Require Printer : _Set the printers that the user will normally have access to._
 
 ### Features in development
 | Nom | Desc. |

@@ -417,4 +417,16 @@
   <data name="Invalid" xml:space="preserve">
     <value>Invalid</value>
   </data>
+  <data name="PrinterList" xml:space="preserve">
+    <value>Printer List</value>
+  </data>
+  <data name="PrinterOptions" xml:space="preserve">
+    <value>Printer Options</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Missing" xml:space="preserve">
+    <value>Missing</value>
+  </data>
 </root>

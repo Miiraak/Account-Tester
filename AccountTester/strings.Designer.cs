@@ -22,14 +22,14 @@ namespace AccountTester {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    internal class strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings() {
+        internal strings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace AccountTester {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AccountTester.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AccountTester.strings", typeof(strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace AccountTester {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Add.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
             }
         }
         
@@ -466,6 +475,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Missing.
+        /// </summary>
+        internal static string Missing {
+            get {
+                return ResourceManager.GetString("Missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Name.
         /// </summary>
         internal static string Name {
@@ -615,6 +633,24 @@ namespace AccountTester {
         internal static string Printer {
             get {
                 return ResourceManager.GetString("Printer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Printer List.
+        /// </summary>
+        internal static string PrinterList {
+            get {
+                return ResourceManager.GetString("PrinterList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Printer Options.
+        /// </summary>
+        internal static string PrinterOptions {
+            get {
+                return ResourceManager.GetString("PrinterOptions", resourceCulture);
             }
         }
         
