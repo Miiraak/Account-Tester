@@ -1,4 +1,4 @@
-# AccountTester [![Security Checks](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml/badge.svg)](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml)
+# AccountTester [![Security Checks](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml/badge.svg)](https://github.com/Miiraak/Account-Tester/actions/workflows/security-checks.yml) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Miiraak/Account-Tester?label=Version)
 <p align="center">
     <img src=".github/App.gif">
   
