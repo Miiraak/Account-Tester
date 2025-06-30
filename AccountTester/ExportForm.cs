@@ -12,14 +12,22 @@ namespace AccountTester
         public ExportForm()
         {
             InitializeComponent();
-            var baseExtension = Blob.Get("BaseExtension");
-            if (baseExtension != null && baseExtension is string lang)
-                comboBoxExtension.Text = baseExtension;
-            else
-                comboBoxExtension.SelectedIndex = 0;
 
-            UpdateTexts();
-            LangManager.Instance.LanguageChanged += UpdateTexts;
+            try
+            {
+                var baseExtension = Blob.Get("BaseExtension");
+                if (baseExtension != null && baseExtension is string lang)
+                    comboBoxExtension.Text = baseExtension;
+                else
+                    comboBoxExtension.SelectedIndex = 0;
+
+                UpdateTexts();
+                LangManager.Instance.LanguageChanged += UpdateTexts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void UpdateTexts()
@@ -50,52 +58,59 @@ namespace AccountTester
         /// </summary>
         private void ButtonExport_Click(object sender, EventArgs e)
         {
-            string fileName;
-            string filePath;
-            string extension;
-
-            if (textBoxFileName.Text.Trim() == "")
-                fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
-            else
-                fileName = textBoxFileName.Text;
-
-            if (textBoxFilePath.Text == "")
-                filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            else
-                filePath = textBoxFilePath.Text;
-
-            if (comboBoxExtension.Text == "")
+            try
             {
-                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Error")}.");
-                return;
-            }
-            else
-                extension = comboBoxExtension.Text;
+                string fileName;
+                string filePath;
+                string extension;
 
-            switch (extension)
+                if (textBoxFileName.Text.Trim() == "")
+                    fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
+                else
+                    fileName = textBoxFileName.Text;
+
+                if (textBoxFilePath.Text == "")
+                    filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                else
+                    filePath = textBoxFilePath.Text;
+
+                if (comboBoxExtension.Text == "")
+                {
+                    MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Error")}.");
+                    return;
+                }
+                else
+                    extension = comboBoxExtension.Text;
+
+                switch (extension)
+                {
+                    case ".csv":
+                        ExportToCSV(fileName, filePath);
+                        break;
+                    case ".xml":
+                        ExportToXML(fileName, filePath);
+                        break;
+                    case ".json":
+                        ExportToJSON(fileName, filePath);
+                        break;
+                    case ".txt":
+                        ExportToTxt(fileName, filePath);
+                        break;
+                    case ".log":
+                        ExportToLog(fileName, filePath);
+                        break;
+                    case ".zip":
+                        ExportToZip(fileName, filePath);
+                        break;
+                }
+
+                MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.", $"{T("Export")}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (Exception ex)
             {
-                case ".csv":
-                    ExportToCSV(fileName, filePath);
-                    break;
-                case ".xml":
-                    ExportToXML(fileName, filePath);
-                    break;
-                case ".json":
-                    ExportToJSON(fileName, filePath);
-                    break;
-                case ".txt":
-                    ExportToTxt(fileName, filePath);
-                    break;
-                case ".log":
-                    ExportToLog(fileName, filePath);
-                    break;
-                case ".zip":
-                    ExportToZip(fileName, filePath);
-                    break;
+                MessageBox.Show(ex.Message, T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            MessageBox.Show($"{T("ExportForm_ButtonExport_MessageBox_Success")}.", $"{T("Export")}", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Close();
         }
 
         /// <summary>

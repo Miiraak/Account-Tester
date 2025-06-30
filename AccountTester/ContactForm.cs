@@ -22,23 +22,30 @@
 
         private void OpenContactInfo(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            LinkLabel link = (LinkLabel)sender;
-            string source = String.Empty;
-
-            switch (link.Tag)
+            try
             {
-                case "A":
-                    source = "mailto:miiraak@miiraak.ch";
-                    break;
-                case "B":
-                    source = "https://github.com/Miiraak/Account-Tester";
-                    break;
-                case "C":
-                    source = "https://www.miiraak.ch";
-                    break;
-            }
+                LinkLabel link = (LinkLabel)sender;
+                string source = String.Empty;
 
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(source) { UseShellExecute = true });
+                switch (link.Tag)
+                {
+                    case "A":
+                        source = "mailto:miiraak@miiraak.ch";
+                        break;
+                    case "B":
+                        source = "https://github.com/Miiraak/Account-Tester";
+                        break;
+                    case "C":
+                        source = "https://www.miiraak.ch";
+                        break;
+                }
+
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(source) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
