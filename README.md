@@ -18,7 +18,8 @@ AccountTester is a Windows Forms application (C#) designed to test various aspec
         - `EN` - `100%`
         - `FR` - `100%`
     - Auto Report : _Export automatically the report to the selected format when tests finish._
-    - Tests selection : _Enable/Disable tests_
+    - Tests selection : _Enable/Disable tests._
+    - Require Printer : _Set the printers that the user will normally have access to._
 
 ### Features in development
 | Nom | Desc. |
