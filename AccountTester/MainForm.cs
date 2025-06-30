@@ -177,7 +177,8 @@ namespace AccountTester
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Sequential Execution Error : " + Environment.NewLine + ex.Message);
+                MessageBox.Show(ex.ToString(), "Sequential Execution Error");
+                
             }
         }
 

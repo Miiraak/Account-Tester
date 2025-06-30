@@ -343,7 +343,7 @@
             MinimizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Account Tester v0.8";
+            Text = "Account Tester v0.8.0.1";
             Load += MainFormLoad;
             contextMenuStrip1.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);

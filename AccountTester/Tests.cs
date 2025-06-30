@@ -348,8 +348,12 @@ namespace AccountTester
             }
             else
             {
-                foreach (string printer in PrinterSettings.InstalledPrinters)
+                foreach (string printerName in PrinterSettings.InstalledPrinters)
                 {
+                    string printer = printerName;
+                    if (printer.Contains('\\', StringComparison.Ordinal))
+                        printer = printer.Split('\\').Last();
+
                     if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) &&
                         !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
                         !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
@@ -361,8 +365,8 @@ namespace AccountTester
                         if (printerKey != null)
                         {
                             Variables.Printer_PrinterName = Variables.Printer_PrinterName.Append(printer).ToArray();
-                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver").ToString()).ToArray();
-                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port").ToString()).ToArray();
+                            Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver")?.ToString() ?? T("Unknown")).ToArray();
+                            Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port")?.ToString() ?? T("Unknown")).ToArray();
 
                             string? locationValue = printerKey.GetValue("Location")?.ToString();
                             if (!string.IsNullOrEmpty(locationValue))
@@ -418,10 +422,6 @@ namespace AccountTester
                             Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
                             Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
                         }
-                    }
-                    else
-                    {
-                        rtb.AppendText($"{printer} : {T("Omitted")}" + Environment.NewLine);
                     }
                 }
             }
