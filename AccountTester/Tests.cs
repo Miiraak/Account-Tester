@@ -435,7 +435,7 @@ namespace AccountTester
                     {
                         if (!foundPrinter.Contains(printer))
                         {
-                            rtb.AppendText($"{printer} ({ T("Missing")})" + Environment.NewLine);
+                            rtb.AppendText($"{printer} ({T("Missing")})" + Environment.NewLine);
                             rtb.AppendText($"- {T("NoPrinterFound")}" + Environment.NewLine);
                             Variables.General_TotalTests++;
                         }
