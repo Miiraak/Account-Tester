@@ -90,6 +90,7 @@ namespace AccountTester
 
         private void UpdateTexts()
         {
+            this.Text = $"AccountTester v{Variables.Version}";
             labelLogs.Text = T("Logs");
             copyToolStripMenuItem.Text = T("Copy");
             exportToolStripMenuItem.Text = T("Export");

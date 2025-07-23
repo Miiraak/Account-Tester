@@ -29,10 +29,12 @@ namespace AccountTester
             try
             {
                 stopwatch.Restart();
-                string Target = Variables.Target;
                 using HttpClient client = new();
                 client.Timeout = TimeSpan.FromSeconds(Variables.Timeout);
+                string customUserAgent = $"AccountTester/{Variables.Version} ({Environment.OSVersion})";
+                client.DefaultRequestHeaders.Add("User-Agent", customUserAgent);
 
+                string Target = Variables.Target;
                 // Check if the target URL starts with "http://" or "https://" if not, prepend "http://" to it.
                 if (!Target.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {
