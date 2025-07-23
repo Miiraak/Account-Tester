@@ -68,8 +68,10 @@ namespace AccountTester
                 }
 
                 Variables.PrinterList = Blob.Get("PrinterList") ?? string.Empty;
+                Variables.DrivesList = Blob.Get("DrivesList") ?? string.Empty;
 
                 TimeoutToolStripTextBox.Text = Blob.GetInt("Timeout").ToString();
+                TargetToolStripTextBox.Text = Blob.Get("Target") ?? "google.com";
 
                 autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
                 autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
@@ -88,6 +90,7 @@ namespace AccountTester
 
         private void UpdateTexts()
         {
+            this.Text = $"AccountTester v{Variables.Version}";
             labelLogs.Text = T("Logs");
             copyToolStripMenuItem.Text = T("Copy");
             exportToolStripMenuItem.Text = T("Export");
@@ -106,6 +109,9 @@ namespace AccountTester
             PrinterToolStripMenuItem.Text = T("Printer");
             TimeoutToolStripMenuItem.Text = $"{T("Timeout")} :";
             setPrinterListToolStripMenuItem.Text = T("PrinterList");
+            GeneralToolStripMenuItem.Text = T("General");
+            DrivesListToolStripMenuItem.Text = T("DrivesList");
+            TargetToolStripMenuItem.Text = $"{T("Target")} (http) :";
         }
 
         /// <summary>
@@ -312,6 +318,7 @@ namespace AccountTester
                 defaultExtension = toolStripComboBoxExtensionByDefault.Text;
             else
                 defaultExtension = ".txt";
+
             bool autoExport = autoExportToolStripMenuItem.Checked;
 
             Blob.Set("Langage", selectedLanguage);
@@ -320,6 +327,8 @@ namespace AccountTester
             Blob.Set("AutoExport", autoExport.ToString());
             Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
             Blob.Set("PrinterList", Variables.PrinterList);
+            Blob.Set("DrivesList", Variables.DrivesList);
+            Blob.Set("Target", TargetToolStripTextBox.Text);
             Blob.Save();
         }
 
@@ -444,12 +453,21 @@ namespace AccountTester
                 Variables.Timeout = timeout;
             else
                 TimeoutToolStripTextBox.Text = Variables.Timeout.ToString();
+
+            if (!string.IsNullOrWhiteSpace(TargetToolStripTextBox.Text))
+                Variables.Target = TargetToolStripTextBox.Text;
         }
 
         private void setPrinterListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OptionPrinter optionPrinterForm = new();
             optionPrinterForm.ShowDialog();
+        }
+
+        private void DrivesListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OptionDrives optionDrivesForm = new();
+            optionDrivesForm.ShowDialog();
         }
     }
 }

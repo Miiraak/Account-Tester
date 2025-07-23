@@ -57,7 +57,7 @@
             // comboBoxExtension
             // 
             comboBoxExtension.FormattingEnabled = true;
-            comboBoxExtension.Items.AddRange(new object[] { ".log", ".txt", ".csv", ".xml", ".json", ".zip" });
+            comboBoxExtension.Items.AddRange(new object[] { ".zip", ".log", ".txt", ".csv", ".xml", ".json" });
             comboBoxExtension.Location = new Point(10, 127);
             comboBoxExtension.Name = "comboBoxExtension";
             comboBoxExtension.Size = new Size(223, 22);

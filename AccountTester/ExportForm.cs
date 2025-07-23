@@ -136,7 +136,7 @@ namespace AccountTester
             sw.WriteLine(T("InternetConnexion"));
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {Variables.InternetConnexion_Hour}");
-            sw.WriteLine($"{T("TestedURL")}: {Variables.InternetConnexion_TestedURL}");
+            sw.WriteLine($"{T("TestedURL")}: {Variables.Target}");
             sw.WriteLine($"{T("HTMLStatus")}: {Variables.InternetConnexion_HTMLStatut}");
             sw.WriteLine($"{T("ResponseTime")}: {Variables.InternetConnexion_ElapsedTime} ms\n\n");
 
@@ -258,7 +258,7 @@ namespace AccountTester
             XmlElement internetConnection = doc.CreateElement(TT("InternetConnexion"));
             root.AppendChild(internetConnection);
             XMLW(doc, internetConnection, TT("Hour"), Variables.InternetConnexion_Hour);
-            XMLW(doc, internetConnection, TT("TestedURL"), Variables.InternetConnexion_TestedURL);
+            XMLW(doc, internetConnection, TT("TestedURL"), Variables.Target);
             XMLW(doc, internetConnection, TT("HTMLStatus"), Variables.InternetConnexion_HTMLStatut);
             XMLW(doc, internetConnection, TT("ResponseTime"), Variables.InternetConnexion_ElapsedTime);
 
@@ -360,7 +360,7 @@ namespace AccountTester
             CSVWL(T("General"), T("TotalSuccess"), Variables.General_TotalSuccess.ToString(), sw);
 
             CSVWL(T("InternetConnexion"), T("Hour"), Variables.InternetConnexion_Hour, sw);
-            CSVWL(T("InternetConnexion"), T("TestedURL"), Variables.InternetConnexion_TestedURL, sw);
+            CSVWL(T("InternetConnexion"), T("TestedURL"), Variables.Target, sw);
             CSVWL(T("InternetConnexion"), T("HTMLStatus"), Variables.InternetConnexion_HTMLStatut, sw);
             CSVWL(T("InternetConnexion"), $"{T("ResponseTime")} (ms)", Variables.InternetConnexion_ElapsedTime, sw);
 
@@ -514,7 +514,7 @@ namespace AccountTester
             var InternetConnexion = new Dictionary<string, object>
             {
                 [TT("Hour")] = Variables.InternetConnexion_Hour,
-                [TT("TestedURL")] = Variables.InternetConnexion_TestedURL,
+                [TT("TestedURL")] = Variables.Target,
                 [TT("HTMLStatus")] = Variables.InternetConnexion_HTMLStatut,
                 [TT("ResponseTime")] = Variables.InternetConnexion_ElapsedTime
             };

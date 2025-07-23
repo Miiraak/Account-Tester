@@ -6,7 +6,7 @@
 AccountTester is a Windows Forms application (C#) designed to test various aspects of user accounts on a system. It performs checks such as Internet connectivity, access rights to network drives, Office presence and permissions, as well as printer availability.
 
 ## Features
-- **Internet Connectivity Test:** Verifies if the computer can access the Internet by sending a request to Google.
+- **Internet Connectivity Test:** Verifies if the computer can access the Internet by sending a request to internet.
 - **Network Drive Access Test:** Attempts to create and delete a test file on each mapped network drive to check write permissions.
 - **Office Version Detection:** Searches for the presence of Microsoft Office via the system registry.
 - **Office Read/Write Permissions Test:** Creates, edits, and reads a Word document to verify user permissions with interop.word.
@@ -19,7 +19,10 @@ AccountTester is a Windows Forms application (C#) designed to test various aspec
         - `FR` - `100%`
     - Auto Report : _Export automatically the report to the selected format when tests finish._
     - Tests selection : _Enable/Disable tests._
+    - Custom HttpRequest : _Set the site that will be used for internet connectivity test._
+    - Require Drives : _Set the drives that the user will normally have access to._
     - Require Printer : _Set the printers that the user will normally have access to._
+    - Custom Timeout : _Set the desired timeout for tests._
 
 ### Features in development
 | Nom | Desc. |
@@ -33,7 +36,7 @@ Before running the project, make sure you have the following:
 - Windows with .NET Framework installed.
 - Microsoft Office installed (for Word-related tests).
 - Sufficient access rights to test network drives and the Windows registry.
-> The software is designed to work with at least the rights of a local non-admin user account.
+> The software is designed to test users with at least the defaults rights of a local non-admin account.
 
 ## Usage
 1. Launch the application.

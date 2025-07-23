@@ -24,7 +24,7 @@ namespace AccountTester
         private void UpdateTexts()
         {
             this.Text = T("PrinterOptions");
-            labelPrinterList.Text = T("PrinterList");
+            labelPrinterList.Text = $"{T("PrinterList")} :";
             buttonAdd.Text = T("Add");
         }
 

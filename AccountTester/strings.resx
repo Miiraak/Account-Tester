@@ -159,9 +159,6 @@
   <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
     <value>Version not found</value>
   </data>
-  <data name="NoPrinterFound" xml:space="preserve">
-    <value>No printer found</value>
-  </data>
   <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
     <value>Not found</value>
   </data>
@@ -428,5 +425,17 @@
   </data>
   <data name="Missing" xml:space="preserve">
     <value>Missing</value>
+  </data>
+  <data name="DrivesList" xml:space="preserve">
+    <value>Drives list</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="DrivesOptions" xml:space="preserve">
+    <value>Drives options</value>
+  </data>
+  <data name="NoPrinterFound" xml:space="preserve">
+    <value>No printer found</value>
   </data>
 </root>

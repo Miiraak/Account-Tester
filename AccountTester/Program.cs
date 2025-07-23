@@ -14,12 +14,14 @@ namespace AccountTester
             {
                 Dictionary<string, int> defaultData = new Dictionary<string, int>
             {
-                { "Langage", 5 },
-                { "BaseExtension", 5 },
-                { "Timeout", 3 },
-                { "AutoExport", 5 },
-                { "Autorun", 5 },
-                { "PrinterList", 100}
+                { "Langage", 8 },
+                { "BaseExtension", 8 },
+                { "Timeout", 8 },
+                { "AutoExport", 8 },
+                { "Autorun", 8 },
+                { "PrinterList", 128},
+                { "DrivesList", 128 },
+                { "Target", 128 }
             };
                 Blob.CheckForUpdates(args, defaultData);
 

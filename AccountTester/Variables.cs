@@ -17,8 +17,6 @@
 
         // Internet Connection variables
         public static string InternetConnexion_Hour { get; set; } = "Null";
-
-        public static string InternetConnexion_TestedURL = "https://www.google.ch";
         public static string InternetConnexion_HTMLStatut { get; set; } = "Null";
         public static string InternetConnexion_ElapsedTime { get; set; } = "Null";
 
@@ -61,9 +59,12 @@
 
 
         // Miscellaneous variables for program functions
+        public static string Version = "0.8.2"; // Version of the program
         public static bool IsAutoRun { get; set; } = false;
         public static bool WordIsInstalled { get; set; } = false;
         public static int Timeout { get; set; } = 5; // Timeout in seconds
-        public static string PrinterList { get; set; } = string.Empty; // List of printers that will normally be shared with the user, spearated by semicolons
+        public static string PrinterList { get; set; } = string.Empty; // List of printers that will normally be shared with the user, string spearated by semicolons
+        public static string DrivesList { get; set; } = string.Empty; // Drive letter list for the network storage rights test, string spearated by semicolons
+        public static string Target { get; set; } = string.Empty; // Target for the internet test. IP, FQDN or URL
     }
 }

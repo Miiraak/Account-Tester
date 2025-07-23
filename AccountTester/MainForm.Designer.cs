@@ -50,11 +50,15 @@
             testsToolStripMenuItem = new ToolStripMenuItem();
             TitleTestsToolStripMenuItem = new ToolStripMenuItem();
             InternetToolStripMenuItem = new ToolStripMenuItem();
+            TargetToolStripMenuItem = new ToolStripMenuItem();
+            TargetToolStripTextBox = new ToolStripTextBox();
             NetworkStorageToolStripMenuItem = new ToolStripMenuItem();
+            DrivesListToolStripMenuItem = new ToolStripMenuItem();
             OfficeToolStripMenuItem = new ToolStripMenuItem();
             PrinterToolStripMenuItem = new ToolStripMenuItem();
             setPrinterListToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
+            GeneralToolStripMenuItem = new ToolStripMenuItem();
             TimeoutToolStripMenuItem = new ToolStripMenuItem();
             TimeoutToolStripTextBox = new ToolStripTextBox();
             toolStripSeparator4 = new ToolStripSeparator();
@@ -140,7 +144,7 @@
             // autorunToolStripMenuItem
             // 
             autorunToolStripMenuItem.Name = "autorunToolStripMenuItem";
-            autorunToolStripMenuItem.Size = new Size(180, 22);
+            autorunToolStripMenuItem.Size = new Size(130, 22);
             autorunToolStripMenuItem.Text = "Autorun";
             autorunToolStripMenuItem.Click += AutorunToolStripMenuItem_Click;
             // 
@@ -148,7 +152,7 @@
             // 
             languageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { enUSToolStripMenuItem, frFRToolStripMenuItem });
             languageToolStripMenuItem.Name = "languageToolStripMenuItem";
-            languageToolStripMenuItem.Size = new Size(180, 22);
+            languageToolStripMenuItem.Size = new Size(130, 22);
             languageToolStripMenuItem.Text = "Language";
             // 
             // enUSToolStripMenuItem
@@ -156,7 +160,7 @@
             enUSToolStripMenuItem.Checked = true;
             enUSToolStripMenuItem.CheckState = CheckState.Checked;
             enUSToolStripMenuItem.Name = "enUSToolStripMenuItem";
-            enUSToolStripMenuItem.Size = new Size(180, 22);
+            enUSToolStripMenuItem.Size = new Size(109, 22);
             enUSToolStripMenuItem.Tag = "";
             enUSToolStripMenuItem.Text = "en-US";
             enUSToolStripMenuItem.Click += EnUSToolStripMenuItem_Click;
@@ -164,7 +168,7 @@
             // frFRToolStripMenuItem
             // 
             frFRToolStripMenuItem.Name = "frFRToolStripMenuItem";
-            frFRToolStripMenuItem.Size = new Size(180, 22);
+            frFRToolStripMenuItem.Size = new Size(109, 22);
             frFRToolStripMenuItem.Tag = "";
             frFRToolStripMenuItem.Text = "fr-FR";
             frFRToolStripMenuItem.Click += FrFRToolStripMenuItem_Click;
@@ -173,7 +177,7 @@
             // 
             reportsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { autoExportToolStripMenuItem, toolStripSeparator3, extensionByDefaultToolStripMenuItem, toolStripComboBoxExtensionByDefault });
             reportsToolStripMenuItem.Name = "reportsToolStripMenuItem";
-            reportsToolStripMenuItem.Size = new Size(180, 22);
+            reportsToolStripMenuItem.Size = new Size(130, 22);
             reportsToolStripMenuItem.Text = "Reports";
             // 
             // autoExportToolStripMenuItem
@@ -206,9 +210,9 @@
             // 
             // testsToolStripMenuItem
             // 
-            testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { TitleTestsToolStripMenuItem, InternetToolStripMenuItem, NetworkStorageToolStripMenuItem, OfficeToolStripMenuItem, PrinterToolStripMenuItem, toolStripSeparator1, TimeoutToolStripMenuItem, TimeoutToolStripTextBox });
+            testsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { TitleTestsToolStripMenuItem, InternetToolStripMenuItem, NetworkStorageToolStripMenuItem, OfficeToolStripMenuItem, PrinterToolStripMenuItem, toolStripSeparator1, GeneralToolStripMenuItem });
             testsToolStripMenuItem.Name = "testsToolStripMenuItem";
-            testsToolStripMenuItem.Size = new Size(180, 22);
+            testsToolStripMenuItem.Size = new Size(130, 22);
             testsToolStripMenuItem.Text = "Tests";
             testsToolStripMenuItem.DropDownClosed += TestsToolStripMenuItem_DropDownClosed;
             // 
@@ -216,7 +220,7 @@
             // 
             TitleTestsToolStripMenuItem.Enabled = false;
             TitleTestsToolStripMenuItem.Name = "TitleTestsToolStripMenuItem";
-            TitleTestsToolStripMenuItem.Size = new Size(180, 22);
+            TitleTestsToolStripMenuItem.Size = new Size(179, 22);
             TitleTestsToolStripMenuItem.Text = "Tests :";
             // 
             // InternetToolStripMenuItem
@@ -224,20 +228,43 @@
             InternetToolStripMenuItem.Checked = true;
             InternetToolStripMenuItem.CheckOnClick = true;
             InternetToolStripMenuItem.CheckState = CheckState.Checked;
+            InternetToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { TargetToolStripMenuItem, TargetToolStripTextBox });
             InternetToolStripMenuItem.Name = "InternetToolStripMenuItem";
-            InternetToolStripMenuItem.Size = new Size(180, 22);
+            InternetToolStripMenuItem.Size = new Size(179, 22);
             InternetToolStripMenuItem.Tag = "test";
             InternetToolStripMenuItem.Text = "Internet";
+            // 
+            // TargetToolStripMenuItem
+            // 
+            TargetToolStripMenuItem.Enabled = false;
+            TargetToolStripMenuItem.Name = "TargetToolStripMenuItem";
+            TargetToolStripMenuItem.Size = new Size(160, 22);
+            TargetToolStripMenuItem.Text = "Target :";
+            // 
+            // TargetToolStripTextBox
+            // 
+            TargetToolStripTextBox.BackColor = SystemColors.Menu;
+            TargetToolStripTextBox.Name = "TargetToolStripTextBox";
+            TargetToolStripTextBox.Size = new Size(100, 23);
+            TargetToolStripTextBox.Text = "google.com";
             // 
             // NetworkStorageToolStripMenuItem
             // 
             NetworkStorageToolStripMenuItem.Checked = true;
             NetworkStorageToolStripMenuItem.CheckOnClick = true;
             NetworkStorageToolStripMenuItem.CheckState = CheckState.Checked;
+            NetworkStorageToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { DrivesListToolStripMenuItem });
             NetworkStorageToolStripMenuItem.Name = "NetworkStorageToolStripMenuItem";
-            NetworkStorageToolStripMenuItem.Size = new Size(180, 22);
+            NetworkStorageToolStripMenuItem.Size = new Size(179, 22);
             NetworkStorageToolStripMenuItem.Tag = "test";
             NetworkStorageToolStripMenuItem.Text = "Network Storage";
+            // 
+            // DrivesListToolStripMenuItem
+            // 
+            DrivesListToolStripMenuItem.Name = "DrivesListToolStripMenuItem";
+            DrivesListToolStripMenuItem.Size = new Size(151, 22);
+            DrivesListToolStripMenuItem.Text = "Drives list";
+            DrivesListToolStripMenuItem.Click += DrivesListToolStripMenuItem_Click;
             // 
             // OfficeToolStripMenuItem
             // 
@@ -245,7 +272,7 @@
             OfficeToolStripMenuItem.CheckOnClick = true;
             OfficeToolStripMenuItem.CheckState = CheckState.Checked;
             OfficeToolStripMenuItem.Name = "OfficeToolStripMenuItem";
-            OfficeToolStripMenuItem.Size = new Size(180, 22);
+            OfficeToolStripMenuItem.Size = new Size(179, 22);
             OfficeToolStripMenuItem.Tag = "test";
             OfficeToolStripMenuItem.Text = "Office";
             // 
@@ -256,27 +283,34 @@
             PrinterToolStripMenuItem.CheckState = CheckState.Checked;
             PrinterToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { setPrinterListToolStripMenuItem });
             PrinterToolStripMenuItem.Name = "PrinterToolStripMenuItem";
-            PrinterToolStripMenuItem.Size = new Size(180, 22);
+            PrinterToolStripMenuItem.Size = new Size(179, 22);
             PrinterToolStripMenuItem.Tag = "test";
             PrinterToolStripMenuItem.Text = "Printer";
             // 
             // setPrinterListToolStripMenuItem
             // 
             setPrinterListToolStripMenuItem.Name = "setPrinterListToolStripMenuItem";
-            setPrinterListToolStripMenuItem.Size = new Size(180, 22);
+            setPrinterListToolStripMenuItem.Size = new Size(158, 22);
             setPrinterListToolStripMenuItem.Text = "Printer list";
             setPrinterListToolStripMenuItem.Click += setPrinterListToolStripMenuItem_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(177, 6);
+            toolStripSeparator1.Size = new Size(176, 6);
+            // 
+            // GeneralToolStripMenuItem
+            // 
+            GeneralToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { TimeoutToolStripMenuItem, TimeoutToolStripTextBox });
+            GeneralToolStripMenuItem.Name = "GeneralToolStripMenuItem";
+            GeneralToolStripMenuItem.Size = new Size(179, 22);
+            GeneralToolStripMenuItem.Text = "General";
             // 
             // TimeoutToolStripMenuItem
             // 
             TimeoutToolStripMenuItem.Enabled = false;
             TimeoutToolStripMenuItem.Name = "TimeoutToolStripMenuItem";
-            TimeoutToolStripMenuItem.Size = new Size(180, 22);
+            TimeoutToolStripMenuItem.Size = new Size(160, 22);
             TimeoutToolStripMenuItem.Text = "Timeout :";
             // 
             // TimeoutToolStripTextBox
@@ -289,12 +323,12 @@
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(177, 6);
+            toolStripSeparator4.Size = new Size(127, 6);
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(130, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += SaveToolStripMenuItem_Click;
             // 
@@ -308,19 +342,19 @@
             // contactToolStripMenuItem
             // 
             contactToolStripMenuItem.Name = "contactToolStripMenuItem";
-            contactToolStripMenuItem.Size = new Size(180, 22);
+            contactToolStripMenuItem.Size = new Size(123, 22);
             contactToolStripMenuItem.Text = "Contact";
             contactToolStripMenuItem.Click += ContactToolStripMenuItem_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(177, 6);
+            toolStripSeparator2.Size = new Size(120, 6);
             // 
             // ResetToolStripMenuItem
             // 
             ResetToolStripMenuItem.Name = "ResetToolStripMenuItem";
-            ResetToolStripMenuItem.Size = new Size(180, 22);
+            ResetToolStripMenuItem.Size = new Size(123, 22);
             ResetToolStripMenuItem.Text = "Reset";
             ResetToolStripMenuItem.Click += ClearFilesToolStripMenuItem_Click;
             // 
@@ -352,7 +386,7 @@
             MinimizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Account Tester v0.8.1";
+            Text = "Account Tester vX.X.X.X";
             Load += MainFormLoad;
             contextMenuStrip1.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);
@@ -386,15 +420,19 @@
         private ToolStripMenuItem ResetToolStripMenuItem;
         private ToolStripMenuItem testsToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripMenuItem TimeoutToolStripMenuItem;
         private ToolStripMenuItem InternetToolStripMenuItem;
         private ToolStripMenuItem NetworkStorageToolStripMenuItem;
         private ToolStripMenuItem OfficeToolStripMenuItem;
         private ToolStripMenuItem PrinterToolStripMenuItem;
-        private ToolStripTextBox TimeoutToolStripTextBox;
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem TitleTestsToolStripMenuItem;
         private ToolStripMenuItem setPrinterListToolStripMenuItem;
+        private ToolStripMenuItem DrivesListToolStripMenuItem;
+        private ToolStripMenuItem GeneralToolStripMenuItem;
+        private ToolStripTextBox TimeoutToolStripTextBox;
+        private ToolStripMenuItem TimeoutToolStripMenuItem;
+        private ToolStripMenuItem TargetToolStripMenuItem;
+        private ToolStripTextBox TargetToolStripTextBox;
     }
 }
