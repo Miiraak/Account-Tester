@@ -196,6 +196,24 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Drives list.
+        /// </summary>
+        internal static string DrivesList {
+            get {
+                return ResourceManager.GetString("DrivesList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Drives options.
+        /// </summary>
+        internal static string DrivesOptions {
+            get {
+                return ResourceManager.GetString("DrivesOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Elapsed Time.
         /// </summary>
         internal static string ElapsedTime {
@@ -831,6 +849,15 @@ namespace AccountTester {
         internal static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Target.
+        /// </summary>
+        internal static string Target {
+            get {
+                return ResourceManager.GetString("Target", resourceCulture);
             }
         }
         

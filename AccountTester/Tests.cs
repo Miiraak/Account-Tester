@@ -29,9 +29,17 @@ namespace AccountTester
             try
             {
                 stopwatch.Restart();
+                string Target = Variables.Target;
                 using HttpClient client = new();
                 client.Timeout = TimeSpan.FromSeconds(Variables.Timeout);
-                HttpResponseMessage response = await client.GetAsync(Variables.InternetConnexion_TestedURL);
+
+                // Check if the target URL starts with "http://" or "https://" if not, prepend "http://" to it.
+                if (!Target.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                {
+                    Target = "http://" + Variables.Target;
+                }
+
+                HttpResponseMessage response = await client.GetAsync(Target);
 
                 Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
                 Variables.InternetConnexion_HTMLStatut = response.StatusCode.ToString();
@@ -70,9 +78,11 @@ namespace AccountTester
             try
             {
                 stopwatch.Restart();
+                string[] foundDrives = [];
 
                 foreach (var drive in DriveInfo.GetDrives())
                 {
+                    foundDrives = foundDrives.Append(drive.Name[0].ToString()).ToArray();
                     Variables.General_TotalTests++;
                     Variables.NetworkStorageRights_DiskLetter = Variables.NetworkStorageRights_DiskLetter.Append(drive.Name).ToArray();
 
@@ -133,6 +143,16 @@ namespace AccountTester
 
                         rtb.AppendText($@"- {drive.Name} : {T("Omitted")}" + Environment.NewLine);
                         Variables.General_TotalSuccess++;
+                    }
+                }
+
+                string[] drivesList = Variables.DrivesList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToArray();
+                foreach (string drive in drivesList)
+                {
+                    if (!foundDrives.Contains(drive))
+                    {
+                        rtb.AppendText($"- {drive}:\\ : {T("Missing")}" + Environment.NewLine);
+                        Variables.General_TotalTests++;
                     }
                 }
             }
