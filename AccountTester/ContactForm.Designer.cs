@@ -40,9 +40,9 @@
             // linkLabelMail
             // 
             linkLabelMail.AutoSize = true;
-            linkLabelMail.Location = new Point(114, 28);
+            linkLabelMail.Location = new Point(127, 28);
             linkLabelMail.Name = "linkLabelMail";
-            linkLabelMail.Size = new Size(133, 14);
+            linkLabelMail.Size = new Size(152, 18);
             linkLabelMail.TabIndex = 0;
             linkLabelMail.TabStop = true;
             linkLabelMail.Tag = "A";
@@ -55,7 +55,7 @@
             labelMail.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelMail.Location = new Point(17, 28);
             labelMail.Name = "labelMail";
-            labelMail.Size = new Size(49, 14);
+            labelMail.Size = new Size(56, 18);
             labelMail.TabIndex = 1;
             labelMail.Text = "Mail :";
             // 
@@ -65,16 +65,16 @@
             labelRepository.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelRepository.Location = new Point(17, 66);
             labelRepository.Name = "labelRepository";
-            labelRepository.Size = new Size(91, 14);
+            labelRepository.Size = new Size(104, 18);
             labelRepository.TabIndex = 3;
             labelRepository.Text = "Repository :";
             // 
             // linkLabelRepository
             // 
             linkLabelRepository.AutoSize = true;
-            linkLabelRepository.Location = new Point(114, 66);
+            linkLabelRepository.Location = new Point(127, 66);
             linkLabelRepository.Name = "linkLabelRepository";
-            linkLabelRepository.Size = new Size(161, 14);
+            linkLabelRepository.Size = new Size(184, 18);
             linkLabelRepository.TabIndex = 2;
             linkLabelRepository.TabStop = true;
             linkLabelRepository.Tag = "B";
@@ -87,16 +87,16 @@
             labelSite.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelSite.Location = new Point(17, 105);
             labelSite.Name = "labelSite";
-            labelSite.Size = new Size(49, 14);
+            labelSite.Size = new Size(56, 18);
             labelSite.TabIndex = 5;
             labelSite.Text = "Site :";
             // 
             // linkLabelSite
             // 
             linkLabelSite.AutoSize = true;
-            linkLabelSite.Location = new Point(114, 105);
+            linkLabelSite.Location = new Point(127, 105);
             linkLabelSite.Name = "linkLabelSite";
-            linkLabelSite.Size = new Size(105, 14);
+            linkLabelSite.Size = new Size(120, 18);
             linkLabelSite.TabIndex = 4;
             linkLabelSite.TabStop = true;
             linkLabelSite.Tag = "C";
@@ -105,10 +105,10 @@
             // 
             // ContactForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
+            AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(284, 150);
+            ClientSize = new Size(348, 150);
             Controls.Add(labelSite);
             Controls.Add(linkLabelSite);
             Controls.Add(labelRepository);

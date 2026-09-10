@@ -39,7 +39,7 @@
             labelDrivesList.AutoSize = true;
             labelDrivesList.Location = new Point(12, 9);
             labelDrivesList.Name = "labelDrivesList";
-            labelDrivesList.Size = new Size(98, 14);
+            labelDrivesList.Size = new Size(112, 18);
             labelDrivesList.TabIndex = 0;
             labelDrivesList.Text = "Drives List :";
             // 
@@ -47,7 +47,7 @@
             // 
             ButtonAdd.Location = new Point(202, 26);
             ButtonAdd.Name = "ButtonAdd";
-            ButtonAdd.Size = new Size(65, 21);
+            ButtonAdd.Size = new Size(65, 25);
             ButtonAdd.TabIndex = 3;
             ButtonAdd.Text = "Add";
             ButtonAdd.UseVisualStyleBackColor = true;
@@ -57,9 +57,9 @@
             // 
             checkedListBoxDrives.CheckOnClick = true;
             checkedListBoxDrives.FormattingEnabled = true;
-            checkedListBoxDrives.Location = new Point(12, 54);
+            checkedListBoxDrives.Location = new Point(12, 57);
             checkedListBoxDrives.Name = "checkedListBoxDrives";
-            checkedListBoxDrives.Size = new Size(255, 174);
+            checkedListBoxDrives.Size = new Size(255, 164);
             checkedListBoxDrives.TabIndex = 5;
             checkedListBoxDrives.TabStop = false;
             checkedListBoxDrives.SelectedIndexChanged += RemoveDrives;
@@ -68,12 +68,12 @@
             // 
             textBoxDrivesAdd.Location = new Point(12, 26);
             textBoxDrivesAdd.Name = "textBoxDrivesAdd";
-            textBoxDrivesAdd.Size = new Size(184, 22);
+            textBoxDrivesAdd.Size = new Size(184, 25);
             textBoxDrivesAdd.TabIndex = 1;
             // 
             // OptionDrives
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
+            AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(281, 245);
