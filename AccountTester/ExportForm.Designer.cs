@@ -43,7 +43,7 @@
             // 
             textBoxFileName.Location = new Point(12, 25);
             textBoxFileName.Name = "textBoxFileName";
-            textBoxFileName.Size = new Size(221, 22);
+            textBoxFileName.Size = new Size(238, 25);
             textBoxFileName.TabIndex = 1;
             // 
             // textBoxFilePath
@@ -51,16 +51,16 @@
             textBoxFilePath.Location = new Point(10, 76);
             textBoxFilePath.Name = "textBoxFilePath";
             textBoxFilePath.ReadOnly = true;
-            textBoxFilePath.Size = new Size(169, 22);
+            textBoxFilePath.Size = new Size(186, 25);
             textBoxFilePath.TabIndex = 2;
             // 
             // comboBoxExtension
             // 
             comboBoxExtension.FormattingEnabled = true;
             comboBoxExtension.Items.AddRange(new object[] { ".zip", ".log", ".txt", ".csv", ".xml", ".json" });
-            comboBoxExtension.Location = new Point(10, 127);
+            comboBoxExtension.Location = new Point(12, 131);
             comboBoxExtension.Name = "comboBoxExtension";
-            comboBoxExtension.Size = new Size(223, 22);
+            comboBoxExtension.Size = new Size(238, 26);
             comboBoxExtension.TabIndex = 4;
             // 
             // labelExtension
@@ -68,7 +68,7 @@
             labelExtension.AutoSize = true;
             labelExtension.Location = new Point(10, 110);
             labelExtension.Name = "labelExtension";
-            labelExtension.Size = new Size(84, 14);
+            labelExtension.Size = new Size(96, 18);
             labelExtension.TabIndex = 5;
             labelExtension.Text = "Extension :";
             // 
@@ -77,7 +77,7 @@
             labelFile.AutoSize = true;
             labelFile.Location = new Point(12, 8);
             labelFile.Name = "labelFile";
-            labelFile.Size = new Size(84, 14);
+            labelFile.Size = new Size(96, 18);
             labelFile.TabIndex = 6;
             labelFile.Text = "File name :";
             // 
@@ -86,13 +86,13 @@
             labelPath.AutoSize = true;
             labelPath.Location = new Point(10, 59);
             labelPath.Name = "labelPath";
-            labelPath.Size = new Size(49, 14);
+            labelPath.Size = new Size(56, 18);
             labelPath.TabIndex = 7;
             labelPath.Text = "Path :";
             // 
             // buttonExport
             // 
-            buttonExport.Location = new Point(85, 157);
+            buttonExport.Location = new Point(94, 170);
             buttonExport.Name = "buttonExport";
             buttonExport.Size = new Size(75, 23);
             buttonExport.TabIndex = 8;
@@ -102,9 +102,9 @@
             // 
             // buttonSelectPath
             // 
-            buttonSelectPath.Location = new Point(185, 76);
+            buttonSelectPath.Location = new Point(202, 76);
             buttonSelectPath.Name = "buttonSelectPath";
-            buttonSelectPath.Size = new Size(48, 23);
+            buttonSelectPath.Size = new Size(48, 25);
             buttonSelectPath.TabIndex = 9;
             buttonSelectPath.Text = "...";
             buttonSelectPath.UseVisualStyleBackColor = true;
@@ -112,10 +112,10 @@
             // 
             // ExportForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
+            AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(245, 189);
+            ClientSize = new Size(262, 208);
             Controls.Add(buttonSelectPath);
             Controls.Add(buttonExport);
             Controls.Add(labelPath);

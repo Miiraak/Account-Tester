@@ -39,7 +39,7 @@
             labelPrinterList.AutoSize = true;
             labelPrinterList.Location = new Point(12, 9);
             labelPrinterList.Name = "labelPrinterList";
-            labelPrinterList.Size = new Size(105, 14);
+            labelPrinterList.Size = new Size(120, 18);
             labelPrinterList.TabIndex = 0;
             labelPrinterList.Text = "Printer List :";
             // 
@@ -47,14 +47,14 @@
             // 
             textBoxPrinterAdd.Location = new Point(12, 26);
             textBoxPrinterAdd.Name = "textBoxPrinterAdd";
-            textBoxPrinterAdd.Size = new Size(184, 22);
+            textBoxPrinterAdd.Size = new Size(184, 25);
             textBoxPrinterAdd.TabIndex = 1;
             // 
             // buttonAdd
             // 
             buttonAdd.Location = new Point(202, 26);
             buttonAdd.Name = "buttonAdd";
-            buttonAdd.Size = new Size(65, 21);
+            buttonAdd.Size = new Size(65, 25);
             buttonAdd.TabIndex = 2;
             buttonAdd.Text = "Add";
             buttonAdd.UseVisualStyleBackColor = true;
@@ -64,15 +64,15 @@
             // 
             checkedListBoxPrinter.CheckOnClick = true;
             checkedListBoxPrinter.FormattingEnabled = true;
-            checkedListBoxPrinter.Location = new Point(12, 54);
+            checkedListBoxPrinter.Location = new Point(12, 57);
             checkedListBoxPrinter.Name = "checkedListBoxPrinter";
-            checkedListBoxPrinter.Size = new Size(255, 174);
+            checkedListBoxPrinter.Size = new Size(255, 164);
             checkedListBoxPrinter.TabIndex = 3;
             checkedListBoxPrinter.SelectedIndexChanged += RemovePrinter;
             // 
             // OptionPrinter
             // 
-            AutoScaleDimensions = new SizeF(7F, 14F);
+            AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(281, 245);

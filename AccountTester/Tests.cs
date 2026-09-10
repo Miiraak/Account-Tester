@@ -11,7 +11,7 @@ namespace AccountTester
     {
         static string T(string key) => LangManager.Instance.Translate(key);
 
-        static Stopwatch stopwatch = new();
+        static readonly Stopwatch stopwatch = new();
 
         /// <summary>
         /// Tests the internet connection by sending an HTTP GET request to a predefined URL.
@@ -35,30 +35,28 @@ namespace AccountTester
                 client.DefaultRequestHeaders.Add("User-Agent", customUserAgent);
 
                 string Target = Variables.Target;
-                // Check if the target URL starts with "http://" or "https://" if not, prepend "http://" to it.
                 if (!Target.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {
                     Target = "http://" + Variables.Target;
                 }
 
-                HttpResponseMessage response = await client.GetAsync(Target);
-
+                using HttpResponseMessage response = await client.GetAsync(Target);
                 Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
                 Variables.InternetConnexion_HTMLStatut = response.StatusCode.ToString();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    rtb.AppendText($"{T("MainForm_RTBL_Internet_Connected")}" + Environment.NewLine);
+                    rtb.AppendText($"{T("MainForm_RTBL_Internet_Connected")}{Environment.NewLine}");
                     Variables.General_TotalSuccess++;
                 }
                 else
                 {
-                    rtb.AppendText($"{T("MainForm_RTBL_Internet_Others")}" + response.StatusCode + Environment.NewLine);
+                    rtb.AppendText($"{T("MainForm_RTBL_Internet_Others")} {response.StatusCode}{Environment.NewLine}");
                 }
             }
             catch (Exception ex)
             {
-                rtb.AppendText($"{T("MainForm_RTBL_Internet_Others")}" + ex.InnerException?.Message + Environment.NewLine);
+                rtb.AppendText($"{T("MainForm_RTBL_Internet_Others")} {ex.InnerException?.Message ?? ex.Message}{Environment.NewLine}");
             }
 
             stopwatch.Stop();
@@ -84,9 +82,9 @@ namespace AccountTester
 
                 foreach (var drive in DriveInfo.GetDrives())
                 {
-                    foundDrives = foundDrives.Append(drive.Name[0].ToString()).ToArray();
+                    foundDrives = [.. foundDrives, drive.Name[0].ToString()];
                     Variables.General_TotalTests++;
-                    Variables.NetworkStorageRights_DiskLetter = Variables.NetworkStorageRights_DiskLetter.Append(drive.Name).ToArray();
+                    Variables.NetworkStorageRights_DiskLetter = [.. Variables.NetworkStorageRights_DiskLetter, drive.Name];
 
                     if (drive.DriveType == DriveType.Network)
                     {
@@ -115,9 +113,9 @@ namespace AccountTester
                             {
                                 rtb.AppendText($@"- {drive.Name} : OK" + Environment.NewLine);
                                 Variables.General_TotalSuccess++;
-                                Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(cheminUNC).ToArray();
-                                Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(serveur).ToArray();
-                                Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(shareName).ToArray();
+                                Variables.NetworkStorageRights_CheminUNC = [.. Variables.NetworkStorageRights_CheminUNC, cheminUNC];
+                                Variables.NetworkStorageRights_Serveur = [.. Variables.NetworkStorageRights_Serveur, serveur];
+                                Variables.NetworkStorageRights_ShareName = [.. Variables.NetworkStorageRights_ShareName, shareName];
                             }
 
                             File.Delete(testFile);
@@ -125,30 +123,30 @@ namespace AccountTester
                         catch (UnauthorizedAccessException)
                         {
                             rtb.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Refused")}" + Environment.NewLine);
-                            Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(T("UnauthorizedAccess")).ToArray();
-                            Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(T("UnauthorizedAccess")).ToArray();
-                            Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("UnauthorizedAccess")).ToArray();
+                            Variables.NetworkStorageRights_CheminUNC = [.. Variables.NetworkStorageRights_CheminUNC, T("UnauthorizedAccess")];
+                            Variables.NetworkStorageRights_Serveur = [.. Variables.NetworkStorageRights_Serveur, T("UnauthorizedAccess")];
+                            Variables.NetworkStorageRights_ShareName = [.. Variables.NetworkStorageRights_ShareName, T("UnauthorizedAccess")];
                         }
                         catch (IOException)
                         {
                             rtb.AppendText($@"- {drive.Name} : {T("MainForm_RTBL_NetworkStorageRightsTesting_Error")}" + Environment.NewLine);
-                            Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(T("IOError")).ToArray();
-                            Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append(T("IOError")).ToArray();
-                            Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("IOError")).ToArray();
+                            Variables.NetworkStorageRights_CheminUNC = [.. Variables.NetworkStorageRights_CheminUNC, T("IOError")];
+                            Variables.NetworkStorageRights_Serveur = [.. Variables.NetworkStorageRights_Serveur, T("IOError")];
+                            Variables.NetworkStorageRights_ShareName = [.. Variables.NetworkStorageRights_ShareName, T("IOError")];
                         }
                     }
                     else
                     {
-                        Variables.NetworkStorageRights_CheminUNC = Variables.NetworkStorageRights_CheminUNC.Append(drive.Name).ToArray();
-                        Variables.NetworkStorageRights_Serveur = Variables.NetworkStorageRights_Serveur.Append("localhost").ToArray();
-                        Variables.NetworkStorageRights_ShareName = Variables.NetworkStorageRights_ShareName.Append(T("None")).ToArray();
+                        Variables.NetworkStorageRights_CheminUNC = [.. Variables.NetworkStorageRights_CheminUNC, drive.Name];
+                        Variables.NetworkStorageRights_Serveur = [.. Variables.NetworkStorageRights_Serveur, "localhost"];
+                        Variables.NetworkStorageRights_ShareName = [.. Variables.NetworkStorageRights_ShareName, T("None")];
 
                         rtb.AppendText($@"- {drive.Name} : {T("Omitted")}" + Environment.NewLine);
                         Variables.General_TotalSuccess++;
                     }
                 }
 
-                string[] drivesList = Variables.DrivesList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToArray();
+                string[] drivesList = [.. Variables.DrivesList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p))];
                 foreach (string drive in drivesList)
                 {
                     if (!foundDrives.Contains(drive))
@@ -384,22 +382,22 @@ namespace AccountTester
                             !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
                             !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
                         {
-                            foundPrinter = foundPrinter.Append(printer).ToArray();
+                            foundPrinter = [.. foundPrinter, printer];
                             Variables.General_TotalTests++;
                             string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
 
                             using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
                             if (printerKey != null)
                             {
-                                Variables.Printer_PrinterName = Variables.Printer_PrinterName.Append(printer).ToArray();
-                                Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(printerKey.GetValue("Printer Driver")?.ToString() ?? T("Unknown")).ToArray();
-                                Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(printerKey.GetValue("Port")?.ToString() ?? T("Unknown")).ToArray();
+                                Variables.Printer_PrinterName = [.. Variables.Printer_PrinterName, printer];
+                                Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, printerKey.GetValue("Printer Driver")?.ToString() ?? T("Unknown")];
+                                Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, printerKey.GetValue("Port")?.ToString() ?? T("Unknown")];
 
                                 string? locationValue = printerKey.GetValue("Location")?.ToString();
                                 if (!string.IsNullOrEmpty(locationValue))
                                 {
                                     string PrinterIP = locationValue.Split("//").Last().Split(":").First();
-                                    Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(PrinterIP).ToArray();
+                                    Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, PrinterIP];
 
                                     if (!string.IsNullOrEmpty(PrinterIP))
                                     {
@@ -410,49 +408,49 @@ namespace AccountTester
                                         {
                                             rtb.AppendText(printer + Environment.NewLine);
                                             rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
-                                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("OK").ToArray();
+                                            Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, "OK"];
                                             Variables.General_TotalSuccess++;
                                         }
                                         else
                                         {
                                             rtb.AppendText(printer + Environment.NewLine);
                                             rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
-                                            Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append("FAIL").ToArray();
+                                            Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, "FAIL"];
                                         }
                                     }
                                     else
                                     {
                                         rtb.AppendText(printer + Environment.NewLine);
                                         rtb.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
-                                        Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                        Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                        Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                        Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
+                                        Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, T("Unknown")];
+                                        Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unknown")];
+                                        Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, T("Unknown")];
+                                        Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, T("Unknown")];
                                     }
                                 }
                                 else
                                 {
                                     rtb.AppendText(printer + Environment.NewLine);
                                     rtb.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
-                                    Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                    Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                    Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                    Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
+                                    Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, T("Unknown")];
+                                    Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unknown")];
+                                    Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, T("Unknown")];
+                                    Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, T("Unknown")];
                                 }
                             }
                             else
                             {
                                 rtb.AppendText(printer + Environment.NewLine);
                                 rtb.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
-                                Variables.Printer_PrinterIP = Variables.Printer_PrinterIP.Append(T("Unknown")).ToArray();
-                                Variables.Printer_PrinterStatus = Variables.Printer_PrinterStatus.Append(T("Unknown")).ToArray();
-                                Variables.Printer_PrinterDriver = Variables.Printer_PrinterDriver.Append(T("Unknown")).ToArray();
-                                Variables.Printer_PrinterPort = Variables.Printer_PrinterPort.Append(T("Unknown")).ToArray();
+                                Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, T("Unknown")];
+                                Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unknown")];
+                                Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, T("Unknown")];
+                                Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, T("Unknown")];
                             }
                         }
                     }
 
-                    string[] printerList = Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)).ToArray();
+                    string[] printerList = [.. Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p))];
                     foreach (string printer in printerList)
                     {
                         if (!foundPrinter.Contains(printer))
