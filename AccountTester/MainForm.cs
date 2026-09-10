@@ -138,14 +138,14 @@ namespace AccountTester
                 richTextBoxLogs.AppendText(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("Username")} :" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"- {Variables.General_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
                 if (InternetToolStripMenuItem.Checked)
                 {
-                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("Internet")} :" + Environment.NewLine);
                     await Tests.InternetConnexionTest(richTextBoxLogs);
                     richTextBoxLogs.AppendText(Environment.NewLine);
@@ -153,7 +153,7 @@ namespace AccountTester
 
                 if (NetworkStorageToolStripMenuItem.Checked)
                 {
-                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("NetworkStorageRights")} :" + Environment.NewLine);
                     Tests.NetworkStorageRightsTesting(richTextBoxLogs);
                     richTextBoxLogs.AppendText(Environment.NewLine);
@@ -161,14 +161,14 @@ namespace AccountTester
 
                 if (OfficeToolStripMenuItem.Checked)
                 {
-                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("OfficeVersion")} :" + Environment.NewLine);
                     Tests.OfficeVersionTesting(richTextBoxLogs);
                     richTextBoxLogs.AppendText(Environment.NewLine);
 
                     if (Variables.WordIsInstalled)
                     {
-                        richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                        richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                         richTextBoxLogs.AppendText($"#### {T("OfficeRights")} :" + Environment.NewLine);
                         Tests.OfficeWRTesting(richTextBoxLogs);
                         richTextBoxLogs.AppendText(Environment.NewLine);
@@ -177,13 +177,13 @@ namespace AccountTester
 
                 if (PrinterToolStripMenuItem.Checked)
                 {
-                    richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                    richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("Printer")} :" + Environment.NewLine);
                     Tests.PrinterTesting(richTextBoxLogs);
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                richTextBoxLogs.AppendText("----------------------------------------" + Environment.NewLine);
+                richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine); 
                 richTextBoxLogs.AppendText($"#### {T("TestsFinished")} :" + Environment.NewLine);
                 stopwatch.Stop();
                 richTextBoxLogs.AppendText($"- {T("TotalTimeElapsed")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
@@ -231,9 +231,9 @@ namespace AccountTester
             }
         }
 
-        internal void Autorun()
+        internal async Task Autorun()
         {
-            Task.Run(() => ExecutionSequentielle()).Wait();
+            await ExecutionSequentielle();
             ExportReport();
         }
 
@@ -245,10 +245,11 @@ namespace AccountTester
         /// specified, the method automatically exports the report and displays a success message.</remarks>
         /// <param name="sender">The source of the event, typically the "Start" menu item.</param>
         /// <param name="e">The event data associated with the click event.</param>
-        private void StartToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             startToolStripMenuItem.Enabled = false;
-            Task.Run(() => ExecutionSequentielle()).Wait();
+            await ExecutionSequentielle();
+
             exportToolStripMenuItem.Enabled = true;
             startToolStripMenuItem.Enabled = true;
 
@@ -458,7 +459,7 @@ namespace AccountTester
                 Variables.Target = TargetToolStripTextBox.Text;
         }
 
-        private void setPrinterListToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SetPrinterListToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OptionPrinter optionPrinterForm = new();
             optionPrinterForm.ShowDialog();
