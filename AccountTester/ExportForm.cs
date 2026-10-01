@@ -180,7 +180,7 @@ namespace AccountTester
             }
             else
             {
-                sw.WriteLine(T("MainForm_RTBL_PrinterTesting_NotFound"));
+                sw.WriteLine(T("MainForm_RTBL_OfficeVersionTesting_NotFound"));
             }
             sw.WriteLine($"{T("ElapsedTime")}: {Variables.OfficeVersion_ElapsedTime} ms\n\n");
 

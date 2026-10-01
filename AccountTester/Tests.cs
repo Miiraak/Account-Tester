@@ -34,7 +34,7 @@ namespace AccountTester
                 stopwatch.Restart();
 
                 using HttpClient client = new();
-                client.Timeout = TimeSpan.FromSeconds(Variables.Timeout);
+                client.Timeout = TimeSpan.FromMilliseconds(Variables.Timeout);
                 string customUserAgent = $"AccountTester/{Variables.Version} ({Environment.OSVersion})";
                 client.DefaultRequestHeaders.Add("User-Agent", customUserAgent);
                 using HttpResponseMessage response = await client.GetAsync(Variables.Target);
@@ -368,13 +368,18 @@ namespace AccountTester
                 }
                 else
                 {
-                    foreach (string printer in PrinterSettings.InstalledPrinters)
+                    // Add printer from installed printers list then do the foreach loop to test each printer.
+                    string[] printerCollection = PrinterSettings.InstalledPrinters.Cast<string>().ToArray();
+                    printerCollection = printerCollection.Concat(Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p))).ToArray();
+
+                    foreach (string printer in printerCollection)
                     {
                         if (!string.IsNullOrWhiteSpace(printer)
                             && !printer.Contains("Fax", StringComparison.OrdinalIgnoreCase)
                             && !printer.Contains("PDF", StringComparison.OrdinalIgnoreCase)
                             && !printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase)
-                            && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
+                            && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase)
+                            && !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase))
                         {
                             Variables.General_TotalTests++;
                             rtb.AppendText(printer + Environment.NewLine);
@@ -388,7 +393,7 @@ namespace AccountTester
 
                             Variables.Printer_PrinterName = [.. Variables.Printer_PrinterName, printer_clean];
 
-                            if (IsPrinterReachable_TCP(printer_clean, Variables.Timeout) || IsPrinterReachable_PING(printer_clean, Variables.Timeout))
+                            if (IsPrinterReachable_TCP(printer_clean, 9100, Variables.Timeout) || IsPrinterReachable_PING(printer_clean, Variables.Timeout))
                             {
                                 Variables.General_TotalSuccess++;
                                 Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Reachable")];
@@ -485,7 +490,7 @@ namespace AccountTester
                     string name = printer["Name"]?.ToString() ?? "";
 
                     var Printer_ServerName = printer["ServerName"];
-                    var Printer_Shared = printer["Shared"];
+                    var Printer_Shared = printer["SharedName"];
                     var Printer_Driver = printer["DriverName"];
                     var Printer_Port = printer["PortName"];
                     var Printer_Location = printer["Location"];
