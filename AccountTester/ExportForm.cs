@@ -121,7 +121,6 @@ namespace AccountTester
         internal static void ExportToTxt(string fileName, string filePath)
         {
             string path = Path.Combine(filePath, $"{fileName}.txt");
-            int i = 0;
 
             using StreamWriter sw = new(path);
             sw.WriteLine(fileName);
@@ -144,8 +143,10 @@ namespace AccountTester
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {Variables.NetworkStorageRights_Hour}");
             sw.WriteLine($"{T("Disk")}:");
+            int i = 0;
             if (Variables.NetworkStorageRights_DiskLetter != null)
             {
+
                 foreach (string diskLetter in Variables.NetworkStorageRights_DiskLetter)
                 {
                     sw.WriteLine($"{T("Letter")}: {diskLetter}");
@@ -159,12 +160,12 @@ namespace AccountTester
             {
                 sw.WriteLine(T("NoNetworkShare"));
             }
-            sw.WriteLine($"{T("ElapsedTime")}: {Variables.NetworkStorageRights_ElapsedTime} ms\n\n");
-            i = 0;
 
+            sw.WriteLine($"{T("ElapsedTime")}: {Variables.NetworkStorageRights_ElapsedTime} ms\n\n");
             sw.WriteLine("Office");
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {Variables.OfficeVersion_Hour}");
+            i = 0;
             if (Variables.OfficeVersion_OfficeVersion.Split(',').Length > 0)
             {
                 sw.WriteLine($"{T("OfficeVersion")}:");
@@ -198,25 +199,20 @@ namespace AccountTester
             sw.WriteLine(T("Printer"));
             sw.WriteLine("-----------------------------------");
             sw.WriteLine($"{T("Hour")}: {Variables.Printer_Hour}");
+            i = 0;
             if (Variables.Printer_PrinterName != null)
             {
                 foreach (string printerName in Variables.Printer_PrinterName)
                 {
                     sw.WriteLine($"{T("Name")}: {printerName}");
-                    sw.WriteLine($"- {T("IP")}: {Variables.Printer_PrinterIP?[i]}");
                     sw.WriteLine($"- {T("Status")}: {Variables.Printer_PrinterStatus?[i]}");
-                    sw.WriteLine($"- {T("Driver")}: {Variables.Printer_PrinterDriver?[i]}");
-                    sw.WriteLine($"- {T("Port")}: {Variables.Printer_PrinterPort?[i]}");
                     i++;
                 }
             }
             else
-            {
                 sw.WriteLine(T("NoPrinterFound"));
-            }
-            sw.WriteLine($"{T("ElapsedTime")}: {Variables.Printer_ElapsedTime} ms\n\n");
-            i = 0;
 
+            sw.WriteLine($"{T("ElapsedTime")}: {Variables.Printer_ElapsedTime} ms\n\n");
             sw.Close();
         }
 
@@ -309,10 +305,7 @@ namespace AccountTester
                     XmlElement printer = doc.CreateElement($"{TT("Printer")}_{i}");
                     printers.AppendChild(printer);
                     XMLW(doc, printer, TT("Name"), Variables.Printer_PrinterName[i]);
-                    XMLW(doc, printer, TT("IP"), Variables.Printer_PrinterIP[i]);
                     XMLW(doc, printer, TT("Status"), Variables.Printer_PrinterStatus[i]);
-                    XMLW(doc, printer, TT("Driver"), Variables.Printer_PrinterDriver[i]);
-                    XMLW(doc, printer, TT("Port"), Variables.Printer_PrinterPort[i]);
                 }
             }
             else
@@ -411,9 +404,6 @@ namespace AccountTester
                 {
                     CSVWL($"{T("Printer")}_{i}", T("Name"), Variables.Printer_PrinterName[i], sw);
                     CSVWL($"{T("Printer")}_{i}", T("Status"), Variables.Printer_PrinterStatus[i], sw);
-                    CSVWL($"{T("Printer")}_{i}", T("IP"), Variables.Printer_PrinterIP[i], sw);
-                    CSVWL($"{T("Printer")}_{i}", T("Driver"), Variables.Printer_PrinterDriver[i], sw);
-                    CSVWL($"{T("Printer")}_{i}", T("Port"), Variables.Printer_PrinterPort[i], sw);
                 }
             }
             else
@@ -455,10 +445,7 @@ namespace AccountTester
                     var printer = new Dictionary<string, object>
                     {
                         [TT("Name")] = Variables.Printer_PrinterName[i],
-                        [TT("IP")] = Variables.Printer_PrinterIP[i],
-                        [TT("Status")] = Variables.Printer_PrinterStatus[i],
-                        [TT("Driver")] = Variables.Printer_PrinterDriver[i],
-                        [TT("Port")] = Variables.Printer_PrinterPort[i]
+                        [TT("Status")] = Variables.Printer_PrinterStatus[i]
                     };
                     Printers[$"{TT("Printer")}_{i + 1}"] = printer;
                 }

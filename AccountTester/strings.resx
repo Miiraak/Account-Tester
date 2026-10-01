@@ -159,15 +159,6 @@
   <data name="MainForm_RTBL_OfficeVersionTesting_NotFound" xml:space="preserve">
     <value>Version not found</value>
   </data>
-  <data name="MainForm_RTBL_PrinterTesting_NotFound" xml:space="preserve">
-    <value>Not found</value>
-  </data>
-  <data name="MainForm_RTBL_PrinterTesting_NoLocationValueReg" xml:space="preserve">
-    <value>Location value not found in registry.</value>
-  </data>
-  <data name="MainForm_RTBL_NoRegKey" xml:space="preserve">
-    <value>Registry key not found.</value>
-  </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
   </data>
@@ -437,5 +428,20 @@
   </data>
   <data name="NoPrinterFound" xml:space="preserve">
     <value>No printer found</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="InvalidURL_Error_message" xml:space="preserve">
+    <value>Error, Invalid URL</value>
+  </data>
+  <data name="Reachable" xml:space="preserve">
+    <value>Reachable</value>
+  </data>
+  <data name="Unreachable" xml:space="preserve">
+    <value>Unreachable</value>
+  </data>
+  <data name="Tests_PrinterError_Configuration" xml:space="preserve">
+    <value>Unreachable or configuration error</value>
   </data>
 </root>

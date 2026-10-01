@@ -12,8 +12,8 @@ namespace AccountTester
         {
             try
             {
-                Dictionary<string, int> defaultData = new Dictionary<string, int>
-            {
+                Dictionary<string, int> defaultData = new()
+                {
                 { "Langage", 8 },
                 { "BaseExtension", 8 },
                 { "Timeout", 8 },

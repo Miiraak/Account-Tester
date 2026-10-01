@@ -3,7 +3,6 @@ using Microsoft.Win32;
 using System.Diagnostics;
 using System.Security.Principal;
 
-
 namespace AccountTester
 {
     public partial class MainForm : Form
@@ -42,11 +41,14 @@ namespace AccountTester
         {
             try
             {
+                // Load user preferences and application settings from Blob storage
+                // BaseExtension
                 if (string.IsNullOrWhiteSpace(Blob.Get("BaseExtension")))
                     toolStripComboBoxExtensionByDefault.Text = ".zip";
                 else
                     toolStripComboBoxExtensionByDefault.Text = Blob.Get("BaseExtension");
 
+                // Langage
                 string savedLanguage = Blob.Get("Langage") ?? "en-US";
                 switch (savedLanguage)
                 {
@@ -67,15 +69,23 @@ namespace AccountTester
                         break;
                 }
 
+                // PrinterList and DrivesList
                 Variables.PrinterList = Blob.Get("PrinterList") ?? string.Empty;
                 Variables.DrivesList = Blob.Get("DrivesList") ?? string.Empty;
 
-                TimeoutToolStripTextBox.Text = Blob.GetInt("Timeout").ToString();
-                TargetToolStripTextBox.Text = Blob.Get("Target") ?? "google.com";
+                // Timeout
+                TimeoutToolStripTextBox.Text = (Blob.GetInt("Timeout") > 0 ? (Blob.GetInt("Timeout") / 1000).ToString() : "1");
+                Variables.Timeout = (Blob.GetInt("Timeout") > 0 ? Blob.GetInt("Timeout") : 1000);
 
+                // Target
+                TargetToolStripTextBox.Text = Blob.Get("Target") ?? "http://www.google.com";
+                Variables.Target = Blob.Get("Target") ?? "http://www.google.com";
+
+                // AutoExport and Autorun
                 autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
                 autorunToolStripMenuItem.Checked = Blob.GetBool("Autorun");
 
+                // Used by the autorun feature. Not a user preference.
                 if (Variables.IsAutoRun)
                 {
                     Autorun();
@@ -183,7 +193,7 @@ namespace AccountTester
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine); 
+                richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                 richTextBoxLogs.AppendText($"#### {T("TestsFinished")} :" + Environment.NewLine);
                 stopwatch.Stop();
                 richTextBoxLogs.AppendText($"- {T("TotalTimeElapsed")} : " + stopwatch.ElapsedMilliseconds + " ms" + Environment.NewLine);
@@ -248,6 +258,14 @@ namespace AccountTester
         private async void StartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             startToolStripMenuItem.Enabled = false;
+
+            if (!Tests.Check_URL(Variables.Target))
+            {
+                MessageBox.Show($"{T("InvalidURL_Error_message")}", $"{T("Error")}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                startToolStripMenuItem.Enabled = true;
+                return;
+            }
+
             await ExecutionSequentielle();
 
             exportToolStripMenuItem.Enabled = true;
@@ -324,7 +342,7 @@ namespace AccountTester
 
             Blob.Set("Langage", selectedLanguage);
             Blob.Set("BaseExtension", defaultExtension);
-            Blob.Set("Timeout", TimeoutToolStripTextBox.Text);
+            Blob.Set("Timeout", (Convert.ToInt32(TimeoutToolStripTextBox.Text) * 1000).ToString());
             Blob.Set("AutoExport", autoExport.ToString());
             Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
             Blob.Set("PrinterList", Variables.PrinterList);
@@ -388,8 +406,12 @@ namespace AccountTester
             }
             else
             {
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
                 using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
+#pragma warning disable CS8602 // Déréférencement d'une éventuelle référence null.
                 key.DeleteValue("AccountTester", false);
+#pragma warning restore CS8602 // Déréférencement d'une éventuelle référence null.
                 Blob.Set("Autorun", "false");
                 MessageBox.Show(T("AutorunDisabled"), T("Success"), MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -432,8 +454,12 @@ namespace AccountTester
 
             if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "AccountTester", null) != null)
             {
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
                 using RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
+#pragma warning disable CS8602 // Déréférencement d'une éventuelle référence null.
                 key.DeleteValue("AccountTester", false);
+#pragma warning restore CS8602 // Déréférencement d'une éventuelle référence null.
             }
 
             Blob.Reset();
@@ -451,12 +477,17 @@ namespace AccountTester
         private void TestsToolStripMenuItem_DropDownClosed(object sender, EventArgs e)
         {
             if (int.TryParse(TimeoutToolStripTextBox.Text, out int timeout) && timeout > 0)
-                Variables.Timeout = timeout;
+                Variables.Timeout = timeout * 1000;
             else
-                TimeoutToolStripTextBox.Text = Variables.Timeout.ToString();
+                TimeoutToolStripTextBox.Text = (Variables.Timeout / 1000).ToString();
 
-            if (!string.IsNullOrWhiteSpace(TargetToolStripTextBox.Text))
+            if (!string.IsNullOrWhiteSpace(TargetToolStripTextBox.Text) && Tests.Check_URL(TargetToolStripTextBox.Text))
                 Variables.Target = TargetToolStripTextBox.Text;
+            else
+            {
+                TargetToolStripTextBox.Text = Variables.Target;
+                MessageBox.Show($"{T("InvalidURL_Error_message")}", $"{T("Error")}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SetPrinterListToolStripMenuItem_Click(object sender, EventArgs e)

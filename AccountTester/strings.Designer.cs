@@ -19,7 +19,7 @@ namespace AccountTester {
     // à l'aide d'un outil, tel que ResGen ou Visual Studio.
     // Pour ajouter ou supprimer un membre, modifiez votre fichier .ResX, puis réexécutez ResGen
     // avec l'option /str ou régénérez votre projet VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class strings {
@@ -223,6 +223,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Excluded Apps.
         /// </summary>
         internal static string ExcludedApps {
@@ -349,6 +358,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Error, Invalid URL.
+        /// </summary>
+        internal static string InvalidURL_Error_message {
+            get {
+                return ResourceManager.GetString("InvalidURL_Error_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à IO Error.
         /// </summary>
         internal static string IOError {
@@ -457,38 +475,11 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Registry key not found..
-        /// </summary>
-        internal static string MainForm_RTBL_NoRegKey {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_NoRegKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Version not found.
         /// </summary>
         internal static string MainForm_RTBL_OfficeVersionTesting_NotFound {
             get {
                 return ResourceManager.GetString("MainForm_RTBL_OfficeVersionTesting_NotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Location value not found in registry..
-        /// </summary>
-        internal static string MainForm_RTBL_PrinterTesting_NoLocationValueReg {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NoLocationValueReg", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Recherche une chaîne localisée semblable à Not found.
-        /// </summary>
-        internal static string MainForm_RTBL_PrinterTesting_NotFound {
-            get {
-                return ResourceManager.GetString("MainForm_RTBL_PrinterTesting_NotFound", resourceCulture);
             }
         }
         
@@ -669,6 +660,15 @@ namespace AccountTester {
         internal static string PrinterOptions {
             get {
                 return ResourceManager.GetString("PrinterOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Reachable.
+        /// </summary>
+        internal static string Reachable {
+            get {
+                return ResourceManager.GetString("Reachable", resourceCulture);
             }
         }
         
@@ -889,6 +889,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unreachable or configuration error.
+        /// </summary>
+        internal static string Tests_PrinterError_Configuration {
+            get {
+                return ResourceManager.GetString("Tests_PrinterError_Configuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Tests finished.
         /// </summary>
         internal static string TestsFinished {
@@ -966,6 +975,15 @@ namespace AccountTester {
         internal static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unreachable.
+        /// </summary>
+        internal static string Unreachable {
+            get {
+                return ResourceManager.GetString("Unreachable", resourceCulture);
             }
         }
         
