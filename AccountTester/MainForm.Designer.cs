@@ -74,6 +74,7 @@
             // 
             // richTextBoxLogs
             // 
+            richTextBoxLogs.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             richTextBoxLogs.BackColor = SystemColors.ControlLightLight;
             richTextBoxLogs.ContextMenuStrip = contextMenuStrip1;
             richTextBoxLogs.Cursor = Cursors.Cross;
@@ -81,7 +82,7 @@
             richTextBoxLogs.Location = new Point(12, 56);
             richTextBoxLogs.Name = "richTextBoxLogs";
             richTextBoxLogs.ReadOnly = true;
-            richTextBoxLogs.Size = new Size(304, 313);
+            richTextBoxLogs.Size = new Size(376, 313);
             richTextBoxLogs.TabIndex = 4;
             richTextBoxLogs.TabStop = false;
             richTextBoxLogs.Text = "";
@@ -118,7 +119,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { startToolStripMenuItem, exportToolStripMenuItem, optionsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(328, 26);
+            menuStrip1.Size = new Size(400, 26);
             menuStrip1.TabIndex = 7;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -248,7 +249,7 @@
             TargetToolStripTextBox.BackColor = SystemColors.Menu;
             TargetToolStripTextBox.Name = "TargetToolStripTextBox";
             TargetToolStripTextBox.Size = new Size(100, 27);
-            TargetToolStripTextBox.Text = "google.com";
+            TargetToolStripTextBox.Text = "http://www.google.com";
             // 
             // NetworkStorageToolStripMenuItem
             // 
@@ -365,9 +366,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(0, 12);
             label1.Name = "label1";
-            label1.Size = new Size(376, 18);
+            label1.Size = new Size(400, 18);
             label1.TabIndex = 8;
-            label1.Text = "______________________________________________";
+            label1.Text = "_________________________________________________";
             // 
             // MainForm
             // 
@@ -375,7 +376,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(328, 386);
+            ClientSize = new Size(400, 386);
             Controls.Add(richTextBoxLogs);
             Controls.Add(labelLogs);
             Controls.Add(menuStrip1);

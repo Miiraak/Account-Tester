@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing.Printing;
+using System.Management;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -17,7 +19,7 @@ namespace AccountTester
         /// Tests the internet connection by sending an HTTP GET request to a predefined URL.
         /// </summary>
         /// <remarks>This method performs an asynchronous HTTP GET request to the URL specified in
-        /// <c>Variables.InternetConnexion_TestedURL</c>. It logs the connection status and response details to the
+        /// <c>Variables.Target</c>. It logs the connection status and response details to the
         /// provided <see cref="RichTextBox"/>. The method updates several global variables, including the total number
         /// of tests, the elapsed time for the test, and the HTTP status code of the response.</remarks>
         /// <param name="rtb">The <see cref="RichTextBox"/> used to display logs related to the connection test.</param>
@@ -25,23 +27,18 @@ namespace AccountTester
         internal static async Task InternetConnexionTest(RichTextBox rtb)
         {
             Variables.General_TotalTests++;
+            Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
 
             try
             {
                 stopwatch.Restart();
+
                 using HttpClient client = new();
-                client.Timeout = TimeSpan.FromSeconds(Variables.Timeout);
+                client.Timeout = TimeSpan.FromMilliseconds(Variables.Timeout);
                 string customUserAgent = $"AccountTester/{Variables.Version} ({Environment.OSVersion})";
                 client.DefaultRequestHeaders.Add("User-Agent", customUserAgent);
+                using HttpResponseMessage response = await client.GetAsync(Variables.Target);
 
-                string Target = Variables.Target;
-                if (!Target.StartsWith("http", StringComparison.OrdinalIgnoreCase))
-                {
-                    Target = "http://" + Variables.Target;
-                }
-
-                using HttpResponseMessage response = await client.GetAsync(Target);
-                Variables.InternetConnexion_Hour = DateTime.Now.ToString("HH:mm:ss");
                 Variables.InternetConnexion_HTMLStatut = response.StatusCode.ToString();
 
                 if (response.IsSuccessStatusCode)
@@ -281,38 +278,39 @@ namespace AccountTester
                     return;
                 }
 
-                doc = wordApp.Documents.Open(filePath);
-                doc.Content.Text += "\nAdding more fox over the lazy dog.";
-                doc.Save();
-                doc.Close();
+                try
+                {
+                    doc = wordApp.Documents.Open(filePath);
+                    doc.Content.Text += "\nAdding more fox over the lazy dog.";
+                    doc.Save();
+                    doc.Close();
+                }
+                catch (Exception ex)
+                {
+                    rtb.AppendText($"- {T("Write")} / {T("Read")} : FAIL. {ex.Message}" + Environment.NewLine);
+                    Variables.OfficeRights_Write = "False";
+                    Variables.OfficeRights_Read = "False";
+                    Variables.OfficeRights_Save = "False";
+                    return;
+                }
 
                 doc = wordApp.Documents.Open(filePath);
                 if (doc.Content.Text.Contains("Adding more fox over the lazy dog"))
                 {
                     rtb.AppendText($"- {T("Save")} : OK" + Environment.NewLine);
+                    rtb.AppendText($"- {T("Read")} : OK" + Environment.NewLine);
+                    rtb.AppendText($"- {T("Write")} : OK" + Environment.NewLine);
                     Variables.OfficeRights_Save = "True";
-                    Variables.General_TotalSuccess++;
+                    Variables.OfficeRights_Read = "True";
+                    Variables.OfficeRights_Write = "True";
+                    Variables.General_TotalSuccess += 3;
                 }
                 else
                 {
                     rtb.AppendText($"- {T("Save")} : FAIL" + Environment.NewLine);
-                    Variables.OfficeRights_Save = "False";
-                }
-                doc.Close();
-
-                doc = wordApp.Documents.Open(filePath);
-                if (doc.Content.Text.Contains("The quick brown fox jumps over the lazy dog"))
-                {
-                    rtb.AppendText($"- {T("Read")} : OK" + Environment.NewLine);
-                    rtb.AppendText($"- {T("Write")} : OK" + Environment.NewLine);
-                    Variables.OfficeRights_Read = "True";
-                    Variables.OfficeRights_Write = "True";
-                    Variables.General_TotalSuccess += 2;
-                }
-                else
-                {
                     rtb.AppendText($"- {T("Read")} : FAIL" + Environment.NewLine);
                     rtb.AppendText($"- {T("Write")} : FAIL" + Environment.NewLine);
+                    Variables.OfficeRights_Save = "False";
                     Variables.OfficeRights_Read = "False";
                     Variables.OfficeRights_Write = "False";
                 }
@@ -370,98 +368,51 @@ namespace AccountTester
                 }
                 else
                 {
-                    string[] foundPrinter = [];
+                    // Add printer from installed printers list then do the foreach loop to test each printer.
+                    string[] printerCollection = PrinterSettings.InstalledPrinters.Cast<string>().ToArray();
+                    printerCollection = printerCollection.Concat(Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p))).ToArray();
 
-                    foreach (string printerName in PrinterSettings.InstalledPrinters)
+                    foreach (string printer in printerCollection)
                     {
-                        string printer = printerName;
-                        if (printer.Contains('\\', StringComparison.Ordinal))
-                            printer = printer.Split('\\').Last();
-
-                        if (!printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase) &&
-                            !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase) &&
-                            !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase))
+                        if (!string.IsNullOrWhiteSpace(printer)
+                            && !printer.Contains("Fax", StringComparison.OrdinalIgnoreCase)
+                            && !printer.Contains("PDF", StringComparison.OrdinalIgnoreCase)
+                            && !printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase)
+                            && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase)
+                            && !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase))
                         {
-                            foundPrinter = [.. foundPrinter, printer];
                             Variables.General_TotalTests++;
-                            string registryPath = @"SYSTEM\CurrentControlSet\Control\Print\Printers\" + printer;
+                            rtb.AppendText(printer + Environment.NewLine);
 
-                            using RegistryKey? printerKey = Registry.LocalMachine.OpenSubKey(registryPath);
-                            if (printerKey != null)
+                            string printer_clean = printer.Split(',')[0].Trim();
+                            printer_clean = printer_clean.Split('(')[0].Trim();
+                            printer_clean = printer_clean.Split('\\').Last().Trim();
+                            printer_clean = printer_clean.Split('/').Last().Trim();
+                            printer_clean = printer_clean.Split(' ').Last().Trim();
+                            printer_clean = printer_clean.Trim();
+
+                            Variables.Printer_PrinterName = [.. Variables.Printer_PrinterName, printer_clean];
+
+                            if (IsPrinterReachable_TCP(printer_clean, 9100, Variables.Timeout) || IsPrinterReachable_PING(printer_clean, Variables.Timeout))
                             {
-                                Variables.Printer_PrinterName = [.. Variables.Printer_PrinterName, printer];
-                                Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, printerKey.GetValue("Printer Driver")?.ToString() ?? T("Unknown")];
-                                Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, printerKey.GetValue("Port")?.ToString() ?? T("Unknown")];
-
-                                string? locationValue = printerKey.GetValue("Location")?.ToString();
-                                if (!string.IsNullOrEmpty(locationValue))
-                                {
-                                    string PrinterIP = locationValue.Split("//").Last().Split(":").First();
-                                    Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, PrinterIP];
-
-                                    if (!string.IsNullOrEmpty(PrinterIP))
-                                    {
-                                        Ping ping = new();
-                                        PingReply reply = ping.Send(PrinterIP, 1000);
-
-                                        if (reply.Status == IPStatus.Success)
-                                        {
-                                            rtb.AppendText(printer + Environment.NewLine);
-                                            rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : OK" + Environment.NewLine);
-                                            Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, "OK"];
-                                            Variables.General_TotalSuccess++;
-                                        }
-                                        else
-                                        {
-                                            rtb.AppendText(printer + Environment.NewLine);
-                                            rtb.AppendText("- IP : " + PrinterIP + Environment.NewLine + "- Ping : FAIL" + Environment.NewLine);
-                                            Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, "FAIL"];
-                                        }
-                                    }
-                                    else
-                                    {
-                                        rtb.AppendText(printer + Environment.NewLine);
-                                        rtb.AppendText($"- IP : {T("MainForm_RTBL_PrinterTesting_NotFound")}" + Environment.NewLine);
-                                        Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, T("Unknown")];
-                                        Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unknown")];
-                                        Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, T("Unknown")];
-                                        Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, T("Unknown")];
-                                    }
-                                }
-                                else
-                                {
-                                    rtb.AppendText(printer + Environment.NewLine);
-                                    rtb.AppendText($"- {T("MainForm_RTBL_PrinterTesting_NoLocationValueReg")}" + Environment.NewLine);
-                                    Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, T("Unknown")];
-                                    Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unknown")];
-                                    Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, T("Unknown")];
-                                    Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, T("Unknown")];
-                                }
+                                Variables.General_TotalSuccess++;
+                                Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Reachable")];
+                                rtb.AppendText($"- Status : {T("Reachable")}" + Environment.NewLine);
+                            }
+                            else if (IsPrinterConfigurationOK(printer_clean))
+                            {
+                                Variables.General_TotalSuccess++;
+                                Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, "Configuration OK"];
+                                rtb.AppendText($"- Status : Configuration OK" + Environment.NewLine);
                             }
                             else
                             {
-                                rtb.AppendText(printer + Environment.NewLine);
-                                rtb.AppendText($"- {T("MainForm_RTBL_NoRegKey")}" + Environment.NewLine);
-                                Variables.Printer_PrinterIP = [.. Variables.Printer_PrinterIP, T("Unknown")];
-                                Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unknown")];
-                                Variables.Printer_PrinterDriver = [.. Variables.Printer_PrinterDriver, T("Unknown")];
-                                Variables.Printer_PrinterPort = [.. Variables.Printer_PrinterPort, T("Unknown")];
+                                Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unreachable")];
+                                rtb.AppendText($"- Status : {T("Tests_PrinterError_Configuration")}" + Environment.NewLine);
                             }
                         }
                     }
-
-                    string[] printerList = [.. Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p))];
-                    foreach (string printer in printerList)
-                    {
-                        if (!foundPrinter.Contains(printer))
-                        {
-                            rtb.AppendText($"{printer} ({T("Missing")})" + Environment.NewLine);
-                            rtb.AppendText($"- {T("NoPrinterFound")}" + Environment.NewLine);
-                            Variables.General_TotalTests++;
-                        }
-                    }
                 }
-
                 stopwatch.Stop();
                 Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
             }
@@ -469,6 +420,191 @@ namespace AccountTester
             {
                 MessageBox.Show(ex.Message, T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Checks if a printer is reachable via TCP connection on the specified port.
+        /// </summary>
+        /// <param name="ip">The IP address of the printer.</param>
+        /// <param name="port">The port number to connect to (default is 9100).</param>
+        /// <param name="timeout">The timeout duration in milliseconds (default is 1000).</param>
+        /// <returns>True if the printer is reachable; otherwise, false.</returns>
+        internal static bool IsPrinterReachable_TCP(string ip, int port = 9100, int timeout = 1000)
+        {
+            try
+            {
+                using TcpClient client = new();
+
+                Task connection = client.ConnectAsync(ip, port);
+
+                return Task.WhenAny(
+                    connection,
+                    Task.Delay(timeout)
+                ).ContinueWith(t => t.Result == connection && client.Connected).Result;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if a printer is reachable via ICMP ping.
+        /// </summary>
+        /// <param name="printerName">The name or IP address of the printer.</param>
+        /// <param name="timeout">The timeout duration in milliseconds (default is 1000).</param>
+        /// <returns>True if the printer is reachable; otherwise, false.</returns>
+        internal static bool IsPrinterReachable_PING(string printerName, int timeout = 1000)
+        {
+            try
+            {
+                Ping newPing = new();
+                PingReply reply = newPing.Send(printerName, timeout);
+                if (reply.Status == IPStatus.Success)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        internal static bool IsPrinterConfigurationOK(string printerName)
+        {
+            try
+            {
+                using ManagementObjectSearcher searcher = new(
+                    "SELECT * FROM Win32_Printer WHERE Name = '" +
+                    printerName.Replace("'", "''") + "'");
+
+                using ManagementObjectCollection printers = searcher.Get();
+
+                foreach (ManagementObject printer in printers.Cast<ManagementObject>())
+                {
+                    int score = 0;
+                    int maxScore = 0;
+
+                    // Informations essentielles
+                    string name = printer["Name"]?.ToString() ?? "";
+
+                    var Printer_ServerName = printer["ServerName"];
+                    var Printer_Shared = printer["SharedName"];
+                    var Printer_Driver = printer["DriverName"];
+                    var Printer_Port = printer["PortName"];
+                    var Printer_Location = printer["Location"];
+
+                    // Nom de l'imprimante : 10 points
+                    maxScore += 10;
+                    if (!string.IsNullOrWhiteSpace(name))
+                        score += 10;
+
+                    // Print Server : 25 points
+                    maxScore += 25;
+                    if (!string.IsNullOrWhiteSpace(Printer_ServerName?.ToString()))
+                        score += 25;
+
+                    // ShareName : 20 points
+                    maxScore += 20;
+                    if (!string.IsNullOrWhiteSpace(Printer_Shared?.ToString()))
+                        score += 20;
+
+                    // Driver : 15 points
+                    maxScore += 15;
+                    if (!string.IsNullOrWhiteSpace(Printer_Driver?.ToString()))
+                        score += 15;
+
+                    // Port : 15 points
+                    maxScore += 15;
+                    if (!string.IsNullOrWhiteSpace(Printer_Port?.ToString()))
+                        score += 15;
+
+                    // Type d'imprimante
+                    bool network = printer["Network"] as bool? ?? false;
+                    bool local = printer["Local"] as bool? ?? false;
+                    bool shared = printer["Shared"] as bool? ?? false;
+
+                    // Imprimante réseau : 5 points
+                    maxScore += 5;
+                    if (network)
+                        score += 5;
+
+                    // Imprimante partagée : 5 points
+                    maxScore += 5;
+                    if (shared)
+                        score += 5;
+
+                    // Pas une imprimante locale : 5 points
+                    maxScore += 5;
+                    if (!local)
+                        score += 5;
+
+                    // Location : 5 points
+                    maxScore += 5;
+                    if (!string.IsNullOrWhiteSpace(Printer_Location?.ToString()))
+                        score += 5;
+
+                    // PrinterStatus :
+                    // 1 = Other
+                    // 2 = Unknown
+                    // 3 = Idle
+                    // 4 = Printing
+                    // 5 = Warming Up
+                    // 6 = Stopped Printing
+                    // 7 = Offline
+                    int printerStatus = Convert.ToInt32(
+                        printer["PrinterStatus"] ?? 0);
+
+                    maxScore += 5;
+
+                    switch (printerStatus)
+                    {
+                        case 3: // Idle
+                        case 4: // Printing
+                            score += 5;
+                            break;
+
+                        case 5: // Warming Up
+                            score += 3;
+                            break;
+
+                        case 1: // Other
+                        case 6: // Stopped Printing
+                            score += 1;
+                            break;
+
+                        case 2: // Unknown
+                        case 7: // Offline
+                        default:
+                            break;
+                    }
+
+                    double percentage = (double)score / maxScore * 100.0;
+
+                    return percentage >= 80.0;
+                }
+
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the provided URL is valid and uses either the HTTP or HTTPS scheme.
+        /// </summary>
+        /// <param name="url">The URL to check.</param>
+        /// <returns>True if the URL is valid and uses HTTP or HTTPS; otherwise, false.</returns>
+        internal static bool Check_URL(string url)
+        {
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
+                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+                return true;
+            else
+                return false;
         }
     }
 }

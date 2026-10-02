@@ -23,7 +23,7 @@
         // NetworkStorageRights variables
         public static string NetworkStorageRights_Hour { get; set; } = "Null";
         public static string[] NetworkStorageRights_DiskLetter { get; set; } = [];
-        public static string[] NetworkStorageRights_CheminUNC { get; set; } = Array.Empty<string>();
+        public static string[] NetworkStorageRights_CheminUNC { get; set; } = [];
         public static string[] NetworkStorageRights_Serveur { get; set; } = [];
         public static string[] NetworkStorageRights_ShareName { get; set; } = [];
         public static string NetworkStorageRights_ElapsedTime { get; set; } = "Null";
@@ -51,20 +51,17 @@
         // Printer variables
         public static string Printer_Hour { get; set; } = "Null";
         public static string[] Printer_PrinterName { get; set; } = [];
-        public static string[] Printer_PrinterIP { get; set; } = [];
         public static string[] Printer_PrinterStatus { get; set; } = [];
-        public static string[] Printer_PrinterDriver { get; set; } = [];
-        public static string[] Printer_PrinterPort { get; set; } = [];
         public static string Printer_ElapsedTime { get; set; } = "Null";
 
 
         // Miscellaneous variables for program functions
-        public static string Version = "0.8.2"; // Version of the program
+        public static string Version = "0.9.0"; // Version of the program
         public static bool IsAutoRun { get; set; } = false;
         public static bool WordIsInstalled { get; set; } = false;
-        public static int Timeout { get; set; } = 5; // Timeout in seconds
-        public static string PrinterList { get; set; } = string.Empty; // List of printers that will normally be shared with the user, string spearated by semicolons
-        public static string DrivesList { get; set; } = string.Empty; // Drive letter list for the network storage rights test, string spearated by semicolons
-        public static string Target { get; set; } = string.Empty; // Target for the internet test. IP, FQDN or URL
+        public static int Timeout { get; set; } = 1000; // Timeout in milliseconds
+        public static string PrinterList { get; set; } = string.Empty; // List of printers that will normally be shared with the user, string separated by semicolons
+        public static string DrivesList { get; set; } = string.Empty; // Drive letter list for the network storage rights test, string separated by semicolons
+        public static string Target { get; set; } = "http://www.google.com"; // Target for the internet test.
     }
 }
