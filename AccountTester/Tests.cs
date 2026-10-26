@@ -103,7 +103,7 @@ namespace AccountTester
 
                         try
                         {
-                            string testFile = Path.Combine(drive.RootDirectory.FullName, "test.txt");
+                            string testFile = Path.Combine(drive.RootDirectory.FullName, $"test_{Guid.NewGuid()}.txt");
                             File.WriteAllText(testFile, "test");
 
                             if (File.Exists(testFile))
