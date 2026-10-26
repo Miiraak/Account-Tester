@@ -3,50 +3,26 @@
     <img src=".github/App.gif">
   
 ## Description
-AccountTester is a Windows Forms application (C#) designed to test various aspects of user accounts on a system. It performs checks such as Internet connectivity, access rights to network drives, Office presence and permissions, as well as printer availability.
+AccountTester is a Windows Forms application for checking network access and selected user account capabilities on Windows.
 
 ## Features
-- **Internet Connectivity Test:** Verifies if the computer can access the Internet by sending a request to internet.
-- **Network Drive Access Test:** Attempts to create and delete a test file on each mapped network drive to check write permissions.
-- **Office Version Detection:** Searches for the presence of Microsoft Office via the system registry.
-- **Office Read/Write Permissions Test:** Creates, edits, and reads a Word document to verify user permissions with interop.word.
-- **Installed Printers List:** Displays all printers available on the system.
-- **Detailed Test Report:** Export the full test report in `.txt`, `.json`, `.log`, `.csv` or `.xml`. Use `.zip` for all in one.
-- **Options:**
-    - Autorun : _Execute a test when a user is logged in._
-    - Language available :
-        - `EN` - `100%`
-        - `FR` - `100%`
-    - Auto Report : _Export automatically the report to the selected format when tests finish._
-    - Tests selection : _Enable/Disable tests._
-    - Custom HttpRequest : _Set the site that will be used for internet connectivity test._
-    - Require Drives : _Set the drives that the user will normally have access to._
-    - Require Printer : _Set the printers that the user will normally have access to._
-    - Custom Timeout : _Set the desired timeout for tests._
-
-### Features in development
-| Nom | Desc. |
-|---|---|
-| **Improved Interface** | 	Enhancing the UI for better readability and user experience. |
-| **...** | ... |
+- **Internet:** Sends an HTTP GET request to a configurable URL.
+- **Network drives:** Attempts to create and delete a temporary file on each mapped network drive. You can also configure expected drive letters; missing drives are reported.
+- **Microsoft Office:** Reads Office version and installation details from the Windows registry. If Office is detected, it uses Microsoft Word to create, edit, save, read, and delete a temporary document.
+- **Printers:** Checks installed printers and any additional printer names configured in the options. It checks reachability over TCP port 9100 or ping, and reports when a printer configuration is present.
+- **Reports:** Export results as `.txt`, `.json`, `.log`, `.csv`, or `.xml`; `.zip` contains reports in all of these formats.
+- **Settings:** Select which test groups to run, choose English or French, configure the HTTP target and timeout, and set expected network drives and additional printer names. Settings can be saved, and reports can be exported automatically after tests.
+- **Autorun:** Optionally run tests and export a report when a user logs in to Windows. Enabling this setting requires administrator privileges.
 
 ## Prerequisites
-Before running the project, make sure you have the following:
-
-- Windows with .NET Framework installed.
-- Microsoft Office installed (for Word-related tests).
-- Sufficient access rights to test network drives and the Windows registry.
-> The software is designed to test users with at least the defaults rights of a local non-admin account.
+- Windows and the .NET 8 Desktop Runtime.
+- Microsoft Word installed to run the Office document permissions test. Other tests can run without Word.
 
 ## Usage
-1. Launch the application.
-2. Click the Start button.
-3. Wait for the tests to complete.
-4. View the results in the log area.
-5. Export results if desired.
-6. Choose a name (a default name will be used if left empty).
-7. Choose the save location.
-8. Select the export format.
+1. Launch AccountTester and choose the test groups from the **Options** menu.
+2. Configure the target URL, timeout, expected drives, or additional printer names if needed, then save your settings.
+3. Select **Start** and review the results in the log.
+4. Select **Export** to choose a filename, destination, and format. Reports are saved to the Desktop by default. You can enable **Auto-Export** to save a report automatically after each run.
 
 ## Issues and Suggestions
 If you encounter issues or have suggestions to improve the project, please use the [GitHub issue tracker](https://github.com/Miiraak/Account-Tester/issues).
