@@ -63,5 +63,6 @@
         public static string PrinterList { get; set; } = string.Empty; // List of printers that will normally be shared with the user, string separated by semicolons
         public static string DrivesList { get; set; } = string.Empty; // Drive letter list for the network storage rights test, string separated by semicolons
         public static string Target { get; set; } = "http://www.google.com"; // Target for the internet test.
+        public static List<bool> TestToRun { get; set; } = new List<bool> { true, true, true, true }; // Array of booleans to determine which tests to run, 0: Internet, 1: Network Storage Rights, 2: Office Version/Rights, 3: Printer
     }
 }

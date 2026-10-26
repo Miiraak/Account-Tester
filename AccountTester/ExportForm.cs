@@ -132,87 +132,103 @@ namespace AccountTester
             sw.WriteLine($"{T("OperatingSystem")}: {Variables.General_DeviceOS}");
             sw.WriteLine($"{T("OSArchitecture")}: {Variables.General_OSArchitecture}\n\n");
 
-            sw.WriteLine(T("InternetConnexion"));
-            sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"{T("Hour")}: {Variables.InternetConnexion_Hour}");
-            sw.WriteLine($"{T("TestedURL")}: {Variables.Target}");
-            sw.WriteLine($"{T("HTMLStatus")}: {Variables.InternetConnexion_HTMLStatut}");
-            sw.WriteLine($"{T("ResponseTime")}: {Variables.InternetConnexion_ElapsedTime} ms\n\n");
-
-            sw.WriteLine(T("NetworkStorageRights"));
-            sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"{T("Hour")}: {Variables.NetworkStorageRights_Hour}");
-            sw.WriteLine($"{T("Disk")}:");
-            int i = 0;
-            if (Variables.NetworkStorageRights_DiskLetter != null)
+            if (Variables.TestToRun[0])
             {
+                sw.WriteLine(T("InternetConnexion"));
+                sw.WriteLine("-----------------------------------");
+                sw.WriteLine($"{T("Hour")}: {Variables.InternetConnexion_Hour}");
+                sw.WriteLine($"{T("TestedURL")}: {Variables.Target}");
+                sw.WriteLine($"{T("HTMLStatus")}: {Variables.InternetConnexion_HTMLStatut}");
+                sw.WriteLine($"{T("ResponseTime")}: {Variables.InternetConnexion_ElapsedTime} ms\n\n");
+            }
 
-                foreach (string diskLetter in Variables.NetworkStorageRights_DiskLetter)
+            if (Variables.TestToRun[1])
+            {
+                sw.WriteLine(T("NetworkStorageRights"));
+                sw.WriteLine("-----------------------------------");
+                sw.WriteLine($"{T("Hour")}: {Variables.NetworkStorageRights_Hour}");
+                sw.WriteLine($"{T("Disk")}:");
+                int i = 0;
+                if (Variables.NetworkStorageRights_DiskLetter != null)
                 {
-                    sw.WriteLine($"{T("Letter")}: {diskLetter}");
-                    sw.WriteLine($"{T("UNCPath")}: {Variables.NetworkStorageRights_CheminUNC?[i]}");
-                    sw.WriteLine($"{T("Server")}: {Variables.NetworkStorageRights_Serveur?[i]}");
-                    sw.WriteLine($"{T("ShareName")}: {Variables.NetworkStorageRights_ShareName?[i]}");
-                    i++;
-                }
-            }
-            else
-            {
-                sw.WriteLine(T("NoNetworkShare"));
-            }
 
-            sw.WriteLine($"{T("ElapsedTime")}: {Variables.NetworkStorageRights_ElapsedTime} ms\n\n");
-            sw.WriteLine("Office");
-            sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"{T("Hour")}: {Variables.OfficeVersion_Hour}");
-            i = 0;
-            if (Variables.OfficeVersion_OfficeVersion.Split(',').Length > 0)
-            {
-                sw.WriteLine($"{T("OfficeVersion")}:");
-                foreach (string version in Variables.OfficeVersion_OfficeVersion.Split(','))
+                    foreach (string diskLetter in Variables.NetworkStorageRights_DiskLetter)
+                    {
+                        sw.WriteLine($"{T("Letter")}: {diskLetter}");
+                        sw.WriteLine($"{T("UNCPath")}: {Variables.NetworkStorageRights_CheminUNC?[i]}");
+                        sw.WriteLine($"{T("Server")}: {Variables.NetworkStorageRights_Serveur?[i]}");
+                        sw.WriteLine($"{T("ShareName")}: {Variables.NetworkStorageRights_ShareName?[i]}");
+                        i++;
+                    }
+                }
+                else
                 {
-                    sw.WriteLine($"- {version}");
+                    sw.WriteLine(T("NoNetworkShare"));
                 }
-                sw.WriteLine($"{T("Path")}: {Variables.OfficeVersion_OfficePath}");
-                sw.WriteLine($"{T("Culture")}: {Variables.OfficeVersion_OfficeCulture}");
-                sw.WriteLine($"{T("ExcludedApps")}: {Variables.OfficeVersion_OfficeExcludedApps}");
-                sw.WriteLine($"{T("LastUpdateStatus")}: {Variables.OfficeVersion_OfficeLastUpdateStatus}");
-            }
-            else
-            {
-                sw.WriteLine(T("MainForm_RTBL_OfficeVersionTesting_NotFound"));
-            }
-            sw.WriteLine($"{T("ElapsedTime")}: {Variables.OfficeVersion_ElapsedTime} ms\n\n");
 
-            sw.WriteLine(T("OfficeRights"));
-            sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"{T("Hour")}: {Variables.OfficeRights_Hour}");
-            sw.WriteLine($"{T("Write")}: {Variables.OfficeRights_Write}");
-            sw.WriteLine($"{T("Read")}: {Variables.OfficeRights_Read}");
-            sw.WriteLine($"{T("Delete")}: {Variables.OfficeRights_Delete}");
-            sw.WriteLine($"{T("Create")}: {Variables.OfficeRights_Create}");
-            sw.WriteLine($"{T("Save")}: {Variables.OfficeRights_Save}");
-            sw.WriteLine($"{T("TestedFolder")}: ");
-            sw.WriteLine($"- {Variables.OfficeRights_FolderTested}\n");
-            sw.WriteLine($"{T("ElapsedTime")}: {Variables.OfficeRights_ElapsedTime} ms\n\n");
+                sw.WriteLine($"{T("ElapsedTime")}: {Variables.NetworkStorageRights_ElapsedTime} ms\n\n");
+            }
 
-            sw.WriteLine(T("Printer"));
-            sw.WriteLine("-----------------------------------");
-            sw.WriteLine($"{T("Hour")}: {Variables.Printer_Hour}");
-            i = 0;
-            if (Variables.Printer_PrinterName != null)
+            if (Variables.TestToRun[2])
             {
-                foreach (string printerName in Variables.Printer_PrinterName)
+                sw.WriteLine("Office");
+                sw.WriteLine("-----------------------------------");
+                sw.WriteLine($"{T("Hour")}: {Variables.OfficeVersion_Hour}");
+                if (Variables.OfficeVersion_OfficeVersion.Split(',').Length > 0)
                 {
-                    sw.WriteLine($"{T("Name")}: {printerName}");
-                    sw.WriteLine($"- {T("Status")}: {Variables.Printer_PrinterStatus?[i]}");
-                    i++;
+                    sw.WriteLine($"{T("OfficeVersion")}:");
+                    foreach (string version in Variables.OfficeVersion_OfficeVersion.Split(','))
+                    {
+                        sw.WriteLine($"- {version}");
+                    }
+                    sw.WriteLine($"{T("Path")}: {Variables.OfficeVersion_OfficePath}");
+                    sw.WriteLine($"{T("Culture")}: {Variables.OfficeVersion_OfficeCulture}");
+                    sw.WriteLine($"{T("ExcludedApps")}: {Variables.OfficeVersion_OfficeExcludedApps}");
+                    sw.WriteLine($"{T("LastUpdateStatus")}: {Variables.OfficeVersion_OfficeLastUpdateStatus}");
                 }
+                else
+                {
+                    sw.WriteLine(T("MainForm_RTBL_OfficeVersionTesting_NotFound"));
+                }
+                sw.WriteLine($"{T("ElapsedTime")}: {Variables.OfficeVersion_ElapsedTime} ms\n\n");
             }
-            else
-                sw.WriteLine(T("NoPrinterFound"));
 
-            sw.WriteLine($"{T("ElapsedTime")}: {Variables.Printer_ElapsedTime} ms\n\n");
+            if (Variables.TestToRun[2])
+            {
+                sw.WriteLine(T("OfficeRights"));
+                sw.WriteLine("-----------------------------------");
+                sw.WriteLine($"{T("Hour")}: {Variables.OfficeRights_Hour}");
+                sw.WriteLine($"{T("Write")}: {Variables.OfficeRights_Write}");
+                sw.WriteLine($"{T("Read")}: {Variables.OfficeRights_Read}");
+                sw.WriteLine($"{T("Delete")}: {Variables.OfficeRights_Delete}");
+                sw.WriteLine($"{T("Create")}: {Variables.OfficeRights_Create}");
+                sw.WriteLine($"{T("Save")}: {Variables.OfficeRights_Save}");
+                sw.WriteLine($"{T("TestedFolder")}: ");
+                sw.WriteLine($"- {Variables.OfficeRights_FolderTested}\n");
+                sw.WriteLine($"{T("ElapsedTime")}: {Variables.OfficeRights_ElapsedTime} ms\n\n");
+            }
+
+            if (Variables.TestToRun[3])
+            {
+                sw.WriteLine(T("Printer"));
+                sw.WriteLine("-----------------------------------");
+                sw.WriteLine($"{T("Hour")}: {Variables.Printer_Hour}");
+                int i = 0;
+                if (Variables.Printer_PrinterName != null)
+                {
+                    foreach (string printerName in Variables.Printer_PrinterName)
+                    {
+                        sw.WriteLine($"{T("Name")}: {printerName}");
+                        sw.WriteLine($"- {T("Status")}: {Variables.Printer_PrinterStatus?[i]}");
+                        i++;
+                    }
+                }
+                else
+                    sw.WriteLine(T("NoPrinterFound"));
+
+                sw.WriteLine($"{T("ElapsedTime")}: {Variables.Printer_ElapsedTime} ms\n\n");
+            }
+
             sw.Close();
         }
 
@@ -251,69 +267,82 @@ namespace AccountTester
             XMLW(doc, general, TT("TotalTests"), Variables.General_TotalTests.ToString());
             XMLW(doc, general, TT("TotalSuccess"), Variables.General_TotalSuccess.ToString());
 
-            XmlElement internetConnection = doc.CreateElement(TT("InternetConnexion"));
-            root.AppendChild(internetConnection);
-            XMLW(doc, internetConnection, TT("Hour"), Variables.InternetConnexion_Hour);
-            XMLW(doc, internetConnection, TT("TestedURL"), Variables.Target);
-            XMLW(doc, internetConnection, TT("HTMLStatus"), Variables.InternetConnexion_HTMLStatut);
-            XMLW(doc, internetConnection, TT("ResponseTime"), Variables.InternetConnexion_ElapsedTime);
-
-            XmlElement networkStorageRights = doc.CreateElement(TT("NetworkStorageRights"));
-            root.AppendChild(networkStorageRights);
-            XMLW(doc, networkStorageRights, TT("Hour"), Variables.NetworkStorageRights_Hour);
-            for (int i = 0; i < Variables.NetworkStorageRights_DiskLetter?.Length; i++)
+            if (Variables.TestToRun[0])
             {
-                XmlElement disk = doc.CreateElement($"{TT("Disk")}_{i}");
-                networkStorageRights.AppendChild(disk);
-                XMLW(doc, disk, TT("DiskLetter"), Variables.NetworkStorageRights_DiskLetter[i]);
-                XMLW(doc, disk, TT("UNCPath"), Variables.NetworkStorageRights_CheminUNC?[i] ?? string.Empty);
-                XMLW(doc, disk, TT("Server"), Variables.NetworkStorageRights_Serveur?[i] ?? string.Empty);
-                XMLW(doc, disk, TT("ShareName"), Variables.NetworkStorageRights_ShareName?[i] ?? string.Empty);
+                XmlElement internetConnection = doc.CreateElement(TT("InternetConnexion"));
+                root.AppendChild(internetConnection);
+                XMLW(doc, internetConnection, TT("Hour"), Variables.InternetConnexion_Hour);
+                XMLW(doc, internetConnection, TT("TestedURL"), Variables.Target);
+                XMLW(doc, internetConnection, TT("HTMLStatus"), Variables.InternetConnexion_HTMLStatut);
+                XMLW(doc, internetConnection, TT("ResponseTime"), Variables.InternetConnexion_ElapsedTime);
             }
 
-            XMLW(doc, networkStorageRights, TT("ElapsedTime"), Variables.NetworkStorageRights_ElapsedTime);
 
-            XmlElement officeVersion = doc.CreateElement(TT("OfficeVersion"));
-            root.AppendChild(officeVersion);
-            XMLW(doc, officeVersion, TT("Hour"), Variables.OfficeVersion_Hour);
-            XMLW(doc, officeVersion, TT("Version"), Variables.OfficeVersion_OfficeVersion);
-            XMLW(doc, officeVersion, TT("Path"), Variables.OfficeVersion_OfficePath);
-            XMLW(doc, officeVersion, TT("Culture"), Variables.OfficeVersion_OfficeCulture);
-            XMLW(doc, officeVersion, TT("ExcludedApps"), Variables.OfficeVersion_OfficeExcludedApps);
-            XMLW(doc, officeVersion, TT("LastUpdateStatus"), Variables.OfficeVersion_OfficeLastUpdateStatus);
-            XMLW(doc, officeVersion, TT("ElapsedTime"), Variables.OfficeVersion_ElapsedTime);
-
-            XmlElement officeRights = doc.CreateElement(TT("OfficeRights"));
-            root.AppendChild(officeRights);
-            XMLW(doc, officeRights, TT("Hour"), Variables.OfficeRights_Hour);
-            XMLW(doc, officeRights, TT("Write"), Variables.OfficeRights_Write);
-            XMLW(doc, officeRights, TT("Read"), Variables.OfficeRights_Read);
-            XMLW(doc, officeRights, TT("Delete"), Variables.OfficeRights_Delete);
-            XMLW(doc, officeRights, TT("Create"), Variables.OfficeRights_Create);
-            XMLW(doc, officeRights, TT("Save"), Variables.OfficeRights_Save);
-            XMLW(doc, officeRights, TT("TestedFolder"), Variables.OfficeRights_FolderTested);
-            XMLW(doc, officeRights, TT("ElapsedTime"), Variables.OfficeRights_ElapsedTime);
-
-            XmlElement printers = doc.CreateElement(TT("Printer"));
-            root.AppendChild(printers);
-            XMLW(doc, printers, TT("Hour"), Variables.Printer_Hour);
-
-            if (Variables.Printer_PrinterName != null)
+            if (Variables.TestToRun[1])
             {
-                for (int i = 0; i < Variables.Printer_PrinterName?.Length; i++)
+                XmlElement networkStorageRights = doc.CreateElement(TT("NetworkStorageRights"));
+                root.AppendChild(networkStorageRights);
+                XMLW(doc, networkStorageRights, TT("Hour"), Variables.NetworkStorageRights_Hour);
+                for (int i = 0; i < Variables.NetworkStorageRights_DiskLetter?.Length; i++)
                 {
-                    XmlElement printer = doc.CreateElement($"{TT("Printer")}_{i}");
-                    printers.AppendChild(printer);
-                    XMLW(doc, printer, TT("Name"), Variables.Printer_PrinterName[i]);
-                    XMLW(doc, printer, TT("Status"), Variables.Printer_PrinterStatus[i]);
+                    XmlElement disk = doc.CreateElement($"{TT("Disk")}_{i}");
+                    networkStorageRights.AppendChild(disk);
+                    XMLW(doc, disk, TT("DiskLetter"), Variables.NetworkStorageRights_DiskLetter[i]);
+                    XMLW(doc, disk, TT("UNCPath"), Variables.NetworkStorageRights_CheminUNC?[i] ?? string.Empty);
+                    XMLW(doc, disk, TT("Server"), Variables.NetworkStorageRights_Serveur?[i] ?? string.Empty);
+                    XMLW(doc, disk, TT("ShareName"), Variables.NetworkStorageRights_ShareName?[i] ?? string.Empty);
                 }
-            }
-            else
-            {
-                XMLW(doc, printers, TT("NoPrinterFound"), string.Empty);
+
+                XMLW(doc, networkStorageRights, TT("ElapsedTime"), Variables.NetworkStorageRights_ElapsedTime);
             }
 
-            XMLW(doc, printers, TT("ElapsedTime"), Variables.Printer_ElapsedTime);
+            if (Variables.TestToRun[2])
+            {
+                XmlElement officeVersion = doc.CreateElement(TT("OfficeVersion"));
+                root.AppendChild(officeVersion);
+                XMLW(doc, officeVersion, TT("Hour"), Variables.OfficeVersion_Hour);
+                XMLW(doc, officeVersion, TT("Version"), Variables.OfficeVersion_OfficeVersion);
+                XMLW(doc, officeVersion, TT("Path"), Variables.OfficeVersion_OfficePath);
+                XMLW(doc, officeVersion, TT("Culture"), Variables.OfficeVersion_OfficeCulture);
+                XMLW(doc, officeVersion, TT("ExcludedApps"), Variables.OfficeVersion_OfficeExcludedApps);
+                XMLW(doc, officeVersion, TT("LastUpdateStatus"), Variables.OfficeVersion_OfficeLastUpdateStatus);
+                XMLW(doc, officeVersion, TT("ElapsedTime"), Variables.OfficeVersion_ElapsedTime);
+
+                XmlElement officeRights = doc.CreateElement(TT("OfficeRights"));
+                root.AppendChild(officeRights);
+                XMLW(doc, officeRights, TT("Hour"), Variables.OfficeRights_Hour);
+                XMLW(doc, officeRights, TT("Write"), Variables.OfficeRights_Write);
+                XMLW(doc, officeRights, TT("Read"), Variables.OfficeRights_Read);
+                XMLW(doc, officeRights, TT("Delete"), Variables.OfficeRights_Delete);
+                XMLW(doc, officeRights, TT("Create"), Variables.OfficeRights_Create);
+                XMLW(doc, officeRights, TT("Save"), Variables.OfficeRights_Save);
+                XMLW(doc, officeRights, TT("TestedFolder"), Variables.OfficeRights_FolderTested);
+                XMLW(doc, officeRights, TT("ElapsedTime"), Variables.OfficeRights_ElapsedTime);
+            }
+
+            if (Variables.TestToRun[3])
+            {
+                XmlElement printers = doc.CreateElement(TT("Printer"));
+                root.AppendChild(printers);
+                XMLW(doc, printers, TT("Hour"), Variables.Printer_Hour);
+
+                if (Variables.Printer_PrinterName != null)
+                {
+                    for (int i = 0; i < Variables.Printer_PrinterName?.Length; i++)
+                    {
+                        XmlElement printer = doc.CreateElement($"{TT("Printer")}_{i}");
+                        printers.AppendChild(printer);
+                        XMLW(doc, printer, TT("Name"), Variables.Printer_PrinterName[i]);
+                        XMLW(doc, printer, TT("Status"), Variables.Printer_PrinterStatus[i]);
+                    }
+                }
+                else
+                {
+                    XMLW(doc, printers, TT("NoPrinterFound"), string.Empty);
+                }
+
+                XMLW(doc, printers, TT("ElapsedTime"), Variables.Printer_ElapsedTime);
+            }
 
             string path = Path.Combine(filePath, $"{fileName}.xml");
             doc.Save(path);
@@ -352,65 +381,78 @@ namespace AccountTester
             CSVWL(T("General"), T("TotalTests"), Variables.General_TotalTests.ToString(), sw);
             CSVWL(T("General"), T("TotalSuccess"), Variables.General_TotalSuccess.ToString(), sw);
 
-            CSVWL(T("InternetConnexion"), T("Hour"), Variables.InternetConnexion_Hour, sw);
-            CSVWL(T("InternetConnexion"), T("TestedURL"), Variables.Target, sw);
-            CSVWL(T("InternetConnexion"), T("HTMLStatus"), Variables.InternetConnexion_HTMLStatut, sw);
-            CSVWL(T("InternetConnexion"), $"{T("ResponseTime")} (ms)", Variables.InternetConnexion_ElapsedTime, sw);
-
-            CSVWL(T("NetworkStorageRights"), T("Hour"), Variables.NetworkStorageRights_Hour, sw);
-            if (Variables.NetworkStorageRights_DiskLetter != null)
+            if (Variables.TestToRun[0])
             {
-                for (int i = 0; i < Variables.NetworkStorageRights_DiskLetter.Length; i++)
+                CSVWL(T("InternetConnexion"), T("Hour"), Variables.InternetConnexion_Hour, sw);
+                CSVWL(T("InternetConnexion"), T("TestedURL"), Variables.Target, sw);
+                CSVWL(T("InternetConnexion"), T("HTMLStatus"), Variables.InternetConnexion_HTMLStatut, sw);
+                CSVWL(T("InternetConnexion"), $"{T("ResponseTime")} (ms)", Variables.InternetConnexion_ElapsedTime, sw);
+            }
+
+            if (Variables.TestToRun[1])
+            {
+                CSVWL(T("NetworkStorageRights"), T("Hour"), Variables.NetworkStorageRights_Hour, sw);
+                if (Variables.NetworkStorageRights_DiskLetter != null)
                 {
-                    CSVWL($"{T("Disk")}_{i}", T("DiskLetter"), Variables.NetworkStorageRights_DiskLetter[i], sw);
-                    CSVWL($"{T("Disk")}_{i}", T("UNCPath"), Variables.NetworkStorageRights_CheminUNC[i], sw);
-                    CSVWL($"{T("Disk")}_{i}", T("Server"), Variables.NetworkStorageRights_Serveur[i], sw);
-                    CSVWL($"{T("Disk")}_{i}", T("ShareName"), Variables.NetworkStorageRights_ShareName[i], sw);
+                    for (int i = 0; i < Variables.NetworkStorageRights_DiskLetter.Length; i++)
+                    {
+                        CSVWL($"{T("Disk")}_{i}", T("DiskLetter"), Variables.NetworkStorageRights_DiskLetter[i], sw);
+                        CSVWL($"{T("Disk")}_{i}", T("UNCPath"), Variables.NetworkStorageRights_CheminUNC[i], sw);
+                        CSVWL($"{T("Disk")}_{i}", T("Server"), Variables.NetworkStorageRights_Serveur[i], sw);
+                        CSVWL($"{T("Disk")}_{i}", T("ShareName"), Variables.NetworkStorageRights_ShareName[i], sw);
+                    }
                 }
-            }
-            else
-            {
-                CSVWL(T("NetworkStorageRights"), T("NoNetworkShare"), "", sw);
-            }
-            CSVWL(T("NetworkStorageRights"), $"{T("ElapsedTime")} (ms)", Variables.NetworkStorageRights_ElapsedTime, sw);
-
-            CSVWL(T("OfficeVersion"), T("Hour"), Variables.OfficeVersion_Hour, sw);
-            if (Variables.OfficeVersion_OfficeVersion.Split(',').Length > 0)
-            {
-                foreach (string version in Variables.OfficeVersion_OfficeVersion.Split(','))
+                else
                 {
-                    CSVWL(T("OfficeVersion"), T("Version"), version, sw);
+                    CSVWL(T("NetworkStorageRights"), T("NoNetworkShare"), "", sw);
                 }
+                CSVWL(T("NetworkStorageRights"), $"{T("ElapsedTime")} (ms)", Variables.NetworkStorageRights_ElapsedTime, sw);
             }
-            CSVWL(T("OfficeVersion"), T("OfficePath"), Variables.OfficeVersion_OfficePath, sw);
-            CSVWL(T("OfficeVersion"), T("Culture"), Variables.OfficeVersion_OfficeCulture, sw);
-            CSVWL(T("OfficeVersion"), T("ExcludedApps"), Variables.OfficeVersion_OfficeExcludedApps.Replace(",", " "), sw);
-            CSVWL(T("OfficeVersion"), T("LastUpdateStatus"), Variables.OfficeVersion_OfficeLastUpdateStatus, sw);
-            CSVWL(T("OfficeVersion"), $"{T("ElapsedTime")} (ms)", Variables.OfficeVersion_ElapsedTime, sw);
 
-            CSVWL(T("OfficeRights"), T("Hour"), Variables.OfficeRights_Hour, sw);
-            CSVWL(T("OfficeRights"), T("Write"), Variables.OfficeRights_Write, sw);
-            CSVWL(T("OfficeRights"), T("Read"), Variables.OfficeRights_Read, sw);
-            CSVWL(T("OfficeRights"), T("Delete"), Variables.OfficeRights_Delete, sw);
-            CSVWL(T("OfficeRights"), T("Create"), Variables.OfficeRights_Create, sw);
-            CSVWL(T("OfficeRights"), T("Save"), Variables.OfficeRights_Save, sw);
-            CSVWL(T("OfficeRights"), T("TestedFolder"), Variables.OfficeRights_FolderTested, sw);
-            CSVWL(T("OfficeRights"), $"{T("ElapsedTime")} (ms)", Variables.OfficeRights_ElapsedTime, sw);
-
-            CSVWL(T("Printer"), T("Hour"), Variables.Printer_Hour, sw);
-            if (Variables.Printer_PrinterName != null)
+            if (Variables.TestToRun[2])
             {
-                for (int i = 0; i < Variables.Printer_PrinterName.Length; i++)
+                CSVWL(T("OfficeVersion"), T("Hour"), Variables.OfficeVersion_Hour, sw);
+                if (Variables.OfficeVersion_OfficeVersion.Split(',').Length > 0)
                 {
-                    CSVWL($"{T("Printer")}_{i}", T("Name"), Variables.Printer_PrinterName[i], sw);
-                    CSVWL($"{T("Printer")}_{i}", T("Status"), Variables.Printer_PrinterStatus[i], sw);
+                    foreach (string version in Variables.OfficeVersion_OfficeVersion.Split(','))
+                    {
+                        CSVWL(T("OfficeVersion"), T("Version"), version, sw);
+                    }
                 }
+
+                CSVWL(T("OfficeVersion"), T("OfficePath"), Variables.OfficeVersion_OfficePath, sw);
+                CSVWL(T("OfficeVersion"), T("Culture"), Variables.OfficeVersion_OfficeCulture, sw);
+                CSVWL(T("OfficeVersion"), T("ExcludedApps"), Variables.OfficeVersion_OfficeExcludedApps.Replace(",", " "), sw);
+                CSVWL(T("OfficeVersion"), T("LastUpdateStatus"), Variables.OfficeVersion_OfficeLastUpdateStatus, sw);
+                CSVWL(T("OfficeVersion"), $"{T("ElapsedTime")} (ms)", Variables.OfficeVersion_ElapsedTime, sw);
+
+                CSVWL(T("OfficeRights"), T("Hour"), Variables.OfficeRights_Hour, sw);
+                CSVWL(T("OfficeRights"), T("Write"), Variables.OfficeRights_Write, sw);
+                CSVWL(T("OfficeRights"), T("Read"), Variables.OfficeRights_Read, sw);
+                CSVWL(T("OfficeRights"), T("Delete"), Variables.OfficeRights_Delete, sw);
+                CSVWL(T("OfficeRights"), T("Create"), Variables.OfficeRights_Create, sw);
+                CSVWL(T("OfficeRights"), T("Save"), Variables.OfficeRights_Save, sw);
+                CSVWL(T("OfficeRights"), T("TestedFolder"), Variables.OfficeRights_FolderTested, sw);
+                CSVWL(T("OfficeRights"), $"{T("ElapsedTime")} (ms)", Variables.OfficeRights_ElapsedTime, sw);
             }
-            else
+
+            if (Variables.TestToRun[3])
             {
-                CSVWL(T("Printer"), T("NoPrinterFound"), "", sw);
+                CSVWL(T("Printer"), T("Hour"), Variables.Printer_Hour, sw);
+                if (Variables.Printer_PrinterName != null)
+                {
+                    for (int i = 0; i < Variables.Printer_PrinterName.Length; i++)
+                    {
+                        CSVWL($"{T("Printer")}_{i}", T("Name"), Variables.Printer_PrinterName[i], sw);
+                        CSVWL($"{T("Printer")}_{i}", T("Status"), Variables.Printer_PrinterStatus[i], sw);
+                    }
+                }
+                else
+                {
+                    CSVWL(T("Printer"), T("NoPrinterFound"), "", sw);
+                }
+                CSVWL(T("Printer"), $"{T("ElapsedTime")} (ms)", Variables.Printer_ElapsedTime, sw);
             }
-            CSVWL(T("Printer"), $"{T("ElapsedTime")} (ms)", Variables.Printer_ElapsedTime, sw);
 
             sw.Close();
         }
@@ -432,79 +474,96 @@ namespace AccountTester
         /// <param name="filePath">json saving path</param>
         internal static void ExportToJSON(string fileName, string filePath)
         {
-            var Printers = new Dictionary<string, object>
+            var Printers = new Dictionary<string, object> { };
+            if (Variables.TestToRun[3])
             {
-                [TT("Hour")] = Variables.Printer_Hour,
-            };
-
-            int printerCount = Variables.Printer_PrinterName?.Length ?? 0;
-            if (printerCount > 0)
-            {
-                for (int i = 0; i < printerCount; i++)
+                Printers = new Dictionary<string, object>
                 {
-                    var printer = new Dictionary<string, object>
-                    {
-                        [TT("Name")] = Variables.Printer_PrinterName[i],
-                        [TT("Status")] = Variables.Printer_PrinterStatus[i]
-                    };
-                    Printers[$"{TT("Printer")}_{i + 1}"] = printer;
-                }
-            }
-            else
-                Printers[TT("NoPrinterFound")] = string.Empty;
-
-            Printers[TT("ElapsedTime")] = Variables.Printer_ElapsedTime;
-
-            var OfficeRights = new Dictionary<string, object>
-            {
-                [TT("Hour")] = Variables.OfficeRights_Hour,
-                [TT("Write")] = Variables.OfficeRights_Write,
-                [TT("Read")] = Variables.OfficeRights_Read,
-                [TT("Delete")] = Variables.OfficeRights_Delete,
-                [TT("Create")] = Variables.OfficeRights_Create,
-                [TT("Save")] = Variables.OfficeRights_Save,
-                [TT("TestedFolder")] = Variables.OfficeRights_FolderTested,
-                [TT("ElapsedTime")] = Variables.OfficeRights_ElapsedTime
-            };
-
-            var OfficeVersion = new Dictionary<string, object>
-            {
-                [TT("Hour")] = Variables.OfficeVersion_Hour,
-                [TT("OfficeVersion")] = Variables.OfficeVersion_OfficeVersion,
-                [TT("Path")] = Variables.OfficeVersion_OfficePath,
-                [TT("Culture")] = Variables.OfficeVersion_OfficeCulture,
-                [TT("ExcludedApps")] = Variables.OfficeVersion_OfficeExcludedApps,
-                [TT("LastUpdateStatus")] = Variables.OfficeVersion_OfficeLastUpdateStatus,
-                [TT("ElapsedTime")] = Variables.OfficeVersion_ElapsedTime
-            };
-
-            var NetworkStorageRights = new Dictionary<string, object>
-            {
-                [TT("Hour")] = Variables.NetworkStorageRights_Hour,
-            };
-
-            int drivesCount = Variables.NetworkStorageRights_DiskLetter?.Length ?? 0;
-            for (int i = 0; i < drivesCount; i++)
-            {
-                var Disk = new Dictionary<string, object>
-                {
-                    [TT("DiskLetter")] = Variables.NetworkStorageRights_DiskLetter[i],
-                    [TT("UNCPath")] = Variables.NetworkStorageRights_CheminUNC[i],
-                    [TT("Server")] = Variables.NetworkStorageRights_Serveur[i],
-                    [TT("ShareName")] = Variables.NetworkStorageRights_ShareName[i]
+                    [TT("Hour")] = Variables.Printer_Hour,
                 };
 
-                NetworkStorageRights[$"{TT("Disk")}_{i + 1}"] = Disk;
-            }
-            NetworkStorageRights[TT("ElapsedTime")] = Variables.NetworkStorageRights_ElapsedTime;
+                int printerCount = Variables.Printer_PrinterName?.Length ?? 0;
+                if (printerCount > 0)
+                {
+                    for (int i = 0; i < printerCount; i++)
+                    {
+                        var printer = new Dictionary<string, object>
+                        {
+                            [TT("Name")] = Variables.Printer_PrinterName[i],
+                            [TT("Status")] = Variables.Printer_PrinterStatus[i]
+                        };
+                        Printers[$"{TT("Printer")}_{i + 1}"] = printer;
+                    }
+                }
+                else
+                    Printers[TT("NoPrinterFound")] = string.Empty;
 
-            var InternetConnexion = new Dictionary<string, object>
+                Printers[TT("ElapsedTime")] = Variables.Printer_ElapsedTime;
+            }
+
+            var OfficeRights = new Dictionary<string, object> { };
+            var OfficeVersion = new Dictionary<string, object> { };
+            if (Variables.TestToRun[2])
             {
-                [TT("Hour")] = Variables.InternetConnexion_Hour,
-                [TT("TestedURL")] = Variables.Target,
-                [TT("HTMLStatus")] = Variables.InternetConnexion_HTMLStatut,
-                [TT("ResponseTime")] = Variables.InternetConnexion_ElapsedTime
-            };
+                OfficeRights = new Dictionary<string, object>
+                {
+                    [TT("Hour")] = Variables.OfficeRights_Hour,
+                    [TT("Write")] = Variables.OfficeRights_Write,
+                    [TT("Read")] = Variables.OfficeRights_Read,
+                    [TT("Delete")] = Variables.OfficeRights_Delete,
+                    [TT("Create")] = Variables.OfficeRights_Create,
+                    [TT("Save")] = Variables.OfficeRights_Save,
+                    [TT("TestedFolder")] = Variables.OfficeRights_FolderTested,
+                    [TT("ElapsedTime")] = Variables.OfficeRights_ElapsedTime
+                };
+
+                OfficeVersion = new Dictionary<string, object>
+                {
+                    [TT("Hour")] = Variables.OfficeVersion_Hour,
+                    [TT("OfficeVersion")] = Variables.OfficeVersion_OfficeVersion,
+                    [TT("Path")] = Variables.OfficeVersion_OfficePath,
+                    [TT("Culture")] = Variables.OfficeVersion_OfficeCulture,
+                    [TT("ExcludedApps")] = Variables.OfficeVersion_OfficeExcludedApps,
+                    [TT("LastUpdateStatus")] = Variables.OfficeVersion_OfficeLastUpdateStatus,
+                    [TT("ElapsedTime")] = Variables.OfficeVersion_ElapsedTime
+                };
+            }
+
+            var NetworkStorageRights = new Dictionary<string, object> { };
+            if (Variables.TestToRun[1])
+            {
+                NetworkStorageRights = new Dictionary<string, object>
+                {
+                    [TT("Hour")] = Variables.NetworkStorageRights_Hour,
+                };
+
+                int drivesCount = Variables.NetworkStorageRights_DiskLetter?.Length ?? 0;
+                for (int i = 0; i < drivesCount; i++)
+                {
+                    var Disk = new Dictionary<string, object>
+                    {
+                        [TT("DiskLetter")] = Variables.NetworkStorageRights_DiskLetter[i],
+                        [TT("UNCPath")] = Variables.NetworkStorageRights_CheminUNC[i],
+                        [TT("Server")] = Variables.NetworkStorageRights_Serveur[i],
+                        [TT("ShareName")] = Variables.NetworkStorageRights_ShareName[i]
+                    };
+
+                    NetworkStorageRights[$"{TT("Disk")}_{i + 1}"] = Disk;
+                }
+                NetworkStorageRights[TT("ElapsedTime")] = Variables.NetworkStorageRights_ElapsedTime;
+            }
+
+            var InternetConnexion = new Dictionary<string, object> { };
+            if (Variables.TestToRun[0])
+            {
+                InternetConnexion = new Dictionary<string, object>
+                {
+                    [TT("Hour")] = Variables.InternetConnexion_Hour,
+                    [TT("TestedURL")] = Variables.Target,
+                    [TT("HTMLStatus")] = Variables.InternetConnexion_HTMLStatut,
+                    [TT("ResponseTime")] = Variables.InternetConnexion_ElapsedTime
+                };
+            }
 
             var General = new Dictionary<string, object>
             {
@@ -519,20 +578,30 @@ namespace AccountTester
                 [TT("Title")] = fileName,
                 [TT("Date")] = Variables.General_DateAndHour,
                 [TT("Username")] = Variables.General_UserName,
-                [TT("General")] = General,
-                [TT("InternetConnexion")] = InternetConnexion,
-                [TT("NetworkStorageRights")] = NetworkStorageRights,
-                [TT("OfficeVersion")] = OfficeVersion,
-                [TT("OfficeRights")] = OfficeRights,
-                [TT("Printer")] = Printers
+                [TT("General")] = General
             };
+
+            if (Variables.TestToRun[0])
+                block[TT("InternetConnexion")] = InternetConnexion;
+
+            if (Variables.TestToRun[1])
+                block[TT("NetworkStorageRights")] = NetworkStorageRights;
+
+            if (Variables.TestToRun[2])
+            {
+                block[TT("OfficeVersion")] = OfficeVersion;
+                block[TT("OfficeRights")] = OfficeRights;
+            }
+
+            if (Variables.TestToRun[3])
+                block[TT("Printer")] = Printers;
 
             string jsonString = JsonSerializer.Serialize(block, CachedJsonSerializerOptions);
             File.WriteAllText($"{filePath}\\{fileName}.json", jsonString);
         }
 
         /// <summary>
-        /// Create a zip file that contains all the disponible reports.
+        /// Create a zip file that contains all the available reports.
         /// </summary>
         /// <param name="fileName">zip file name</param>
         /// <param name="filePath">zip saving path</param>
