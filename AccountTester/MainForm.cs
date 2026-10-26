@@ -232,14 +232,6 @@ namespace AccountTester
             string fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-            Variables.TestToRun = new List<bool>
-            {
-                InternetToolStripMenuItem.Checked,
-                NetworkStorageToolStripMenuItem.Checked,
-                OfficeToolStripMenuItem.Checked,
-                PrinterToolStripMenuItem.Checked
-            };
-
             switch (toolStripComboBoxExtensionByDefault.Text ?? ".zip")
             {
                 case ".csv":

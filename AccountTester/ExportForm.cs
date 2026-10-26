@@ -578,20 +578,30 @@ namespace AccountTester
                 [TT("Title")] = fileName,
                 [TT("Date")] = Variables.General_DateAndHour,
                 [TT("Username")] = Variables.General_UserName,
-                [TT("General")] = General,
-                [TT("InternetConnexion")] = InternetConnexion,
-                [TT("NetworkStorageRights")] = NetworkStorageRights,
-                [TT("OfficeVersion")] = OfficeVersion,
-                [TT("OfficeRights")] = OfficeRights,
-                [TT("Printer")] = Printers
+                [TT("General")] = General
             };
+
+            if (Variables.TestToRun[0])
+                block[TT("InternetConnexion")] = InternetConnexion;
+
+            if (Variables.TestToRun[1])
+                block[TT("NetworkStorageRights")] = NetworkStorageRights;
+
+            if (Variables.TestToRun[2])
+            {
+                block[TT("OfficeVersion")] = OfficeVersion;
+                block[TT("OfficeRights")] = OfficeRights;
+            }
+
+            if (Variables.TestToRun[3])
+                block[TT("Printer")] = Printers;
 
             string jsonString = JsonSerializer.Serialize(block, CachedJsonSerializerOptions);
             File.WriteAllText($"{filePath}\\{fileName}.json", jsonString);
         }
 
         /// <summary>
-        /// Create a zip file that contains all the disponible reports.
+        /// Create a zip file that contains all the available reports.
         /// </summary>
         /// <param name="fileName">zip file name</param>
         /// <param name="filePath">zip saving path</param>
