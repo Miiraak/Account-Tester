@@ -56,7 +56,7 @@
 
 
         // Miscellaneous variables for program functions
-        public static string Version = "0.9.0"; // Version of the program
+        public static string Version = "0.9.1"; // Version of the program
         public static bool IsAutoRun { get; set; } = false;
         public static bool WordIsInstalled { get; set; } = false;
         public static int Timeout { get; set; } = 1000; // Timeout in milliseconds
