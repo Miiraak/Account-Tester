@@ -137,6 +137,20 @@ namespace AccountTester
         {
             Variables.General_TotalSuccess = 0;
             Variables.General_TotalTests = 0;
+            Variables.NetworkStorageRights_DiskLetter = Array.Empty<string>();
+            Variables.NetworkStorageRights_CheminUNC = Array.Empty<string>();
+            Variables.NetworkStorageRights_Serveur = Array.Empty<string>();
+            Variables.NetworkStorageRights_ShareName = Array.Empty<string>();
+            Variables.Printer_PrinterName = Array.Empty<string>();
+            Variables.Printer_PrinterStatus = Array.Empty<string>();
+            Variables.TestToRun = new List<bool>
+            {
+                InternetToolStripMenuItem.Checked,
+                NetworkStorageToolStripMenuItem.Checked,
+                OfficeToolStripMenuItem.Checked,
+                PrinterToolStripMenuItem.Checked
+            };
+
             exportToolStripMenuItem.Enabled = false;
             richTextBoxLogs.Clear();
 
@@ -153,7 +167,7 @@ namespace AccountTester
                 richTextBoxLogs.AppendText($"- {Variables.General_UserName}" + Environment.NewLine);
                 richTextBoxLogs.AppendText(Environment.NewLine);
 
-                if (InternetToolStripMenuItem.Checked)
+                if (Variables.TestToRun[0])
                 {
                     richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("Internet")} :" + Environment.NewLine);
@@ -161,7 +175,7 @@ namespace AccountTester
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                if (NetworkStorageToolStripMenuItem.Checked)
+                if (Variables.TestToRun[1])
                 {
                     richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("NetworkStorageRights")} :" + Environment.NewLine);
@@ -169,7 +183,7 @@ namespace AccountTester
                     richTextBoxLogs.AppendText(Environment.NewLine);
                 }
 
-                if (OfficeToolStripMenuItem.Checked)
+                if (Variables.TestToRun[2])
                 {
                     richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("OfficeVersion")} :" + Environment.NewLine);
@@ -185,7 +199,7 @@ namespace AccountTester
                     }
                 }
 
-                if (PrinterToolStripMenuItem.Checked)
+                if (Variables.TestToRun[3])
                 {
                     richTextBoxLogs.AppendText("------------------------------" + Environment.NewLine);
                     richTextBoxLogs.AppendText($"#### {T("Printer")} :" + Environment.NewLine);
@@ -217,6 +231,14 @@ namespace AccountTester
         {
             string fileName = $"{T("Report")}_{Environment.UserName}_{DateTime.Now:yyyyMMddHHmmss}";
             string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            Variables.TestToRun = new List<bool>
+            {
+                InternetToolStripMenuItem.Checked,
+                NetworkStorageToolStripMenuItem.Checked,
+                OfficeToolStripMenuItem.Checked,
+                PrinterToolStripMenuItem.Checked
+            };
 
             switch (toolStripComboBoxExtensionByDefault.Text ?? ".zip")
             {
