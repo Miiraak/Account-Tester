@@ -441,7 +441,19 @@
   <data name="Unreachable" xml:space="preserve">
     <value>Unreachable</value>
   </data>
-  <data name="Tests_PrinterError_Configuration" xml:space="preserve">
-    <value>Unreachable or configuration error</value>
+  <data name="Tests_PrinterUnreachableButVisible" xml:space="preserve">
+    <value>Unreachable but the printer is installed.</value>
+  </data>
+  <data name="InvalidPort_Error_message" xml:space="preserve">
+    <value>Please enter a valid port number.</value>
+  </data>
+  <data name="Tests_PrinterUnreachable" xml:space="preserve">
+    <value>This printer is unreachable.</value>
+  </data>
+  <data name="PrinterPort" xml:space="preserve">
+    <value>Printer port</value>
+  </data>
+  <data name="InvalidTimeout_Error_message" xml:space="preserve">
+    <value>Please enter a valid timeout.</value>
   </data>
 </root>

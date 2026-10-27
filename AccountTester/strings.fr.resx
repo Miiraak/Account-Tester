@@ -361,7 +361,7 @@
     <value>Aucun</value>
   </data>
   <data name="AutoExport" xml:space="preserve">
-    <value>Auto-exportation</value>
+    <value>Exportation auto.</value>
   </data>
   <data name="ExtensionByDefault" xml:space="preserve">
     <value>Extension par défaut :</value>
@@ -441,7 +441,19 @@
   <data name="Unreachable" xml:space="preserve">
     <value>Non joignable</value>
   </data>
-  <data name="Tests_PrinterError_Configuration" xml:space="preserve">
-    <value>Non joignable ou erreur de configuration</value>
+  <data name="Tests_PrinterUnreachableButVisible" xml:space="preserve">
+    <value>Non joignable mais l'imprimante est installée.</value>
+  </data>
+  <data name="InvalidPort_Error_message" xml:space="preserve">
+    <value>Veuillez entrer un port valide.</value>
+  </data>
+  <data name="Tests_PrinterUnreachable" xml:space="preserve">
+    <value>Cette imprimante n'est pas joignable.</value>
+  </data>
+  <data name="PrinterPort" xml:space="preserve">
+    <value>Port imprimante</value>
+  </data>
+  <data name="InvalidTimeout_Error_message" xml:space="preserve">
+    <value>Veuillez entrer un timeout valide.</value>
   </data>
 </root>
