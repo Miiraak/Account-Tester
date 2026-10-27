@@ -369,7 +369,7 @@ namespace AccountTester
                     }
                 }
 
-                if (PrinterSettings.InstalledPrinters.Count == 0)
+                if (Variables.PrinterSystemList.Length == 0)
                 {
                     Variables.General_TotalTests++;
                     rtb.AppendText(T("NoPrinterFound") + Environment.NewLine);
