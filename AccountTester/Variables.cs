@@ -57,11 +57,12 @@
 
 
         // Miscellaneous variables for program functions
-        public static string Version = "0.9.1"; // Version of the program
+        public static string Version = "0.9.2"; // Version of the program
         public static bool IsAutoRun { get; set; } = false;
         public static bool WordIsInstalled { get; set; } = false;
         public static int Timeout { get; set; } = 1000; // Timeout in milliseconds
         public static string PrinterList { get; set; } = string.Empty; // Printer list for the printer test, string separated by semicolons
+        public static int PrinterPort { get; set; } = 9100; // Printer port for the printer test
         public static string DrivesList { get; set; } = string.Empty; // Drive letter list for the network storage rights test, string separated by semicolons
         public static string Target { get; set; } = "http://www.google.com"; // Target for the internet test.
         public static List<bool> TestToRun { get; set; } = new List<bool> { true, true, true, true }; // Array of booleans to determine which tests to run, 0: Internet, 1: Network Storage Rights, 2: Office Version/Rights, 3: Printer

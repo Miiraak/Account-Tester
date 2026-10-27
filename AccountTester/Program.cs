@@ -21,7 +21,8 @@ namespace AccountTester
                 { "Autorun", 8 },
                 { "PrinterList", 128},
                 { "DrivesList", 128 },
-                { "Target", 128 }
+                { "Target", 128 },
+                { "PrinterPort", 8 }
             };
                 Blob.CheckForUpdates(args, defaultData);
 

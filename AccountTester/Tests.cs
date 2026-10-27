@@ -1,8 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Diagnostics;
 using System.Drawing.Printing;
-using System.Management;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using Word = Microsoft.Office.Interop.Word;
@@ -354,30 +352,22 @@ namespace AccountTester
         {
             Variables.Printer_Hour = DateTime.Now.ToString("HH:mm:ss");
 
-            foreach (string printer in PrinterSettings.InstalledPrinters)
-            {
-                if (!string.IsNullOrWhiteSpace(printer)
-                    && !printer.Contains("Fax", StringComparison.OrdinalIgnoreCase)
-                    && !printer.Contains("PDF", StringComparison.OrdinalIgnoreCase)
-                    && !printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase)
-                    && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase)
-                    && !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase))
-                {
-                    Variables.PrinterSystemList = [.. Variables.PrinterSystemList, printer];
-                }
-            }
-
-            if (!(Variables.PrinterList == null || Variables.PrinterList.Length == 0))
-            {
-                for (int i = 0; i < Variables.PrinterList.Split(';').Length; i++)
-                {
-                    Variables.PrinterSystemList = [.. Variables.PrinterSystemList, Variables.PrinterList.Split(';')[i]];
-                }
-            }
-
             try
             {
                 stopwatch.Restart();
+
+                foreach (string printer in PrinterSettings.InstalledPrinters)
+                {
+                    if (!string.IsNullOrWhiteSpace(printer)
+                        && !printer.Contains("Fax", StringComparison.OrdinalIgnoreCase)
+                        && !printer.Contains("PDF", StringComparison.OrdinalIgnoreCase)
+                        && !printer.Contains("Microsoft Print to PDF", StringComparison.OrdinalIgnoreCase)
+                        && !printer.Contains("OneNote", StringComparison.OrdinalIgnoreCase)
+                        && !printer.Contains("XPS", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Variables.PrinterSystemList = [.. Variables.PrinterSystemList, printer];
+                    }
+                }
 
                 if (PrinterSettings.InstalledPrinters.Count == 0)
                 {
@@ -388,40 +378,65 @@ namespace AccountTester
                     Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
                 }
                 else
-                {   
-                    foreach (string printer in Variables.PrinterSystemList)
-                    {
-                        Variables.General_TotalTests++;
-                        rtb.AppendText(printer + Environment.NewLine);
-
-                        string printer_clean = printer.Split(',')[0].Trim();
-                        printer_clean = printer_clean.Split('(')[0].Trim();
-                        printer_clean = printer_clean.Split('\\').Last().Trim();
-                        printer_clean = printer_clean.Split('/').Last().Trim();
-                        printer_clean = printer_clean.Split(' ').Last().Trim();
-                        printer_clean = printer_clean.Trim();
-
-                        Variables.Printer_PrinterName = [.. Variables.Printer_PrinterName, printer_clean];
-
-                        if (IsPrinterReachable_TCP(printer_clean, 9100, Variables.Timeout))
-                        {
-                            Variables.General_TotalSuccess++;
-                            Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Reachable")];
-                            rtb.AppendText($"- Status : {T("Reachable")}" + Environment.NewLine);
-                        }
-                        else
-                        {
-                            Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unreachable")];
-                            rtb.AppendText($"- Status : {T("Tests_PrinterUnreachableStatus")}" + Environment.NewLine);
-                        }
-                    }
+                {
+                    TestPrinter(Variables.PrinterSystemList, rtb, true);
                 }
+
+                if (!(Variables.PrinterList == null || Variables.PrinterList.Length == 0))
+                {
+                    string[] PrinterListArray = [];
+                    foreach (string printer in Variables.PrinterList.Split(';').Select(p => p.Trim()).Where(p => !string.IsNullOrEmpty(p)))
+                    {
+                        PrinterListArray = [.. PrinterListArray, printer];
+                    }
+
+                    TestPrinter(PrinterListArray, rtb, false);
+                }
+
                 stopwatch.Stop();
                 Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, T("Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        internal static void TestPrinter(string[] PrinterList, RichTextBox rtb, bool isSystem)
+        {
+            foreach (string printer in PrinterList)
+            {
+                Variables.General_TotalTests++;
+                rtb.AppendText(printer + Environment.NewLine);
+
+                string printer_clean = printer.Split(',')[0].Trim();
+                printer_clean = printer_clean.Split('(')[0].Trim();
+                printer_clean = printer_clean.Split('\\').Last().Trim();
+                printer_clean = printer_clean.Split('/').Last().Trim();
+                printer_clean = printer_clean.Split(' ').Last().Trim();
+                printer_clean = printer_clean.Trim();
+
+                Variables.Printer_PrinterName = [.. Variables.Printer_PrinterName, printer_clean];
+
+                if (IsPrinterReachable_TCP(printer_clean, Variables.PrinterPort, Variables.Timeout))
+                {
+                    Variables.General_TotalSuccess++;
+                    Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Reachable")];
+                    rtb.AppendText($"- Status : {T("Reachable")}" + Environment.NewLine);
+                }
+                else
+                {
+                    if (isSystem)
+                    {
+                        Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unreachable")];
+                        rtb.AppendText($"- Status : {T("Tests_PrinterUnreachableButVisible")}" + Environment.NewLine);
+                    }
+                    else
+                    {
+                        Variables.Printer_PrinterStatus = [.. Variables.Printer_PrinterStatus, T("Unreachable")];
+                        rtb.AppendText($"- Status : {T("Tests_PrinterUnreachable")}" + Environment.NewLine);
+                    }
+                }
             }
         }
 

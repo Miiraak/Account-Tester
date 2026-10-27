@@ -69,17 +69,22 @@ namespace AccountTester
                         break;
                 }
 
-                // PrinterList and DrivesList
+                // PrinterList, DrivesList
                 Variables.PrinterList = Blob.Get("PrinterList") ?? string.Empty;
                 Variables.DrivesList = Blob.Get("DrivesList") ?? string.Empty;
 
+                // PrinterPort
+                Variables.PrinterPort = Blob.GetInt("PrinterPort");
+                PrinterPortToolStripTextBox.Text = (Variables.PrinterPort > 0 && Variables.PrinterPort <= 65535 ? Variables.PrinterPort.ToString() : "9100");
+
                 // Timeout
-                TimeoutToolStripTextBox.Text = (Blob.GetInt("Timeout") > 0 ? (Blob.GetInt("Timeout") / 1000).ToString() : "1");
-                Variables.Timeout = (Blob.GetInt("Timeout") > 0 ? Blob.GetInt("Timeout") : 1000);
+                Variables.Timeout = (Blob.GetInt("Timeout") > 0 ? (Blob.GetInt("Timeout") * 1000) : 1000);
+                TimeoutToolStripTextBox.Text = (Variables.Timeout / 1000).ToString();
 
                 // Target
                 TargetToolStripTextBox.Text = Blob.Get("Target") ?? "http://www.google.com";
                 Variables.Target = Blob.Get("Target") ?? "http://www.google.com";
+
 
                 // AutoExport and Autorun
                 autoExportToolStripMenuItem.Checked = Blob.GetBool("AutoExport");
@@ -122,6 +127,7 @@ namespace AccountTester
             GeneralToolStripMenuItem.Text = T("General");
             DrivesListToolStripMenuItem.Text = T("DrivesList");
             TargetToolStripMenuItem.Text = $"{T("Target")} (http) :";
+            printerPortToolStripMenuItem.Text = $"{T("PrinterPort")} :";
         }
 
         /// <summary>
@@ -346,16 +352,15 @@ namespace AccountTester
             else
                 defaultExtension = ".txt";
 
-            bool autoExport = autoExportToolStripMenuItem.Checked;
-
             Blob.Set("Langage", selectedLanguage);
             Blob.Set("BaseExtension", defaultExtension);
-            Blob.Set("Timeout", (Convert.ToInt32(TimeoutToolStripTextBox.Text) * 1000).ToString());
-            Blob.Set("AutoExport", autoExport.ToString());
+            Blob.Set("Timeout", (Variables.Timeout * 1000).ToString());
+            Blob.Set("AutoExport", autoExportToolStripMenuItem.Checked.ToString());
             Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
             Blob.Set("PrinterList", Variables.PrinterList);
             Blob.Set("DrivesList", Variables.DrivesList);
-            Blob.Set("Target", TargetToolStripTextBox.Text);
+            Blob.Set("Target", Variables.Target);
+            Blob.Set("PrinterPort", Variables.PrinterPort);
             Blob.Save();
         }
 
@@ -495,6 +500,14 @@ namespace AccountTester
             {
                 TargetToolStripTextBox.Text = Variables.Target;
                 MessageBox.Show($"{T("InvalidURL_Error_message")}", $"{T("Error")}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (PrinterPortToolStripTextBox.Text != string.Empty && int.TryParse(PrinterPortToolStripTextBox.Text, out int port) && port > 0 && port <= 65535)
+                Variables.PrinterPort = port;
+            else
+            {
+                PrinterPortToolStripTextBox.Text = Variables.PrinterPort.ToString();
+                MessageBox.Show($"{T("InvalidPort_Error_message")}", $"{T("Error")}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

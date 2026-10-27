@@ -358,6 +358,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Please enter a valid port number..
+        /// </summary>
+        internal static string InvalidPort_Error_message {
+            get {
+                return ResourceManager.GetString("InvalidPort_Error_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Error, Invalid URL.
         /// </summary>
         internal static string InvalidURL_Error_message {
@@ -664,6 +673,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Printer port.
+        /// </summary>
+        internal static string PrinterPort {
+            get {
+                return ResourceManager.GetString("PrinterPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Reachable.
         /// </summary>
         internal static string Reachable {
@@ -889,11 +907,20 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unreachable but the printer is visible..
+        ///   Recherche une chaîne localisée semblable à This printer is unreachable..
         /// </summary>
-        internal static string Tests_PrinterUnreachableStatus {
+        internal static string Tests_PrinterUnreachable {
             get {
-                return ResourceManager.GetString("Tests_PrinterUnreachableStatus", resourceCulture);
+                return ResourceManager.GetString("Tests_PrinterUnreachable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Unreachable but the printer is installed..
+        /// </summary>
+        internal static string Tests_PrinterUnreachableButVisible {
+            get {
+                return ResourceManager.GetString("Tests_PrinterUnreachableButVisible", resourceCulture);
             }
         }
         
