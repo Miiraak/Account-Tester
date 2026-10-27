@@ -441,7 +441,7 @@
   <data name="Unreachable" xml:space="preserve">
     <value>Non joignable</value>
   </data>
-  <data name="Tests_PrinterError_Configuration" xml:space="preserve">
-    <value>Non joignable ou erreur de configuration</value>
+  <data name="Tests_PrinterUnreachableStatus" xml:space="preserve">
+    <value>Non joignable mais l'imprimante est visible.</value>
   </data>
 </root>

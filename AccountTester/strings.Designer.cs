@@ -889,11 +889,11 @@ namespace AccountTester {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Unreachable or configuration error.
+        ///   Recherche une chaîne localisée semblable à Unreachable but the printer is visible..
         /// </summary>
-        internal static string Tests_PrinterError_Configuration {
+        internal static string Tests_PrinterUnreachableStatus {
             get {
-                return ResourceManager.GetString("Tests_PrinterError_Configuration", resourceCulture);
+                return ResourceManager.GetString("Tests_PrinterUnreachableStatus", resourceCulture);
             }
         }
         

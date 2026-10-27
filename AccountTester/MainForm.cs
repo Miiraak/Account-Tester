@@ -135,14 +135,8 @@ namespace AccountTester
         /// <returns></returns>
         async Task ExecutionSequentielle()
         {
-            Variables.General_TotalSuccess = 0;
-            Variables.General_TotalTests = 0;
-            Variables.NetworkStorageRights_DiskLetter = Array.Empty<string>();
-            Variables.NetworkStorageRights_CheminUNC = Array.Empty<string>();
-            Variables.NetworkStorageRights_Serveur = Array.Empty<string>();
-            Variables.NetworkStorageRights_ShareName = Array.Empty<string>();
-            Variables.Printer_PrinterName = Array.Empty<string>();
-            Variables.Printer_PrinterStatus = Array.Empty<string>();
+            Variables.ResetVariables();
+
             Variables.TestToRun = new List<bool>
             {
                 InternetToolStripMenuItem.Checked,
