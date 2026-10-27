@@ -453,4 +453,7 @@
   <data name="PrinterPort" xml:space="preserve">
     <value>Port imprimante</value>
   </data>
+  <data name="InvalidTimeout_Error_message" xml:space="preserve">
+    <value>Veuillez entrer un timeout valide.</value>
+  </data>
 </root>

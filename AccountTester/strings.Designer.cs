@@ -367,6 +367,15 @@ namespace AccountTester {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Please enter a valid timeout..
+        /// </summary>
+        internal static string InvalidTimeout_Error_message {
+            get {
+                return ResourceManager.GetString("InvalidTimeout_Error_message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Error, Invalid URL.
         /// </summary>
         internal static string InvalidURL_Error_message {

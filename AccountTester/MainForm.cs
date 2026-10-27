@@ -74,7 +74,7 @@ namespace AccountTester
                 Variables.DrivesList = Blob.Get("DrivesList") ?? string.Empty;
 
                 // PrinterPort
-                Variables.PrinterPort = Blob.GetInt("PrinterPort");
+                Variables.PrinterPort = Blob.GetInt("PrinterPort") > 0 && Blob.GetInt("PrinterPort") <= 65535 ? Blob.GetInt("PrinterPort") : 9100;
                 PrinterPortToolStripTextBox.Text = (Variables.PrinterPort > 0 && Variables.PrinterPort <= 65535 ? Variables.PrinterPort.ToString() : "9100");
 
                 // Timeout
@@ -354,7 +354,7 @@ namespace AccountTester
 
             Blob.Set("Langage", selectedLanguage);
             Blob.Set("BaseExtension", defaultExtension);
-            Blob.Set("Timeout", (Variables.Timeout * 1000).ToString());
+            Blob.Set("Timeout", (Variables.Timeout / 1000).ToString());
             Blob.Set("AutoExport", autoExportToolStripMenuItem.Checked.ToString());
             Blob.Set("Autorun", autorunToolStripMenuItem.Checked.ToString());
             Blob.Set("PrinterList", Variables.PrinterList);
@@ -492,7 +492,10 @@ namespace AccountTester
             if (int.TryParse(TimeoutToolStripTextBox.Text, out int timeout) && timeout > 0)
                 Variables.Timeout = timeout * 1000;
             else
+            {
+                MessageBox.Show($"{T("InvalidTimeout_Error_message")}", $"{T("Error")}", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 TimeoutToolStripTextBox.Text = (Variables.Timeout / 1000).ToString();
+            }
 
             if (!string.IsNullOrWhiteSpace(TargetToolStripTextBox.Text) && Tests.Check_URL(TargetToolStripTextBox.Text))
                 Variables.Target = TargetToolStripTextBox.Text;

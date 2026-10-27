@@ -374,8 +374,6 @@ namespace AccountTester
                     Variables.General_TotalTests++;
                     rtb.AppendText(T("NoPrinterFound") + Environment.NewLine);
                     Variables.General_TotalSuccess++;
-                    stopwatch.Stop();
-                    Variables.Printer_ElapsedTime = stopwatch.ElapsedMilliseconds.ToString();
                 }
                 else
                 {
